@@ -7,98 +7,6 @@
             <!-- START REVOLUTION SLIDER 5.1.4 fullscreen mode -->
             <div id="rev_slider_579_1" class="rev_slider fullscreenbanner" style="display:none;" data-version="5.1.4">
                 <ul>   <!-- SLIDE  -->
-                    <!-- <li class="dark" data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="images/slider/rev/main/s1-thumb.jpg"  data-saveperformance="off"  data-title="Siap menghadapi kebakaran"> -->
-                        <!-- <!-- MAIN IMAGE --> -->
-                        <!-- <!-- <img src="images/videos/explore-poster.jpg"  alt="Image"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina> --> -->
-                        <!-- <img src="images/slider/rev/main/s1-thumb.jpg"  alt="Image"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina> -->
-                        <!-- <!-- LAYERS --> -->
-
-                        <!-- <!-- LAYER NR. 1 --> -->
-                        <!-- <!-- <div class="tp-fade fadeout fullscreenvideo rs-background-video-layer" --> -->
-                            <!-- <!-- data-forcerewind="on" --> -->
-                            <!-- <!-- data-volume="mute" --> -->
-                            <!-- <!-- data-videowidth="100%" --> -->
-                            <!-- <!-- data-videoheight="100%" --> -->
-                            <!-- <!-- data-videomp4="images/videos/explore.mp4" --> -->
-                            <!-- <!-- data-videopreload="preload" --> -->
-                            <!-- <!-- data-videoloop="none" --> -->
-                            <!-- <!-- data-forceCover="1" --> -->
-                            <!-- <!-- data-aspectratio="16:9" --> -->
-                            <!-- <!-- data-autoplay="true" --> -->
-                            <!-- <!-- data-autoplayonlyfirsttime="false" --> -->
-                            <!-- <!-- data-nextslideatend="true" --> -->
-                            <!-- <!-- > --> -->
-                        <!-- <!-- </div> --> -->
-
-                        <!-- <!-- LAYER NR. 2 --> -->
-                        <!-- <div class="tp-caption ltl tp-resizeme revo-slider-caps-text text-uppercase" -->
-                        <!-- data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" -->
-                        <!-- data-y="['middle','middle','middle','middle']" data-voffset="['-55','-55','-90','-90']" -->
-                        <!-- data-transform_in="x:0;y:150;z:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;s:800;e:Power4.easeOutQuad;" -->
-                        <!-- data-speed="800" -->
-                        <!-- data-start="1000" -->
-                        <!-- data-easing="easeOutQuad" -->
-                        <!-- data-splitin="none" -->
-                        <!-- data-splitout="none" -->
-                        <!-- data-elementdelay="0.01" -->
-                        <!-- data-endelementdelay="0.1" -->
-                        <!-- data-endspeed="1000" -->
-                        <!-- data-textAlign="center" -->
-                        <!-- data-endeasing="Power4.easeIn" style="z-index: 3; white-space: nowrap;">The Best Multipurpose HTML5 Template</div> -->
-
-                        <!-- <div class="tp-caption ltl tp-resizeme revo-slider-emphasis-text p-0 border-0" -->
-                        <!-- data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" -->
-                        <!-- data-y="['middle','middle','middle','middle']" data-voffset="['0','0','-10','-10']" -->
-                        <!-- data-fontsize="['50','50','50','36']" -->
-                        <!-- data-lineheight="['50','50','60','50']" -->
-                        <!-- data-transform_in="x:0;y:150;z:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;s:800;e:Power4.easeOutQuad;" -->
-                        <!-- data-speed="800" -->
-                        <!-- data-start="1200" -->
-                        <!-- data-easing="easeOutQuad" -->
-                        <!-- data-splitin="none" -->
-                        <!-- data-splitout="none" -->
-                        <!-- data-elementdelay="0.01" -->
-                        <!-- data-endelementdelay="0.1" -->
-                        <!-- data-endspeed="1000" -->
-                        <!-- data-textAlign="center" -->
-                        <!-- data-width="['800','800','560','400']" -->
-                        <!-- data-height="none" -->
-                        <!-- data-whitespace="['normal','nowrap','normal','normal']" -->
-                        <!-- data-endeasing="Power4.easeIn" style="z-index: 3; white-space: normal;">Welcome to the World of Canvas</div> -->
-
-                        <!-- <div class="tp-caption ltl tp-resizeme revo-slider-desc-text" -->
-                        <!-- data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" -->
-                        <!-- data-y="['middle','middle','middle','middle']" data-voffset="['80','80',100,'130']" -->
-                        <!-- data-transform_in="x:0;y:150;z:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;s:800;e:Power4.easeOutQuad;" -->
-                        <!-- data-speed="800" -->
-                        <!-- data-start="1400" -->
-                        <!-- data-easing="easeOutQuad" -->
-                        <!-- data-splitin="none" -->
-                        <!-- data-splitout="none" -->
-                        <!-- data-elementdelay="0.01" -->
-                        <!-- data-endelementdelay="0.1" -->
-                        <!-- data-endspeed="1000" -->
-                        <!-- data-textAlign="center" -->
-                        <!-- data-width="['800','800','560','400']" -->
-                        <!-- data-height="none" -->
-                        <!-- data-endeasing="Power4.easeIn" style="z-index: 3; width: 750px; max-width: 750px; white-space: normal;">Create a website that you are gonna be proud of. Be it Business, Portfolio, Agency, Photography, e-Commerce &amp; much more..</div> -->
-
-                        <!-- <div class="tp-caption ltl tp-resizeme" -->
-                        <!-- data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" -->
-                        <!-- data-y="['middle','middle','middle','middle']" data-voffset="['170','170','210','210']" -->
-                        <!-- data-transform_in="x:0;y:150;z:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;s:800;e:Power4.easeOutQuad;" -->
-                        <!-- data-speed="800" -->
-                        <!-- data-start="1550" -->
-                        <!-- data-easing="easeOutQuad" -->
-                        <!-- data-splitin="none" -->
-                        <!-- data-splitout="none" -->
-                        <!-- data-elementdelay="0.01" -->
-                        <!-- data-endelementdelay="0.1" -->
-                        <!-- data-endspeed="1000" -->
-                        <!-- data-endeasing="Power4.easeIn" style="z-index: 3; white-space: nowrap;"><a href="#" class="button button-border button-white button-light button-large button-rounded text-end m-0"><span>Start Tour</span> <i class="uil uil-angle-right-b"></i></a></div> -->
-
-                    <!-- </li> -->
-                    
                     <li class="dark" data-transition="slideup" data-slotamount="1" data-masterspeed="1500" data-thumb="images/slider/rev/main/s1-thumb.jpg" data-delay="10000"  data-saveperformance="off"  data-title="Responsive &amp; Retina">
                     <!-- MAIN IMAGE -->
                         <img src="images/slider/rev/main/s1.jpg"  alt="kenburns6"  data-bgposition="left top" data-kenburns="on" data-duration="10000" data-ease="Linear.easeNone" data-scalestart="130" data-scaleend="100" data-bgpositionend="right bottom">
@@ -131,7 +39,7 @@
                         data-elementdelay="0.1"
                         data-endelementdelay="0.1"
                         data-endspeed="1000"
-                        data-endeasing="Power4.easeIn" style="z-index: 3; white-space: nowrap; color: #222; line-height: 1.2; max-width: 450px; width: 450px; white-space: normal;">di Wilayah Tambora, Jakarta Barat</div>
+                        data-endeasing="Power4.easeIn" style="z-index: 3; white-space: nowrap; color: rgb(252, 250, 250); line-height: 1.2; max-width: 450px; width: 450px; white-space: normal;">di Wilayah Tambora, Jakarta Barat</div>
                     </li>
                     
                     <li data-transition="slideup" data-slotamount="1" data-masterspeed="1500" data-thumb="images/slider/rev/main/s2-thumb.jpg" data-delay="10000"  data-saveperformance="off"  data-title="Responsive &amp; Retina">
