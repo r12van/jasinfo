@@ -81,6 +81,9 @@
                             </ul>
                         </li>
                         <li class="menu-item">
+                            <a class="menu-link" href="/"><div>Produk Hukum</div></a>
+                        </li>
+                        <li class="menu-item">
                             <a class="menu-link" ><div>Publikasi</div></a>
                             <ul class="sub-menu-container">
                                 <li class="menu-item">
@@ -93,6 +96,9 @@
                                     <a class="menu-link" href="/kegiatan"><div>Kegiatan</div></a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="/"><div>Kontak</div></a>
                         </li>
                     </ul>
                 </nav><!-- #primary-menu end -->
