@@ -1,6 +1,6 @@
 <p align=center>
-    ![logo pemadam](https://github.com/izzax123/jasinfo/blob/master/public/images/logo-side.png)
-    ![logo dki](https://github.com/izzax123/jasinfo/blob/master/public/images/logo/jayaraya.png)
+    <img src="https://github.com/izzax123/jasinfo/blob/master/public/images/logo-side.png" width="300" alt="logo pemadam">
+    <img src="https://github.com/izzax123/jasinfo/blob/master/public/images/logo/jayaraya.png" width="300" alt="logo dki">
 </p>
 
 <p align=center>
