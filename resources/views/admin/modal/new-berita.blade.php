@@ -48,18 +48,7 @@
 											</select>
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Highlight</label>
-											<select class="form-control">
-												<option>0</option>
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-											</select>
-										</div>
-									</div>
+									
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="example-date-input" >Date</label>
