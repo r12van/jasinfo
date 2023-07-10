@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\TipeBerita;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Category;
-use App\Models\Post;
+use App\Models\Wilayah;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,5 +29,31 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user->save();
+
+        $list_wilayah = [
+            ["id_wilayah" => 1, "nama_wilayah" => "Jakarta Pusat"],
+            ["id_wilayah" => 2, "nama_wilayah" => "Jakarta Utara"],
+            ["id_wilayah" => 3, "nama_wilayah" => "Jakarta Barat"],
+            ["id_wilayah" => 4, "nama_wilayah" => "Jakarta Selatan"],
+            ["id_wilayah" => 5, "nama_wilayah" => "Jakarta Barat"],
+        ];
+
+        foreach($list_wilayah as $wilayah)
+        {
+            $w = new Wilayah($wilayah);
+            $w->save();
+        }
+
+        $list_tipe = [
+            ["id_tipe" => 1, "nama_tipe" => "Berita"],
+            ["id_tipe" => 2, "nama_tipe" => "Kegiatan"],
+            ["id_tipe" => 3, "nama_tipe" => "Pers"],
+        ];
+
+        foreach($list_tipe as $tipe)
+        {
+            $w = new TipeBerita($tipe);
+            $w->save();
+        }
     }
 }

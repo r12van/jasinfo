@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tabel_tipe_berita', function (Blueprint $table) {
-            $table->id();
-            $table->string('tipe');
+            $table->id('id_tipe')->autoIncrement();
+            $table->string('nama_tipe');
         });
     }
 

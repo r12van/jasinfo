@@ -71,3 +71,6 @@ Route::get('/kerjasama', [LoginController::class, 'login'])->name('login');
 Route::post('/kerjasama', [LoginController::class, 'authenticate'])->name('loginProses');
 Route::get('/admin-dashboard', [LoginController::class, 'adminHome'])->name('adminHome');
 Route::get('/admin-berita', [AdminController::class, 'adminBerita'])->name('adminBerita');
+
+Route::resource('brt',\App\Http\Controllers\Crud\BeritaController::class);
+Route::resource('upload/img',\App\Http\Controllers\Crud\ImageUploadController::class);
