@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,3 +66,8 @@ Route::get('/pers', function () {
 Route::get('/pencegahan', function () {
     return view('dashboard.layanan.pencegahan.pencegahan');
 });
+
+Route::get('/kerjasama', [LoginController::class, 'login'])->name('login');
+Route::post('/kerjasama', [LoginController::class, 'authenticate'])->name('loginProses');
+Route::get('/admin-dashboard', [LoginController::class, 'adminHome'])->name('adminHome');
+Route::get('/admin-berita', [AdminController::class, 'adminBerita'])->name('adminBerita');

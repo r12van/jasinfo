@@ -9,12 +9,12 @@
                     <a href="/" class="menu-link">
                         <div class="row">
                             <div class="col">
-                                <img class="logo-default" srcset="images/logo-side.png, images/logo@2x.png 2x" src="images/logo-side.png" alt="Logo Damkar">
-                                <img class="logo-dark" srcset="images/logo-side.png, images/logo-dark@2x.png 2x" src="images/logo-side.png" alt="Logo Damkar">
+                                <img class="logo-default" srcset="images/logo/damkar.png, images/logo/damkar.png 2x" src="images/logo/damkar.png" alt="Logo Damkar">
+                                <img class="logo-dark" srcset="images/logo/damkar.png, images/logo/damkar.png 2x" src="images/logo/damkar.png" alt="Logo Damkar">
                             </div>
                             <div class="col">
-                                <img class="logo-default" srcset="images/logo/jayaraya.png, images/logo@2x.png 2x" src="images/logo/jayaraya.png" alt="Canvas Logo"> 
-                                <img class="logo-dark" srcset="images/logo/jayaraya.png, images/logo-dark@2x.png 2x" src="images/logo/jayaraya.png" alt="Canvas Logo">
+                                <img class="logo-default" srcset="images/logo/jayaraya.png, images/logo/jayaraya.png 2x" src="images/logo/jayaraya.png" alt="Canvas Logo"> 
+                                <img class="logo-dark" srcset="images/logo/jayaraya.png, images/logo/jayaraya.png 2x" src="images/logo/jayaraya.png" alt="Canvas Logo">
                             </div>
                         </div>
                        
@@ -33,10 +33,10 @@
 
                     <ul class="menu-container">
                         <li class="menu-item">
-                            <a class="menu-link" href="/"><div>Beranda</div></a>
+                            <a class="menu-link" href="/"><div style="text-shadow: 0 0 5px #FFFFFF;">Beranda</div></a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" ><div>Profil</div></a>
+                            <a class="menu-link" ><div style="text-shadow: 0 0 5px #FFFFFF;">Profil</div></a>
                             <ul class="sub-menu-container">
                                 <li class="menu-item">
                                     <a class="menu-link" href="/sejarah"><div>Sejarah Pemadam Kebakaran</div></a>
@@ -53,7 +53,7 @@
                             </ul>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" ><div>Layanan</div></a>
+                            <a class="menu-link" ><div style="text-shadow: 0 0 5px #FFFFFF;">Layanan</div></a>
                             <ul class="sub-menu-container">
                                 <li class="menu-item">
                                     <a class="menu-link" href="/layanan_kebakaran"><div>Operasi Kebakaran</div></a>
@@ -81,10 +81,10 @@
                             </ul>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="/"><div>Produk Hukum</div></a>
+                            <a class="menu-link" href="/"><div style="text-shadow: 0 0 5px #FFFFFF;">Produk Hukum</div></a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" ><div>Publikasi</div></a>
+                            <a class="menu-link" ><div style="text-shadow: 0 0 5px #FFFFFF;">Publikasi</div></a>
                             <ul class="sub-menu-container">
                                 <li class="menu-item">
                                     <a class="menu-link" href="/berita"><div>Berita</div></a>
@@ -98,7 +98,7 @@
                             </ul>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="/"><div>Kontak</div></a>
+                            <a class="menu-link" href="/"><div style="text-shadow: 0 0 5px #FFFFFF; ">Kontak</div></a>
                         </li>
                     </ul>
                 </nav><!-- #primary-menu end -->
