@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard.utama');
+    return view('dashboard.home');
 });
 //route profil
 Route::get('/sejarah', function () {
@@ -72,5 +72,5 @@ Route::post('/kerjasama', [LoginController::class, 'authenticate'])->name('login
 Route::get('/admin-dashboard', [LoginController::class, 'adminHome'])->name('adminHome');
 Route::get('/admin-berita', [AdminController::class, 'adminBerita'])->name('adminBerita');
 
-Route::resource('brt',\App\Http\Controllers\Crud\BeritaController::class);
-Route::resource('upload/img',\App\Http\Controllers\Crud\ImageUploadController::class);
+Route::resource('brt', \App\Http\Controllers\Crud\BeritaController::class);
+Route::resource('upload/img', \App\Http\Controllers\Crud\ImageUploadController::class);
