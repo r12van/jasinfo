@@ -8,11 +8,15 @@
 
       <div class="col-12">
 
-		<form id="form-berita" action="{{route('artikel.store')}}" method="POST" enctype="multipart/form-data">
+		<form id="form-berita" @if (isset($editMode) && $editMode) action="{{route('artikel.update',['artikel' => $id])}}" method="PATCH" @else action="{{route('artikel.store')}}" method="POST" @endif enctype="multipart/form-data">
 			@csrf
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Buat Berita Baru</h3>
+					@if (isset($editMode) && $editMode)
+						<h3 class="box-title">Edit Berita</h3>
+					@else
+						<h3 class="box-title">Buat Berita Baru</h3>
+					@endif
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
@@ -51,13 +55,13 @@
 									<div class="form-group row">
 										<label for="example-text-input" class="col-sm-2 col-form-label">Judul</label>
 										<div class="col-sm-10">
-											<input class="form-control" type="text" placeholder="Masukan judul berita" id="judul" name="judul" value="{{old('judul')}}">
+											<input class="form-control" type="text" placeholder="Masukan judul berita" id="judul" name="judul" value="{{(isset($judul)) ? $judul : old('judul')}}">
 										</div>
 									</div>
 									<div class="form-group row">
 										<label for="example-search-input" class="col-sm-2 col-form-label">Sumary</label>
 										<div class="col-sm-10">
-											<textarea class="form-control" type="text" placeholder="Ringkasan singkat mengenai berita. Text ini yang akan ditampilkan di thumbnail berita." id="summary" name="summary" value="{{old('summary')}}"></textarea>
+											<textarea class="form-control" type="text" placeholder="Ringkasan singkat mengenai berita. Text ini yang akan ditampilkan di thumbnail berita." id="summary" name="summary" value="{{(isset($summary)) ? $summary : old('summary')}}"></textarea>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -65,8 +69,8 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Wilayah</label>
-													<select class="form-control" name="wilayah" value="{{old('wilayah')}}">
-														@foreach ($wilayah as $item)
+													<select class="form-control" name="wilayah" value="{{(isset($wilayah)) ? $wilayah : old('wilayah')}}">
+														@foreach ($list_wilayah as $item)
 															<option value="{{$item['id_wilayah']}}">{{$item["nama_wilayah"]}}</option>
 														@endforeach
 													</select>
@@ -75,8 +79,8 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Tipe</label>
-													<select class="form-control" name="tipe" value="{{old('tipe')}}">
-														@foreach ($tipe as $item)
+													<select class="form-control" name="tipe" value="{{(isset($tipe)) ? $tipe : old('tipe')}}">
+														@foreach ($list_tipe as $item)
 															<option value="{{$item['id_tipe']}}">{{$item["nama_tipe"]}}</option>
 														@endforeach
 													</select>
@@ -87,7 +91,7 @@
 												<div class="form-group">
 													<label for="example-date-input" >Date</label>
 													<div class="col-sm-10">
-													<input class="form-control" name="tanggal" type="date" value="{{now()->toDateString()}}" id="tanggal">
+													<input class="form-control" name="tanggal" type="date" value="{{(isset($tanggal)) ? $tanggal : now()->toDateString()}}" id="tanggal">
 													</div>
 												</div>
 											</div>
@@ -109,7 +113,7 @@
 										</div>
 										<!-- /.box-header -->
 										<div class="box-body">
-											<textarea id="editor-berita" name="isi" value="{{old('isi')}}"></textarea>
+											<textarea id="editor-berita" name="isi" value="testis"></textarea>
 										</div>
 									</div>
 									
@@ -146,12 +150,12 @@
 
 {{-- start ckeditor --}}
 @push('stack-head')
-    <script src="ckeditor5/build/ckeditor.js"></script>
+    <script src="{{asset('ckeditor5/build/ckeditor.js')}}"></script>
 @endpush
 
 @push('stack-body')
     <script>
-        ClassicEditor
+        var ed = ClassicEditor
             .create( document.querySelector( '#editor-berita' ),{
 				mediaEmbed:{
 					previewsInData:true // ini penting untuk embed media dari youtube, dsb
@@ -167,7 +171,21 @@
                 console.error( error );
                 alert( error );
             } );
+
+			ed.setData("testing");
+
+			// var text = <?php 
+			// 	echo "Test";
+			// ?>
+
+			// ed.setData(text);
     </script>
+
+	{{-- @isset($isi) --}}
+		<script>
+			editor.setData("testing");
+		</script>
+	{{-- @endisset --}}
 @endpush
 {{-- end ckeditor --}}
 
@@ -193,3 +211,4 @@
         }
     </script>
 @endpush
+

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Crud;
 use App\Http\Controllers\Controller;
 use App\Models\Berita;
 use App\Models\TipeBerita;
+use App\Models\Wilayah;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -24,14 +25,12 @@ class BeritaController extends Controller
         try{
             
             $query = Berita::query();
-
-            $query = $query
-                            ->join('tabel_wilayah','tabel_berita.id_wilayah','=','tabel_wilayah.id_wilayah')
-                            ->join('tabel_tipe_berita', 'tabel_berita.id_tipe','=','tabel_tipe_berita.id_tipe');
                 
             if($r->ajax())
             {
-                
+                $query = $query
+                            ->join('tabel_wilayah','tabel_berita.id_wilayah','=','tabel_wilayah.id_wilayah')
+                            ->join('tabel_tipe_berita', 'tabel_berita.id_tipe','=','tabel_tipe_berita.id_tipe');
 
                 if($r->exists("tabel"))
                 {
@@ -47,10 +46,11 @@ class BeritaController extends Controller
                     return DataTables::eloquent($query)
                         ->addIndexColumn()
                         ->editColumn("publish", function($berita){
-                                if($berita->publish)
-                                    return "Publish";
-                                else
-                                    return "Belum Publish";
+                                return view('kolom.publish-tabel-berita')->with("publish",$berita->publish)->with("id",$berita->id_berita);
+                            }
+                        )
+                        ->editColumn("highlight", function($berita){
+                                return view('kolom.highlight-tabel-berita')->with("highlight",$berita->highlight)->with("id",$berita->id_berita);
                             }
                         )
                         ->editColumn("banner", function ($berita){
@@ -59,7 +59,7 @@ class BeritaController extends Controller
                             return "";
                         })
                         ->editColumn("tindakan",function($berita){
-                            return view("kolom.tindakan-tabel-berita")->with("id",$berita->id_berita)->with("slug",$berita->slug);
+                            return view("kolom.tindakan-tabel-berita")->with("id",$berita->id_berita)->with("judul",$berita->judul);
                         })
                         ->toJson();
                 }
@@ -80,6 +80,8 @@ class BeritaController extends Controller
                         "isi" => $berita->isi
                     ]);
                 }
+
+                
 
         }
         catch(Throwable $e)
@@ -104,6 +106,57 @@ class BeritaController extends Controller
     public function store(Request $r)
     {
         try{
+
+                // untuk update melalui route store / untuk update masal
+                if($r->exists('update'))
+                {
+                    if($r->input("update") == 'table')
+                    {
+                        $input_highlight = $r->input("highlight");
+
+                        $array_cek = [];
+                        $list_urutan_ganda = [];
+                        foreach($input_highlight as $id => $h)
+                        {
+                            if($h != 0)
+                                $array_cek[$h][] = $id;
+                        }
+                        foreach($array_cek as $urut => $cek_urutan)
+                        {
+                            if(count($cek_urutan) > 1)
+                                foreach($cek_urutan as $id)
+                                {
+                                    $list_urutan_ganda[$urut][] = $id;
+                                }
+                        }
+                        if(count($list_urutan_ganda) > 0)
+                        {
+                            $text = "<br>";
+                            foreach($list_urutan_ganda as $urut => $item)
+                            {
+                                $text = $text."Berita dengan urutan ".$urut." : <br>";
+                                foreach($item as $id)
+                                    $text = $text."- ".Berita::find($id)->judul."<br>";
+                            }
+                            return redirect()->back()->with('alert.warning','Terdapat duplikasi pada urutan highlight. Periksa kembali dan pastikan tidak ada duplikasi urutan pada berita highlight.'.$text);
+                        }
+
+                        $list_id = Berita::all()->pluck('id');
+                        $input_publish = $r->input("publish");
+
+                        foreach($list_id as $id)
+                        {
+                            $berita = Berita::find($id);
+                            $berita->highlight = $input_highlight[$id];
+                            $berita->publish = $input_publish[$id];
+                            $berita->save();
+                        }
+
+                        return redirect()->back()->with('alert.success','Perubahan berhasil disimpan!');
+
+                    }
+                }
+
                 // fetch data
                 $judul = $r->input("judul");
                 $summary = $r->input("summary");
@@ -237,7 +290,36 @@ class BeritaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try{
+
+            $berita = Berita::find($id);
+
+            if(is_null($berita))
+                throw new Exception("Artikel tidak ditemukan");
+
+            $wilayah = Wilayah::all();
+            $tipe = TipeBerita::all();
+
+            return view('admin.dashboard.editor-berita')->with([
+                "list_wilayah" => $wilayah,
+                "list_tipe" => $tipe,
+                "judul" => $berita->judul,
+                "summary" => $berita->summary,
+                "wilayah" => $berita->wilayah,
+                "tipe" => $berita->tipe,
+                "tanggal" => $berita->tanggal,
+                "isi" => $berita->isi,
+                "editMode" => true,
+                "id" => $id
+            ]);
+
+        }
+        catch(Throwable $e)
+        {
+            error_log("Berita Controller Error : Gagal menyimpan update pada berita at update() ".$e);
+            Log::error("Berita Controller Error : Gagal menyimpan update pada berita at update() ".$e);
+            return abort(404,$e);
+        }
     }
 
     /**
@@ -246,6 +328,10 @@ class BeritaController extends Controller
     public function update(Request $r, string $id)
     {
         try{
+
+            $berita = Berita::find($id);
+
+           
 
         }
         catch(Throwable $e)
@@ -270,10 +356,10 @@ class BeritaController extends Controller
             {
                 $paginator = Berita::paginate(columns: ['id_berita']);
                 $redirect = ($r->page <= $paginator->lastPage()) ? $r->page : $paginator->lastPage();
-                return redirect()->route($r->route(),['page'=>$redirect]);
+                return redirect()->route($r->route(),['page'=>$redirect])->with("alert.success","Berita berhasil dihapus!");
             }
             
-            return redirect()->back();
+            return redirect()->back()->with("alert.success","Berita berhasil dihapus!");
 
         }
         catch(Throwable $e)

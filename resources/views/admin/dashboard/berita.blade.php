@@ -14,44 +14,78 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-              <button type="button" class="waves-effect waves-light btn btn-rounded btn-primary mb-5" data-toggle="modal" data-target=".new-berita">Berita Baru</button>
-              <div class="table-responsive">
-                <table id="tabel-berita-all" class="table table-bordered table-striped" style="width:100%">
-                  <thead>
-                      <tr>
-                          <th>No</th>
-                          <th>Judul</th>
-                          <th>Penulis</th>
-                          <th>Sumary</th>
-                          <th>Banner</th>
-                          <th>Wilayah</th>
-                          <th>Tipe</th>
-                          <th>Tanggal</th>
-                          <th>Highlight</th>
-                          <th>Publish</th>
-                          <th>Tindakan</th>
-                      </tr>
-                  </thead>
-                  
-                  <tfoot>
-                      <tr>
-                          <th>No</th>
-                          <th>Judul</th>
-                          <th>Penulis</th>
-                          <th>Sumary</th>
-                          <th>Banner</th>
-                          <th>Wilayah</th>
-                          <th>Tipe</th>
-                          <th>Tanggal</th>
-                          <th>Highlight</th>
-                          <th>Publish</th>
-                          <th>Tindakan</th>
-                      </tr>
-                  </tfoot>
-              </table>
-              </div>
+
+              @if (session()->has("alert.success"))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-square"></i> {!! session("alert.success") !!}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+              @endif
+
+              @if (session()->has("alert.warning"))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <i class="far fa-exclamation-triangle"></i> {!! session("alert.warning") !!}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+              @endif
+
+              @if (session()->has("alert.danger"))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle"></i> {!! session("alert.danger") !!}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+              @endif
+
+              <a type="button" class="waves-effect waves-light btn btn-rounded btn-primary mb-5" href="{{route('adminBuatBerita')}}" target="_blank">Berita Baru</a>
+                <form id="tabel-berita" action="{{route('artikel.store',['update' => 'table'])}}" method="post">
+                    @csrf 
+                    <div class="table-responsive">
+                      <table id="tabel-berita-all" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Judul</th>
+                                <th>Penulis</th>
+                                <th>Sumary</th>
+                                <th>Banner</th>
+                                <th>Wilayah</th>
+                                <th>Tipe</th>
+                                <th>Tanggal</th>
+                                <th>Highlight</th>
+                                <th>Publish</th>
+                                <th>Tindakan</th>
+                            </tr>
+                        </thead>
+                        
+                        <tfoot>
+                            <tr>
+                                <th>No</th>
+                                <th>Judul</th>
+                                <th>Penulis</th>
+                                <th>Sumary</th>
+                                <th>Banner</th>
+                                <th>Wilayah</th>
+                                <th>Tipe</th>
+                                <th>Tanggal</th>
+                                <th>Highlight</th>
+                                <th>Publish</th>
+                                <th>Tindakan</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    </div>
+                </form>
           </div>
           <!-- /.box-body -->
+          <div class="box-footer">
+              <button class="btn btn-primary align-self-right" onclick="$('#tabel-berita').submit()">Simpan Perubahan</button>
+          </div>
        </div>
 
         <!-- /.box -->      
@@ -96,7 +130,13 @@
                                 {data : "DT_RowIndex",  title: "No", searchable:false, orderable:false},
                                 {data : 'judul', title : "Judul"},
                                 {data : 'penulis', title : "Penulis"},
-                                {data : 'summary', title : "Summary"},
+                                {data : 'summary', title : "Summary", 
+                                  render : function(data, type, row, meta){
+                                      if(data.length > 30)
+                                        return data.substring(0, 30)+"...";
+                                      else
+                                        return data;
+                                  }},
                                 {data : 'banner', title : "Banner", searchable:false, orderable:false},
                                 {data : 'nama_wilayah',name : 'tabel_wilayah.nama_wilayah', title : "Wilayah"},
                                 {data : 'nama_tipe', name: 'tabel_tipe_berita.nama_tipe', title : "Tipe"},
@@ -110,7 +150,24 @@
                               ],
         })
 
-        $
+        function checkboxPublish(status, id){
+
+          console.log("publish change : "+status);
+          $.ajax({
+               type:'PATCH',
+               url:'/artikel/'+id,
+               data:{
+                  '_token' : '<?php echo csrf_token() ?>',
+                  'set-status' : "publish",
+                  'value' : status
+               },
+               success:function() {
+                    
+                    tabelBerita.ajax.reload(null, false);
+                    
+               }
+            });
+        }
       
     </script>
 

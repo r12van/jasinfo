@@ -18,9 +18,9 @@ class AdminController extends Controller
         $wilayah = Wilayah::all();
         $tipe = TipeBerita::all();
 
-        return view('admin.dashboard.buat-berita')->with([
-            "wilayah" => $wilayah,
-            "tipe" => $tipe
+        return view('admin.dashboard.editor-berita')->with([
+            "list_wilayah" => $wilayah,
+            "list_tipe" => $tipe
         ]);
     }
 }
