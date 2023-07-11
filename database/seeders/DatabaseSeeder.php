@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             ["id_wilayah" => 3, "nama_wilayah" => "Jakarta Barat"],
             ["id_wilayah" => 4, "nama_wilayah" => "Jakarta Selatan"],
             ["id_wilayah" => 5, "nama_wilayah" => "Jakarta Barat"],
+            ["id_wilayah" => 6, "nama_wilayah" => "Kepulauan Seribu"],
         ];
 
         foreach($list_wilayah as $wilayah)
@@ -45,9 +46,11 @@ class DatabaseSeeder extends Seeder
         }
 
         $list_tipe = [
-            ["id_tipe" => 1, "nama_tipe" => "Berita"],
-            ["id_tipe" => 2, "nama_tipe" => "Kegiatan"],
-            ["id_tipe" => 3, "nama_tipe" => "Pers"],
+            ["id_tipe" => 1, "nama_tipe" => "Kebakaran"],
+            ["id_tipe" => 2, "nama_tipe" => "Penyelamatan"],
+            ["id_tipe" => 3, "nama_tipe" => "Sosialisasi"],
+            ["id_tipe" => 4, "nama_tipe" => "Pers"],
+            ["id_tipe" => 5, "nama_tipe" => "Kegiatan"],
         ];
 
         foreach($list_tipe as $tipe)

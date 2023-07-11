@@ -10,7 +10,8 @@ class Berita extends Model
     use HasUlids;
 
     protected 
-        $table = "tabel_berita";
+        $table = "tabel_berita",
+        $primaryKey = "id_berita";
 
     protected $fillable = [
         "judul",

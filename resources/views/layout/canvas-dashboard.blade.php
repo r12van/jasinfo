@@ -62,7 +62,7 @@
 
 		.tp-caption { white-space: nowrap; }
 	</style>
-
+	@stack('stack-head')
 </head>
 
 <body class="stretched">
@@ -182,6 +182,6 @@
 			}
 		}); /*ready*/
 	</script>
-
+	@stack('stack-body')
 </body>
 </html>

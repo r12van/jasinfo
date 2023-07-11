@@ -14,9 +14,10 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
+              <button type="button" class="waves-effect waves-light btn btn-rounded btn-primary mb-5" data-toggle="modal" data-target=".new-berita">Berita Baru</button>
+
               <div class="table-responsive">
-                <button type="button" class="waves-effect waves-light btn btn-rounded btn-primary mb-5" data-toggle="modal" data-target=".new-berita">Berita Baru</button>
-                <table id="example5" class="table table-bordered table-striped" style="width:100%">
+                <table id="tabel-berita-all" class="table table-bordered table-striped" style="width:100%">
                   <thead>
                       <tr>
                           <th>No</th>
@@ -27,251 +28,11 @@
                           <th>Tipe</th>
                           <th>Tanggal</th>
                           <th>Highlight</th>
-                          <th>Gambar</th>
+                          <th>Banner</th>
                           <th>Aksi</th>
                       </tr>
                   </thead>
-                  <tbody>
-                      <tr>
-                          <td>1</td>
-                          <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                          <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                          <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                          <td>Jakarta Selatan</td>
-                          <td>Kebakaran</td>
-                          <td>2011/04/25</td>
-                          <td>
-                            <select name="highlight" id="highlight">
-                                <option value="volvo">0</option>
-                                <option value="volvo">1</option>
-                                <option value="saab">2</option>
-                                <option value="opel">3</option>
-                                <option value="audi">4</option>
-                            </select>
-                          </td>
-                          <td>
-                            <a class="image-popup-vertical-fit" href="image-berita/1.jpg" title="">
-							<button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button>
-						    </a>
-                          </td>
-                          <td>
-                            <button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button>
-                            <button type="button" class="waves-effect waves-light btn btn-info btn-xs" data-toggle="modal" data-target=".bs-example-modal-lg">Edit</button>
-                          </td>
-                      </tr>
-                      {{-- <tr>
-                        <td>2</td>
-                        <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                        <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button></td>
-                        <td>Jakarta Selatan</td>
-                        <td>Kebakaran</td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <select name="highlight" id="highlight">
-                              <option value="volvo">0</option>
-                              <option value="volvo">1</option>
-                              <option value="saab">2</option>
-                              <option value="opel">3</option>
-                              <option value="audi">4</option>
-                          </select>
-                        </td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button></td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                        <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button></td>
-                        <td>Jakarta Selatan</td>
-                        <td>Kebakaran</td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <select name="highlight" id="highlight">
-                              <option value="volvo">0</option>
-                              <option value="volvo">1</option>
-                              <option value="saab">2</option>
-                              <option value="opel">3</option>
-                              <option value="audi">4</option>
-                          </select>
-                        </td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button></td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                        <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button></td>
-                        <td>Jakarta Selatan</td>
-                        <td>Kebakaran</td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <select name="highlight" id="highlight">
-                              <option value="volvo">0</option>
-                              <option value="volvo">1</option>
-                              <option value="saab">2</option>
-                              <option value="opel">3</option>
-                              <option value="audi">4</option>
-                          </select>
-                        </td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button></td>
-                      </tr>
-                      <tr>
-                        <td>5</td>
-                        <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                        <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button></td>
-                        <td>Jakarta Selatan</td>
-                        <td>Kebakaran</td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <select name="highlight" id="highlight">
-                              <option value="volvo">1</option>
-                              <option value="saab">2</option>
-                              <option value="opel">3</option>
-                              <option value="audi">4</option>
-                          </select>
-                        </td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button></td>
-                      </tr>
-                      <tr>
-                        <td>6</td>
-                        <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                        <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button></td>
-                        <td>Jakarta Selatan</td>
-                        <td>Kebakaran</td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <select name="highlight" id="highlight">
-                              <option value="volvo">1</option>
-                              <option value="saab">2</option>
-                              <option value="opel">3</option>
-                              <option value="audi">4</option>
-                          </select>
-                        </td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button></td>
-                      </tr>
-                      <tr>
-                        <td>7</td>
-                        <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                        <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button></td>
-                        <td>Jakarta Selatan</td>
-                        <td>Kebakaran</td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <select name="highlight" id="highlight">
-                              <option value="volvo">1</option>
-                              <option value="saab">2</option>
-                              <option value="opel">3</option>
-                              <option value="audi">4</option>
-                          </select>
-                        </td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button></td>
-                      </tr>
-                      <tr>
-                        <td>8</td>
-                        <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                        <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button></td>
-                        <td>Jakarta Selatan</td>
-                        <td>Kebakaran</td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <select name="highlight" id="highlight">
-                              <option value="volvo">1</option>
-                              <option value="saab">2</option>
-                              <option value="opel">3</option>
-                              <option value="audi">4</option>
-                          </select>
-                        </td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button></td>
-                      </tr>
-                      <tr>
-                        <td>9</td>
-                        <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                        <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button></td>
-                        <td>Jakarta Selatan</td>
-                        <td>Kebakaran</td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <select name="highlight" id="highlight">
-                              <option value="volvo">1</option>
-                              <option value="saab">2</option>
-                              <option value="opel">3</option>
-                              <option value="audi">4</option>
-                          </select>
-                        </td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button></td>
-                      </tr>
-                      <tr>
-                        <td>10</td>
-                        <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                        <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button></td>
-                        <td>Jakarta Selatan</td>
-                        <td>Kebakaran</td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <select name="highlight" id="highlight">
-                              <option value="volvo">1</option>
-                              <option value="saab">2</option>
-                              <option value="opel">3</option>
-                              <option value="audi">4</option>
-                          </select>
-                        </td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button></td>
-                      </tr>
-                      <tr>
-                        <td>11</td>
-                        <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                        <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button></td>
-                        <td>Jakarta Selatan</td>
-                        <td>Kebakaran</td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <select name="highlight" id="highlight">
-                              <option value="volvo">1</option>
-                              <option value="saab">2</option>
-                              <option value="opel">3</option>
-                              <option value="audi">4</option>
-                          </select>
-                        </td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button></td>
-                      </tr>
-                      <tr>
-                        <td>12</td>
-                        <td>Kebakaran Rumah Di Kampung Pulo Pasar Minggu</td>
-                        <td>Kebakaran telah terjadi di kampung pulo Pasar Minggu asdsda asdsad asdasd asdasd asdsad</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rerum sed dolorum? Veritatis vel recusandae sunt hic quaerat impedit laboriosam.</td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">View</button></td>
-                        <td>Jakarta Selatan</td>
-                        <td>Kebakaran</td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <select name="highlight" id="highlight">
-                              <option value="volvo">1</option>
-                              <option value="saab">2</option>
-                              <option value="opel">3</option>
-                              <option value="audi">4</option>
-                          </select>
-                        </td>
-                        <td><button type="button" class="waves-effect waves-light btn btn-info btn-xs">Simpan</button></td>
-                      </tr> --}}
-                  </tbody>
+                  
                   <tfoot>
                       <tr>
                         <th>No</th>
@@ -282,7 +43,7 @@
                         <th>Tipe</th>
                         <th>Tanggal</th>
                         <th>Highlight</th>
-                        <th>Gambar</th>
+                        <th>Banner</th>
                         <th>Aksi</th>
                       </tr>
                   </tfoot>
@@ -300,7 +61,59 @@
     <!-- /.row -->
     </section>
     </div>
-    @include('admin.modal.edit-berita')
-    @include('admin.modal.new-berita')
 </div>
 @endsection
+
+{{-- start Untuk datatable --}}
+@push('stack-head')
+{{-- datatable --}}
+{{-- sumber : https://datatables.net/download/ --}}
+    <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/af-2.5.3/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/b-print-2.3.6/cr-1.6.2/date-1.4.1/fc-4.2.2/fh-3.3.2/r-2.4.1/rg-1.3.1/rr-1.3.3/sc-2.1.1/sb-1.4.2/sp-2.1.2/sl-1.6.2/datatables.min.css" rel="stylesheet"/>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/af-2.5.3/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/b-print-2.3.6/cr-1.6.2/date-1.4.1/fc-4.2.2/fh-3.3.2/r-2.4.1/rg-1.3.1/rr-1.3.3/sc-2.1.1/sb-1.4.2/sp-2.1.2/sl-1.6.2/datatables.min.js"></script>
+@endpush
+
+@push('stack-body')
+
+    <script>
+        var tabelBerita = $("#tabel-berita-all");
+        var tabelPublish = $("#tabel-berita-publish");
+        var tabelHighlight = $("#tabel-berita-highlight");
+
+        tabelBerita.DataTable({
+                            processing : true,
+                            serverSide : true,
+                            ajax : {
+                                url : "artikel?tabel='all'"
+                            },
+                            dom: 'Bfrtip',
+                            buttons :[
+                                'excelHtml5',
+                                'csvHtml5',
+                                'pdfHtml5'
+                            ],
+                            columns : [
+                                {data:"DT_RowIndex",  title: "No", searchable:false, orderable:false},
+                                {data : 'judul', title : "Judul"},
+                                {data : 'summary', title : "Summary"},
+                                {data : 'banner', title : "Banner"},
+                                {data : 'nama_wilayah',name : 'tabel_wilayah.nama_wilayah', title : "Wilayah"},
+                                {data : 'nama_tipe', name: 'tabel_tipe_berita.nama_tipe', title : "Tipe"},
+                                {data : 'tanggal', title : "Tanggal"},
+                                {data : 'highlight', title : "Highlight"},
+                                {data : 'publish', title : "Publish"},
+                                {title : "Tindakan", searchable:false, orderable:false},
+                            ],
+                            columnDefs: [
+                              {targets: '_all',defaultContent : ''},
+                              ],
+        })
+
+      
+    </script>
+
+@endpush
+
+{{-- end Untuk datatable --}}
