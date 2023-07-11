@@ -74,8 +74,8 @@ class BeritaController extends Controller
                     return view("admin.dashboard.preview")->with([
                         "judul" => $berita->judul,
                         "summary" => $berita->summary,
-                        "wilayah" => $berita->wilayah,
-                        "tipe" => $berita->tipe,
+                        "wilayah" => $berita->nama_wilayah,
+                        "tipe" => $berita->nama_tipe,
                         "tanggal" => $berita->tanggal,
                         "banner" => $berita->banner,
                         "isi" => $berita->isi
@@ -260,7 +260,9 @@ class BeritaController extends Controller
     {
         try{
 
-            $berita = Berita::where('slug',$slug)->first();
+            $berita = Berita::join('tabel_wilayah','tabel_berita.id_wilayah','=','tabel_wilayah.id_wilayah')
+                            ->join('tabel_tipe_berita', 'tabel_berita.id_tipe','=','tabel_tipe_berita.id_tipe')
+                            ->where('slug',$slug)->first();
 
             if(is_null($berita))
                 throw new Exception("Artikel tidak ditemukan!");
@@ -268,9 +270,9 @@ class BeritaController extends Controller
             return view('dashboard.berita.isi')->with([
                 "judul" => $berita->judul,
                 "summary" => $berita->summary,
-                "wilayah" => $berita->wilayah,
+                "wilayah" => $berita->nama_wilayah,
                 "penulis" => $berita->penulis,
-                "tipe" => $berita->tipe,
+                "tipe" => $berita->nama_tipe,
                 "tanggal" => $berita->tanggal,
                 "banner" => $berita->banner,
                 "isi" => $berita->isi
@@ -306,8 +308,8 @@ class BeritaController extends Controller
                 "list_tipe" => $tipe,
                 "judul" => $berita->judul,
                 "summary" => $berita->summary,
-                "wilayah" => $berita->wilayah,
-                "tipe" => $berita->tipe,
+                "id_wilayah" => $berita->id_wilayah,
+                "id_tipe" => $berita->id_tipe,
                 "tanggal" => $berita->tanggal,
                 "isi" => $berita->isi,
                 "editMode" => true,

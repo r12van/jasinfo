@@ -61,17 +61,18 @@
 									<div class="form-group row">
 										<label for="example-search-input" class="col-sm-2 col-form-label">Sumary</label>
 										<div class="col-sm-10">
-											<textarea class="form-control" type="text" placeholder="Ringkasan singkat mengenai berita. Text ini yang akan ditampilkan di thumbnail berita." id="summary" name="summary" value="{{(isset($summary)) ? $summary : old('summary')}}"></textarea>
+											<textarea class="form-control" type="text" placeholder="Ringkasan singkat mengenai berita. Text ini yang akan ditampilkan di thumbnail berita." id="summary" name="summary">{{(isset($summary)) ? $summary : old('summary')}}</textarea>
 										</div>
 									</div>
 									<div class="form-group row">
 										<div class="row">
 											<div class="col-md-6">
+													
 												<div class="form-group">
 													<label>Wilayah</label>
-													<select class="form-control" name="wilayah" value="{{(isset($wilayah)) ? $wilayah : old('wilayah')}}">
+													<select class="form-control" name="wilayah" value="">
 														@foreach ($list_wilayah as $item)
-															<option value="{{$item['id_wilayah']}}">{{$item["nama_wilayah"]}}</option>
+															<option value="{{$item['id_wilayah']}}" @if($id_wilayah == $item['id_wilayah']) selected @endif>{{$item["nama_wilayah"]}}</option>
 														@endforeach
 													</select>
 												</div>
@@ -81,7 +82,7 @@
 													<label>Tipe</label>
 													<select class="form-control" name="tipe" value="{{(isset($tipe)) ? $tipe : old('tipe')}}">
 														@foreach ($list_tipe as $item)
-															<option value="{{$item['id_tipe']}}">{{$item["nama_tipe"]}}</option>
+															<option value="{{$item['id_tipe']}}" @if($id_tipe == $item['id_tipe']) selected @endif>{{$item["nama_tipe"]}}</option>
 														@endforeach
 													</select>
 												</div>
@@ -101,7 +102,10 @@
 									<div class="form-group">
 										<label for="file">Gambar Banner</label>
 										<input type="file" class="form-control-file" id="file" name="banner" accept=".jpg,.jpeg,.png,.webp">
-										<small class="form-text text-muted  mb-3">1920 x 1080p resolusi minimal untuk carrousel</small>
+										<small class="form-text text-muted">1920 x 1080p resolusi minimal untuk carrousel</small>
+										@if (isset($editMode) && $editMode)
+											<small class="form-text text-muted">Biarkan jika tidak ingin mengganti gambar banner.</small>
+										@endif
 									</div>
 
 									{{-- ck editor --}}
@@ -113,7 +117,7 @@
 										</div>
 										<!-- /.box-header -->
 										<div class="box-body">
-											<textarea id="editor-berita" name="isi" value="testis"></textarea>
+											<textarea id="editor-berita" name="isi">{{(isset($isi)) ? $isi : old('isi')}}</textarea>
 										</div>
 									</div>
 									
