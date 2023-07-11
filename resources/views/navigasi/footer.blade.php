@@ -13,7 +13,7 @@
 
                             <div class="widget mw-xxs text-center mx-auto">
 
-                                <img src="images/logo-side.png" alt="Image" class="logo-default mx-auto d-block">
+                                <img src="{{asset('images/logo-side.png')}}" alt="Image" class="logo-default mx-auto d-block">
 
                                 
 
@@ -27,7 +27,7 @@
 
                                 <p>Dinas Penanggulangan Kebakaran dan Penyelamatan Provinsi DKI Jakarta</p>
 
-                                <div style="background: url('images/world-map.png') no-repeat center center; background-size: 100%;">
+                                <div style="background: url('{{asset('images/world-map.png')}}') no-repeat center center; background-size: 100%;">
                                     <address>
                                         
                                         Jln. K.H. Zainul Arifin No.71, Duri Pulo, Gambir, Jakarta Pusat<br>
@@ -48,7 +48,7 @@
 
                                 <p>Bidang Kerjasama dan Informasi<br>Dinas Penanggulangan Kebakaran dan Penyelamatan Provinsi DKI Jakarta</p>
 
-                                <div style="background: url('images/world-map.png') no-repeat center center; background-size: 100%;">
+                                <div style="background: url('{{asset('images/world-map.png')}}') no-repeat center center; background-size: 100%;">
                                     <address>
                                         
                                     Lt.8, Jln. K.H. Zainul Arifin No.71, Duri Pulo, Gambir, Jakarta Pusat<br>

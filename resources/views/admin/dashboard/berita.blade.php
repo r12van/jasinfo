@@ -15,36 +15,37 @@
           <!-- /.box-header -->
           <div class="box-body">
               <button type="button" class="waves-effect waves-light btn btn-rounded btn-primary mb-5" data-toggle="modal" data-target=".new-berita">Berita Baru</button>
-
               <div class="table-responsive">
                 <table id="tabel-berita-all" class="table table-bordered table-striped" style="width:100%">
                   <thead>
                       <tr>
                           <th>No</th>
                           <th>Judul</th>
+                          <th>Penulis</th>
                           <th>Sumary</th>
-                          <th>Isi</th>
+                          <th>Banner</th>
                           <th>Wilayah</th>
                           <th>Tipe</th>
                           <th>Tanggal</th>
                           <th>Highlight</th>
-                          <th>Banner</th>
-                          <th>Aksi</th>
+                          <th>Publish</th>
+                          <th>Tindakan</th>
                       </tr>
                   </thead>
                   
                   <tfoot>
                       <tr>
-                        <th>No</th>
-                        <th>Judul</th>
-                        <th>Sumary</th>
-                        <th>Isi</th>
-                        <th>Wilayah</th>
-                        <th>Tipe</th>
-                        <th>Tanggal</th>
-                        <th>Highlight</th>
-                        <th>Banner</th>
-                        <th>Aksi</th>
+                          <th>No</th>
+                          <th>Judul</th>
+                          <th>Penulis</th>
+                          <th>Sumary</th>
+                          <th>Banner</th>
+                          <th>Wilayah</th>
+                          <th>Tipe</th>
+                          <th>Tanggal</th>
+                          <th>Highlight</th>
+                          <th>Publish</th>
+                          <th>Tindakan</th>
                       </tr>
                   </tfoot>
               </table>
@@ -59,6 +60,7 @@
       <!-- /.col -->
     </div>
     <!-- /.row -->
+    @include('admin.modal.preview-banner')
     </section>
     </div>
 </div>
@@ -88,29 +90,27 @@
                             ajax : {
                                 url : "artikel?tabel='all'"
                             },
-                            dom: 'Bfrtip',
-                            buttons :[
-                                'excelHtml5',
-                                'csvHtml5',
-                                'pdfHtml5'
-                            ],
+                            dom: 'frtip',
+                            
                             columns : [
-                                {data:"DT_RowIndex",  title: "No", searchable:false, orderable:false},
+                                {data : "DT_RowIndex",  title: "No", searchable:false, orderable:false},
                                 {data : 'judul', title : "Judul"},
+                                {data : 'penulis', title : "Penulis"},
                                 {data : 'summary', title : "Summary"},
-                                {data : 'banner', title : "Banner"},
+                                {data : 'banner', title : "Banner", searchable:false, orderable:false},
                                 {data : 'nama_wilayah',name : 'tabel_wilayah.nama_wilayah', title : "Wilayah"},
                                 {data : 'nama_tipe', name: 'tabel_tipe_berita.nama_tipe', title : "Tipe"},
                                 {data : 'tanggal', title : "Tanggal"},
                                 {data : 'highlight', title : "Highlight"},
                                 {data : 'publish', title : "Publish"},
-                                {title : "Tindakan", searchable:false, orderable:false},
+                                {data : "tindakan", title : "Tindakan", searchable:false, orderable:false},
                             ],
                             columnDefs: [
                               {targets: '_all',defaultContent : ''},
                               ],
         })
 
+        $
       
     </script>
 

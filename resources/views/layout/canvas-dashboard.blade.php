@@ -14,18 +14,18 @@
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=PT+Serif:ital@0;1&display=swap" rel="stylesheet">
 
 	<!-- Core Style -->
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="{{asset('style.css')}}">
 
 	<!-- Font Icons -->
-	<link rel="stylesheet" href="css/font-icons.css">
+	<link rel="stylesheet" href="{{asset('css/font-icons.css')}}">
 
 	<!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
-	<link rel="stylesheet" href="include/rs-plugin/css/settings.css" media="screen">
-	<link rel="stylesheet" href="include/rs-plugin/css/layers.css">
-	<link rel="stylesheet" href="include/rs-plugin/css/navigation.css">
+	<link rel="stylesheet" href="{{asset('include/rs-plugin/css/settings.css')}}" media="screen">
+	<link rel="stylesheet" href="{{asset('include/rs-plugin/css/layers.css')}}">
+	<link rel="stylesheet" href="{{asset('include/rs-plugin/css/navigation.css')}}">
 
 	<!-- Custom CSS -->
-	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="{{asset('css/custom.css')}}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Document Title
@@ -77,21 +77,21 @@
 	<div id="gotoTop" class="uil uil-angle-up"></div>
 	<!-- JavaScripts
 	============================================= -->
-	<script src="js/jquery.js"></script>
-	<script src="js/functions.js"></script>
+	<script src="{{asset('js/jquery.js')}}"></script>
+	<script src="{{asset('js/functions.js')}}"></script>
 
 	<!-- SLIDER REVOLUTION 5.x SCRIPTS  -->
-	<script src="include/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-	<script src="include/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+	<script src="{{asset('include/rs-plugin/js/jquery.themepunch.tools.min.js')}}"></script>
+	<script src="{{asset('include/rs-plugin/js/jquery.themepunch.revolution.min.js')}}"></script>
 
-	<script src="include/rs-plugin/js/extensions/revolution.extension.video.min.js"></script>
-	<script src="include/rs-plugin/js/extensions/revolution.extension.slideanims.min.js"></script>
-	<script src="include/rs-plugin/js/extensions/revolution.extension.actions.min.js"></script>
-	<script src="include/rs-plugin/js/extensions/revolution.extension.layeranimation.min.js"></script>
-	<script src="include/rs-plugin/js/extensions/revolution.extension.kenburn.min.js"></script>
-	<script src="include/rs-plugin/js/extensions/revolution.extension.navigation.min.js"></script>
-	<script src="include/rs-plugin/js/extensions/revolution.extension.migration.min.js"></script>
-	<script src="include/rs-plugin/js/extensions/revolution.extension.parallax.min.js"></script>
+	<script src="{{asset('include/rs-plugin/js/extensions/revolution.extension.video.min.js')}}"></script>
+	<script src="{{asset('include/rs-plugin/js/extensions/revolution.extension.slideanims.min.js')}}"></script>
+	<script src="{{asset('include/rs-plugin/js/extensions/revolution.extension.actions.min.js')}}"></script>
+	<script src="{{asset('include/rs-plugin/js/extensions/revolution.extension.layeranimation.min.js')}}"></script>
+	<script src="{{asset('include/rs-plugin/js/extensions/revolution.extension.kenburn.min.js')}}"></script>
+	<script src="{{asset('include/rs-plugin/js/extensions/revolution.extension.navigation.min.js')}}"></script>
+	<script src="{{asset('include/rs-plugin/js/extensions/revolution.extension.migration.min.js')}}"></script>
+	<script src="{{asset('include/rs-plugin/js/extensions/revolution.extension.parallax.min.js')}}"></script>
 
 	<script>
 		var tpj = jQuery;
@@ -103,7 +103,7 @@
 			} else {
 				revapi202 = tpj("#rev_slider_579_1").show().revolution({
 					sliderType: "standard",
-					jsFileLocation: "include/rs-plugin/js/",
+					jsFileLocation: "{{asset('include/rs-plugin/js/')}}",
 					sliderLayout: "fullscreen",
 					dottedOverlay: "none",
 					delay: 9000,

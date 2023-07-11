@@ -43,7 +43,7 @@
 								@if ($banner)
 									<a href="#"><img src="{{$banner}}" alt="Blog Single"></a>
 								@else
-									<a href="#"><img src="images/sejarah/sejarah.png" alt="Blog Single"></a>
+									<a href="#"><img src="image-berita/preview/no-img.jpg" alt="Blog Single"></a>
 								@endif
 							</div><!-- .entry-image end -->
 

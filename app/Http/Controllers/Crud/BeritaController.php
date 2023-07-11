@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Throwable;
 use Yajra\DataTables\Facades\DataTables;
@@ -23,12 +24,14 @@ class BeritaController extends Controller
         try{
             
             $query = Berita::query();
+
+            $query = $query
+                            ->join('tabel_wilayah','tabel_berita.id_wilayah','=','tabel_wilayah.id_wilayah')
+                            ->join('tabel_tipe_berita', 'tabel_berita.id_tipe','=','tabel_tipe_berita.id_tipe');
                 
             if($r->ajax())
             {
-                $query = $query
-                            ->join('tabel_wilayah','tabel_berita.id_wilayah','=','tabel_wilayah.id_wilayah')
-                            ->join('tabel_tipe_berita', 'tabel_berita.id_tipe','=','tabel_tipe_berita.id_tipe');
+                
 
                 if($r->exists("tabel"))
                 {
@@ -43,17 +46,40 @@ class BeritaController extends Controller
                     
                     return DataTables::eloquent($query)
                         ->addIndexColumn()
-                        ->setRowData([
-                            "publish" => function($publish){
-                                if($publish)
-                                    return "Ya";
+                        ->editColumn("publish", function($berita){
+                                if($berita->publish)
+                                    return "Publish";
                                 else
-                                    return "Tidak";
+                                    return "Belum Publish";
                             }
-                        ])
+                        )
+                        ->editColumn("banner", function ($berita){
+                            if($berita->banner)
+                                return view("kolom.banner")->with("banner",$berita->banner);
+                            return "";
+                        })
+                        ->editColumn("tindakan",function($berita){
+                            return view("kolom.tindakan-tabel-berita")->with("id",$berita->id_berita)->with("slug",$berita->slug);
+                        })
                         ->toJson();
                 }
             }
+
+                // untuk preview
+                if($r->exists('preview'))
+                {
+                    $berita = $query->where("id_berita",$r->input('preview'))->first();
+
+                    return view("admin.dashboard.preview")->with([
+                        "judul" => $berita->judul,
+                        "summary" => $berita->summary,
+                        "wilayah" => $berita->wilayah,
+                        "tipe" => $berita->tipe,
+                        "tanggal" => $berita->tanggal,
+                        "banner" => $berita->banner,
+                        "isi" => $berita->isi
+                    ]);
+                }
 
         }
         catch(Throwable $e)
@@ -180,12 +206,29 @@ class BeritaController extends Controller
     {
         try{
 
+            $berita = Berita::where('slug',$slug)->first();
+
+            if(is_null($berita))
+                throw new Exception("Artikel tidak ditemukan!");
+            
+            return view('dashboard.berita.isi')->with([
+                "judul" => $berita->judul,
+                "summary" => $berita->summary,
+                "wilayah" => $berita->wilayah,
+                "penulis" => $berita->penulis,
+                "tipe" => $berita->tipe,
+                "tanggal" => $berita->tanggal,
+                "banner" => $berita->banner,
+                "isi" => $berita->isi
+            ]);
+
         }
         catch(Throwable $e)
         {
             error_log("Berita Controller Error : Gagal mengambil berita dengan slug : ".$slug." at show() ".$e);
             Log::error("Berita Controller Error : Gagal mengambil berita dengan slug : ".$slug." at show() ".$e);
             session()->flash("alert.danger","Kesalahan pada mengambil berita.");
+            
         }
     }
 
@@ -216,9 +259,21 @@ class BeritaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $r, string $id)
     {
         try{
+
+            $berita = Berita::find($id);
+            $berita->delete();
+
+            if(!is_null($r->page))
+            {
+                $paginator = Berita::paginate(columns: ['id_berita']);
+                $redirect = ($r->page <= $paginator->lastPage()) ? $r->page : $paginator->lastPage();
+                return redirect()->route($r->route(),['page'=>$redirect]);
+            }
+            
+            return redirect()->back();
 
         }
         catch(Throwable $e)

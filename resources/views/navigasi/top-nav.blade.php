@@ -9,12 +9,12 @@
                     <a href="/" class="menu-link">
                         <div class="row">
                             <div class="col">
-                                <img class="logo-default" srcset="images/logo/damkar.png, images/logo/damkar.png 2x" src="images/logo/damkar.png" alt="Logo Damkar">
-                                <img class="logo-dark" srcset="images/logo/damkar.png, images/logo/damkar.png 2x" src="images/logo/damkar.png" alt="Logo Damkar">
+                                <img class="logo-default" srcset="{{asset('images/logo/damkar.png, images/logo/damkar.png 2x')}}" src="{{asset('images/logo/damkar.png')}}" alt="Logo Damkar">
+                                <img class="logo-dark" srcset="{{asset('images/logo/damkar.png, images/logo/damkar.png 2x')}}" src="{{asset('images/logo/damkar.png')}}" alt="Logo Damkar">
                             </div>
                             <div class="col">
-                                <img class="logo-default" srcset="images/logo/jayaraya.png, images/logo/jayaraya.png 2x" src="images/logo/jayaraya.png" alt="Canvas Logo"> 
-                                <img class="logo-dark" srcset="images/logo/jayaraya.png, images/logo/jayaraya.png 2x" src="images/logo/jayaraya.png" alt="Canvas Logo">
+                                <img class="logo-default" srcset="{{asset('images/logo/jayaraya.png, images/logo/jayaraya.png 2x')}}" src="{{asset('images/logo/jayaraya.png')}}" alt="Canvas Logo"> 
+                                <img class="logo-dark" srcset="{{asset('images/logo/jayaraya.png, images/logo/jayaraya.png 2x')}}" src="{{asset('images/logo/jayaraya.png')}}" alt="Canvas Logo">
                             </div>
                         </div>
                        
