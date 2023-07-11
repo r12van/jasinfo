@@ -50,6 +50,7 @@ class BeritaController extends Controller
                             }
                         )
                         ->editColumn("highlight", function($berita){
+                            error_log("highlight : ".$berita->highlight);
                                 return view('kolom.highlight-tabel-berita')->with("highlight",$berita->highlight)->with("id",$berita->id_berita);
                             }
                         )
@@ -141,14 +142,14 @@ class BeritaController extends Controller
                             return redirect()->back()->with('alert.warning','Terdapat duplikasi pada urutan highlight. Periksa kembali dan pastikan tidak ada duplikasi urutan pada berita highlight.'.$text);
                         }
 
-                        $list_id = Berita::all()->pluck('id');
+                        $list_id = Berita::all()->pluck('id_berita');
                         $input_publish = $r->input("publish");
 
                         foreach($list_id as $id)
                         {
                             $berita = Berita::find($id);
                             $berita->highlight = $input_highlight[$id];
-                            $berita->publish = $input_publish[$id];
+                            $berita->publish = (isset($input_publish[$id])) ? true : false;
                             $berita->save();
                         }
 
