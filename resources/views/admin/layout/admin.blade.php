@@ -45,8 +45,8 @@
 	<script src="admin/assets/vendor_components/d3/d3.min.js"></script>
 	<script src="admin/assets/vendor_components/d3/d3_tooltip.js"></script>
 	<script src="admin/assets/vendor_components/datatable/datatables.min.js"></script>
-	{{-- <script src="admin/assets/vendor_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script> --}}
-    {{-- <script src="admin/assets/vendor_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script> --}}
+	<script src="admin/assets/vendor_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+    <script src="admin/assets/vendor_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
 	
 	<script src="admin/assets/vendor_components/ckeditor/ckeditor.js"></script>
 	<script src="admin/main/js/pages/editor.js"></script>
@@ -56,7 +56,5 @@
 	<script src="admin/main/js/pages/dashboard.js"></script>
 	{{-- <script src="admin/main/js/demo.js"></script> --}}
 	<script src="admin/main/js/pages/data-table.js"></script>
-	
-	
 </body>
 </html>
