@@ -1,8 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,10 +69,14 @@ Route::get('/pencegahan', function () {
     return view('dashboard.layanan.pencegahan.pencegahan');
 });
 
-Route::get('/kerjasama', [LoginController::class, 'login'])->name('login');
-Route::post('/kerjasama', [LoginController::class, 'authenticate'])->name('loginProses');
-Route::get('/admin-dashboard', [LoginController::class, 'adminHome'])->name('adminHome');
-Route::get('/admin-berita', [AdminController::class, 'adminBerita'])->name('adminBerita');
 
 Route::resource('brt', \App\Http\Controllers\Crud\BeritaController::class);
 Route::resource('upload/img', \App\Http\Controllers\Crud\ImageUploadController::class);
+
+//route untuk admin
+Auth::routes();
+Route::get('/admin-berita', [App\Http\Controllers\HomeController::class, 'adminBerita'])->name('adminBerita');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+
+//end route admin

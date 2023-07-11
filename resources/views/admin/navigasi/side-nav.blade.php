@@ -4,7 +4,7 @@
       <!-- sidebar menu-->
       <ul class="sidebar-menu" data-widget="tree">
 		    <li>
-          <a href="index.html">
+          <a href="{{ route('dashboard') }}">
             <i class="mdi mdi-database"></i>
 			      <span>Dashboard</span>
           </a>
