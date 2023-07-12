@@ -20,6 +20,7 @@
               <ul class="treeview-menu">
                 {{-- <li><a href="widgets_blog.html"><i class="ti-more"></i>Banner Berita</a></li> --}}
                 <li><a href="{{ route('adminBerita') }}"><i class="ti-more"></i>Tabel Berita</a></li>
+                <li><a href="{{ route('adminBuatBerita') }}"><i class="ti-more"></i>Buat Berita</a></li>
               </ul>
         </li> 
         {{-- <li class="treeview">

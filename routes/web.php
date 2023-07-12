@@ -70,8 +70,17 @@ Route::get('/pencegahan', function () {
 });
 
 
-Route::resource('brt', \App\Http\Controllers\Crud\BeritaController::class);
-Route::resource('upload/img', \App\Http\Controllers\Crud\ImageUploadController::class);
+
+
+// Route::get('/kerjasama', [LoginController::class, 'login'])->name('login');
+// Route::post('/kerjasama', [LoginController::class, 'authenticate'])->name('loginProses');
+// Route::get('/admin-dashboard', [LoginController::class, 'adminHome'])->name('adminHome');
+// Route::get('/admin-berita', [AdminController::class, 'adminBerita'])->name('adminBerita');
+Route::get('/buat-berita', [AdminController::class, 'adminBuatBerita'])->name('adminBuatBerita');
+
+Route::resource('artikel',\App\Http\Controllers\Crud\BeritaController::class);
+Route::post('/upload/ck-img',[\App\Http\Controllers\Crud\SimpleImageUpload::class,"upload"]);
+
 
 //route untuk admin
 Auth::routes();
@@ -80,3 +89,4 @@ Route::get('/admin-berita', [App\Http\Controllers\HomeController::class, 'adminB
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
 //end route admin
+
