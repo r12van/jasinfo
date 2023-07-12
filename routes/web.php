@@ -1,8 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard.utama');
+    return view('dashboard.home');
 });
 //route profil
 Route::get('/sejarah', function () {
@@ -67,15 +69,24 @@ Route::get('/pencegahan', function () {
     return view('dashboard.layanan.pencegahan.pencegahan');
 });
 
-Route::get('/isi', function(){
-    return view('dashboard.berita.isi');
-});
 
-Route::get('/kerjasama', [LoginController::class, 'login'])->name('login');
-Route::post('/kerjasama', [LoginController::class, 'authenticate'])->name('loginProses');
-Route::get('/admin-dashboard', [LoginController::class, 'adminHome'])->name('adminHome');
-Route::get('/admin-berita', [AdminController::class, 'adminBerita'])->name('adminBerita');
+
+
+// Route::get('/kerjasama', [LoginController::class, 'login'])->name('login');
+// Route::post('/kerjasama', [LoginController::class, 'authenticate'])->name('loginProses');
+// Route::get('/admin-dashboard', [LoginController::class, 'adminHome'])->name('adminHome');
+// Route::get('/admin-berita', [AdminController::class, 'adminBerita'])->name('adminBerita');
 Route::get('/buat-berita', [AdminController::class, 'adminBuatBerita'])->name('adminBuatBerita');
 
 Route::resource('artikel',\App\Http\Controllers\Crud\BeritaController::class);
 Route::post('/upload/ck-img',[\App\Http\Controllers\Crud\SimpleImageUpload::class,"upload"]);
+
+
+//route untuk admin
+Auth::routes();
+Route::get('/admin-berita', [App\Http\Controllers\HomeController::class, 'adminBerita'])->name('adminBerita');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+
+//end route admin
+
