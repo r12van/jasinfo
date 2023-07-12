@@ -161,6 +161,9 @@ class BeritaController extends Controller
             $tanggal = $r->input("tanggal");
             $banner = $r->banner;
             $ext = (is_null($banner)) ? "jpg" : $banner->getClientOriginalExtension();
+
+            if(is_null($summary))
+                $summary = substr(strip_tags($isi),0,30);
             // throw new Exception("Test");
 
             // untuk preview
@@ -328,6 +331,9 @@ class BeritaController extends Controller
                 $tanggal = $r->input("tanggal");
                 $banner = $r->banner;
                 $ext = (is_null($banner)) ? "jpg" : $banner->getClientOriginalExtension();
+
+                if(is_null($summary))
+                    $summary = substr(strip_tags($isi),0,30);
 
                 // buat slug
                 $slug = $tanggal . "_" . Str::slug($judul);

@@ -16,6 +16,14 @@
 				$id_tipe = old('tipe');
 		@endphp
 
+		@if (isset($editMode) && $editMode)
+			<div class="alert alert-dark" role="alert">
+				<h4 class="alert-heading text-center">Editor dalam Mode Edit</h4>
+				<hr>
+				<p class="mb-0">Perubahan yang anda lakukan baru akan muncul di tabel berita setelah tabel di refresh.</p>
+			</div>
+		@endif
+
 		<form id="form-berita" @if (isset($editMode) && $editMode) action="{{route('artikel.update',['artikel' => $id])}}" method="PATCH" @else action="{{route('artikel.store')}}" method="POST" @endif enctype="multipart/form-data">
 			@csrf
 			<div class="box">
