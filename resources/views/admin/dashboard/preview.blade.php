@@ -6,7 +6,11 @@
 		<section id="content">
 			<div class="content-wrap">
 				<div class="container">
-
+					<div class="alert alert-dark" role="alert">
+						<h4 class="alert-heading text-center">Preview Artikel</h4>
+						<hr>
+						<p class="mb-0">Dibawah ini hanyalah preview artikel yang memperlihatkan bagaimana artikel disajikan untuk pengunjung.</p>
+					</div>
 					<div class="single-post mb-0">
 
 						<!-- Single Post
