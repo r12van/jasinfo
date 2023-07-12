@@ -374,7 +374,7 @@ class BeritaController extends Controller
                 }
                 $berita->save();
 
-            return redirect()->back()->with("alert.success", "Berita berhasil disimpan!");
+            return redirect(route('adminBerita'))->with("alert.success", "Berita berhasil disimpan!");
 
         } catch (Throwable $e) {
             error_log("Berita Controller Error : Gagal menyimpan update pada berita at update() " . $e);

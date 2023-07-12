@@ -24,8 +24,11 @@
 			</div>
 		@endif
 
-		<form id="form-berita" @if (isset($editMode) && $editMode) action="{{route('artikel.update',['artikel' => $id])}}" method="PATCH" @else action="{{route('artikel.store')}}" method="POST" @endif enctype="multipart/form-data">
+		<form id="form-berita" @if (isset($editMode) && $editMode) action="{{route('artikel.update',['artikel' => $id])}}" @else action="{{route('artikel.store')}}"  @endif method="POST" enctype="multipart/form-data">
 			@csrf
+			@if (isset($editMode) && $editMode)
+				@method('PATCH')
+			@endif
 			<div class="box">
 				<div class="box-header with-border">
 					@if (isset($editMode) && $editMode)
@@ -140,7 +143,7 @@
 								</div>
 								<!-- /.col -->
 							</div>
-					
+					</form>
 				</div>
 				<!-- /.box-body -->
 				<div class="box-footer">
@@ -156,7 +159,6 @@
 					
 				</div>
 			</div>
-		</form>
         <!-- /.box -->      
       </div> 
 
