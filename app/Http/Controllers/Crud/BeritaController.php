@@ -9,6 +9,7 @@ use App\Models\Wilayah;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -199,7 +200,7 @@ class BeritaController extends Controller
             $ulid = Berita::create([
                 "judul" => $judul,
                 "slug" => $slug,
-                "penulis" => "Admin",
+                "penulis" => (Auth::user()) ? Auth::user()->name : "Admin",
                 "isi" => $isi,
                 "summary" => $summary,
                 "id_wilayah" => $wilayah,
@@ -213,7 +214,7 @@ class BeritaController extends Controller
             if (!is_null($banner)) {
                 $tipe_berita = TipeBerita::find($tipe)->nama_tipe;
                 $folder_banner = "image-berita/banner/" . $tipe_berita . "/" . $tanggal . "/";
-                $nama_banner = substr($ulid, 0, 3);
+                $nama_banner = substr($ulid, -7);
                 if ($banner->isValid()) {
                     $banner->move($folder_banner, $nama_banner . "." . $ext);
                     $gambar = $folder_banner . $nama_banner . "." . $ext;
@@ -311,7 +312,63 @@ class BeritaController extends Controller
         $this->middleware('auth');
         try {
 
-            $berita = Berita::find($id);
+                $berita = Berita::find($id);
+
+                if(is_null($berita))
+                {
+                    return abort(403,"Artikel tidak ditemukan!");
+                }
+
+                // fetch data
+                $judul = $r->input("judul");
+                $summary = $r->input("summary");
+                $isi = $r->input("isi");
+                $wilayah = $r->input("wilayah");
+                $tipe = $r->input("tipe");
+                $tanggal = $r->input("tanggal");
+                $banner = $r->banner;
+                $ext = (is_null($banner)) ? "jpg" : $banner->getClientOriginalExtension();
+
+                // buat slug
+                $slug = $tanggal . "_" . Str::slug($judul);
+                if (Berita::where("slug", $slug)->exists())
+                    for ($i = 0; $i != "stop"; $i++) {
+                        $tes_slug = $tanggal . "_" . Str::slug($judul) . "_" . $i;
+                        if (!Berita::where("slug", $tes_slug)->exists()) {
+                            $slug = $tes_slug;
+                            $i = "stop";
+                        }
+                    }
+
+
+                // save ke db
+                $berita->judul = $judul;
+                $berita->slug = $slug;
+                $berita->penulis = (Auth::user())? Auth::user() : "Admin";
+                $berita->isi = $isi;
+                $berita->summary = $summary;
+                $berita->id_wilayah = $wilayah;
+                $berita->id_tipe = $tipe;
+                $berita->tanggal = $tanggal;
+                
+
+
+
+                // untuk banner
+                if (!is_null($banner)) {
+                    $tipe_berita = TipeBerita::find($tipe)->nama_tipe;
+                    $folder_banner = "image-berita/banner/" . $tipe_berita . "/" . $tanggal . "/";
+                    $nama_banner = substr($id, -7);
+                    if ($banner->isValid()) {
+                        $banner->move($folder_banner, $nama_banner . "." . $ext);
+                        $gambar = $folder_banner . $nama_banner . "." . $ext;
+                    }
+
+                    $berita->banner = $gambar;
+                }
+                $berita->save();
+
+
         } catch (Throwable $e) {
             error_log("Berita Controller Error : Gagal menyimpan update pada berita at update() " . $e);
             Log::error("Berita Controller Error : Gagal menyimpan update pada berita at update() " . $e);
