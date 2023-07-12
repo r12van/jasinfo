@@ -8,6 +8,14 @@
 
       <div class="col-12">
 
+		@php
+			if(!isset($id_wilayah))
+				$id_wilayah = old('wilayah');
+
+			if(!isset($id_tipe))
+				$id_tipe = old('tipe');
+		@endphp
+
 		<form id="form-berita" @if (isset($editMode) && $editMode) action="{{route('artikel.update',['artikel' => $id])}}" method="PATCH" @else action="{{route('artikel.store')}}" method="POST" @endif enctype="multipart/form-data">
 			@csrf
 			<div class="box">

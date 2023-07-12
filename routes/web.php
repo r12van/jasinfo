@@ -78,8 +78,8 @@ Route::get('/pencegahan', function () {
 // Route::get('/admin-berita', [AdminController::class, 'adminBerita'])->name('adminBerita');
 Route::get('/buat-berita', [AdminController::class, 'adminBuatBerita'])->name('adminBuatBerita');
 
-Route::resource('artikel',\App\Http\Controllers\Crud\BeritaController::class);
-Route::post('/upload/ck-img',[\App\Http\Controllers\Crud\SimpleImageUpload::class,"upload"]);
+Route::resource('artikel', \App\Http\Controllers\Crud\BeritaController::class);
+Route::post('/upload/ck-img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "upload"]);
 
 
 //route untuk admin
@@ -90,3 +90,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->
 
 //end route admin
 
+Route::get('register', function () {
+    return abort(404);
+});
+
+Route::post('register', function () {
+    return abort(503);
+});
