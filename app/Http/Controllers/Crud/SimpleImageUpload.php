@@ -22,7 +22,7 @@ class SimpleImageUpload extends Controller
                 throw new Exception("Tidak ada gambar yang diterima sistem.");
 
             $tanggal = now()->toDateString();
-            $nama = $file->getClientOriginalName().".".$file->getClientOriginalExtension();
+            $nama = $file->getClientOriginalName();
 
             $dir = $this->base_dir."/".$tanggal;
 
