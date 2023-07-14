@@ -79,7 +79,7 @@ Route::get('/pencegahan', function () {
 Route::get('/buat-berita', [AdminController::class, 'adminBuatBerita'])->name('adminBuatBerita');
 
 Route::resource('artikel', \App\Http\Controllers\Crud\BeritaController::class);
-Route::post('/upload/ck-img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "upload"]);
+Route::post('/upload/ck-img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "upload"])->name('cke5-img.up');
 
 
 //route untuk admin

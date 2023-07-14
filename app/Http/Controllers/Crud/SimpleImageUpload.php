@@ -16,7 +16,7 @@ class SimpleImageUpload extends Controller
     {
         try{
 
-            $file = $r->file();
+            $file = $r->file('upload');
 
             if(is_null($file))
                 throw new Exception("Tidak ada gambar yang diterima sistem.");
@@ -28,14 +28,14 @@ class SimpleImageUpload extends Controller
 
             $file->move($dir,$nama);
 
-            return json_encode(["url" => asset($dir."/".$nama)]);
+            return response()->json(["filename"=>$nama, "uploaded" => 1,"url" => asset($dir."/".$nama)]);
 
         }
         catch(Throwable $e)
         {
             error_log("Simple Image Upload Error : kesalahan saat upload file gambar melalui plugin CKEditor ".$e);
             Log::error("Simple Image Upload Error : kesalahan saat upload file gambar melalui plugin CKEditor ".$e);
-            return json_encode([
+            return response()->json([
                 "error" => ["message" => $e]
             ]);
         }
