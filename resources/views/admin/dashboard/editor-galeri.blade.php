@@ -1,0 +1,452 @@
+@extends('admin.layout.admin')
+
+@section('kontainer')
+<div class="content-wrapper">
+    <div class="container-full">
+    <section class="content">
+    <div class="row">
+
+      <div class="col-12">
+
+		@php
+			if(!isset($id_wilayah))
+				$id_wilayah = old('wilayah');
+
+			if(!isset($id_tipe))
+				$id_tipe = old('tipe');
+		@endphp
+
+		@if (isset($editMode) && $editMode)
+			<div class="alert alert-dark" role="alert">
+				<h4 class="alert-heading text-center">Editor dalam Mode Edit</h4>
+				<hr>
+				<p class="mb-0">Perubahan yang anda lakukan baru akan muncul di tabel galeri setelah tabel di refresh.</p>
+			</div>
+		@endif
+
+		<form id="form-galeri" @if (isset($editMode) && $editMode) action="{{route('galeri.update',['galeri' => $id])}}" @else action="{{route('galeri.store')}}"  @endif method="POST" enctype="multipart/form-data">
+			@csrf
+			@if (isset($editMode) && $editMode)
+				@method('PATCH')
+			@endif
+			<div class="box">
+				<div class="box-header with-border">
+					@if (isset($editMode) && $editMode)
+						<h3 class="box-title">Edit Galeri</h3>
+					@else
+						<h3 class="box-title">Buat Galeri Baru</h3>
+					@endif
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+
+					@if (session()->has("alert.success"))
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
+						<i class="fas fa-check-square"></i> {{session("alert.success")}}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						</div>
+					@endif
+
+					@if (session()->has("alert.warning"))
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+						<i class="far fa-exclamation-triangle"></i> {{session("alert.warning")}}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						</div>
+					@endif
+
+					@if (session()->has("alert.danger"))
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<i class="fas fa-exclamation-circle"></i> {{session("alert.danger")}}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						</div>
+					@endif
+
+					
+
+					<div class="row">
+								<div class="col-12">
+									<div class="form-group row">
+										<label for="example-text-input" class="col-sm-2 col-form-label">Judul</label>
+										<div class="col-sm-10">
+											<input class="form-control" type="text" placeholder="Masukan judul galeri" id="judul" name="judul" value="{{(isset($judul)) ? $judul : old('judul')}}" autocomplete="off" required>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="row">
+											<div class="col-md-6">
+													
+												<div class="form-group">
+													<label>Wilayah</label>
+													<select class="form-control" name="wilayah" value="">
+														@foreach ($list_wilayah as $item)
+															<option value="{{$item['id_wilayah']}}" @if($id_wilayah == $item['id_wilayah']) selected @endif>{{$item["nama_wilayah"]}}</option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Tipe</label>
+													<select class="form-control" name="tipe" value="{{(isset($tipe)) ? $tipe : old('tipe')}}">
+														@foreach ($list_tipe as $item)
+															<option value="{{$item['id_tipe']}}" @if($id_tipe == $item['id_tipe']) selected @endif>{{$item["nama_tipe"]}}</option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+											
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="example-date-input" >Date</label>
+													<div class="col-sm-10">
+													<input class="form-control" name="tanggal" type="date" value="{{(isset($tanggal)) ? $tanggal : now()->toDateString()}}" id="tanggal">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="card-body overflow-auto" style="max-height: 1000px">
+										<div class="row">
+											<div class="col-lg-6 mb-4">
+												<label for="gambar-uploader-input">Gambar Galeri</label>
+												<input type="file" name="gambar" title="Browse gambar" id="gambar-uploader-input" >
+												<small>Hanya mendukung file gambar berupa : jpg, jpeg, png, dan webp.</small>
+											</div>
+											<div class="col-lg-6">
+													<div class="form-group">
+														<label for="example-date-input" >Video Eksternal</label>
+														<div class="col-sm-10">
+														<input class="form-control" type="text" placeholder="Url atau Id video" id="video">
+														<a class="btn btn-md btn-primary" onclick="masukanKeVideo()">Tambah</a>
+														</div>
+														<small id="video-warning" class="text-danger" style="visibility: hidden"></small>
+													</div>
+													<div id="desc-list-video" style="visibility: hidden">
+														<small>Klik <i class='fas fa-trash-alt'></i> untuk Menghapus</small>
+														<ul id="url-list-video">
+														</ul>
+													</div>
+													
+											</div>
+										</div>
+									</div>
+
+									<label for="card-sortir">Atur Urutan Penyajian Item</label><br>
+									<small>Gunakan list dibawah ini untuk mengatur urutan penyajian item galeri untuk pengunjung ketika mereka mengklik thumbnail galeri.</small><br>
+									<small>Tekan dan geser  <i class="fas fa-grip-lines"></i>  untuk mengganti urutan. Urutan paling atas disajikan pertama dan urutan paling bawah disajikan terakhir.</small>
+									<div id="card-sortir" class="card-body overflow-auto bg-grey" style="max-height: 800px">
+										<div id="urutan-sorter" style="visibility: hidden">
+										</div>
+										<div id="urutan-placeholder" class="jumbotron text-center">
+											<strong>Tidak ada data yang dapat ditampilkan. Masukan gambar atau link video terlebih dahulu.</strong>
+										</div>
+									</div>
+									
+									
+									<input type="hidden" name="data" id="list-upload">
+								</div>
+								<!-- /.col -->
+							</div>
+					</form>
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer">
+					<div class="row">
+						
+						<div class="col text-right">
+							<a class="btn btn-primary" onclick="if(confirm('Selesai dan submit galeri?')) submitGaleri()">Submit</a>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+        <!-- /.box -->      
+      </div> 
+
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    </section>
+    </div>
+</div>
+@endsection
+
+@push('stack-head')
+	<link rel="stylesheet" href="{{asset('filepond-4.28.2/dist/filepond.min.css')}}">
+	<link rel="stylesheet" href="{{asset('filepond-plugin/filepond-plugin-image-preview-4.5.0/dist/filepond-plugin-image-preview.css')}}">
+	<script src="{{asset('filepond-4.28.2/dist/filepond.min.js')}}"></script>
+	<script src="{{asset('filepond-plugin/filepond-plugin-file-validate-type-1.2.8/dist/filepond-plugin-file-validate-type.min.js')}}"></script>
+	<script src="{{asset('filepond-plugin/filepond-plugin-image-preview-4.5.0/dist/filepond-plugin-image-preview.min.js')}}"></script>
+@endpush
+
+@push('stack-body')
+{{-- untuk sortir list --}}
+	@vite('resources/js/sortable.js')
+@endpush
+
+@push('stack-body')
+	<script>
+
+		var listVideo = [];
+		var listUrut = [];
+
+		var iconGambar = "<i class='far fa-image mx-1'></i>"
+		var iconYoutube = "<i class='fab fa-youtube-square mx-1'></i>"
+
+		var listElUrut = $("#urutan-sorter")
+		var placeholderElUrut = $("#urutan-placeholder")
+
+
+		// file uploader
+		const inputElement = document.querySelector('#gambar-uploader-input');
+
+		FilePond.registerPlugin(FilePondPluginFileValidateType)
+		FilePond.registerPlugin(FilePondPluginImagePreview)
+
+		var fp = FilePond.create(inputElement,{
+			labelIdle : 'Drag & Drop file gambar disini atau <span class="filepond--label-action"> Browse </span>',
+			allowMultiple:true,
+			allowFileTypeValidation: true,
+			acceptedFileTypes : ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'],
+			// server:{
+			// 	url:"{{URL::to('')}}",
+			// 	timeout: 7000,
+			// 	process:{
+			// 		url:'/upload/img/process',
+			// 		method: 'POST',
+			// 		headers:{
+			// 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			// 		},
+			// 		withCredentials: false,
+			// 		onerror: (response) => console.log(response.data)
+			// 	}
+			// },
+			onaddfile(error,file){
+				var id = file.id;
+				var name = file.filename;
+				console.log(error)
+				$("#urutan-sorter").append(masukanKeUrut(iconGambar+name,id,'image',name,'image'))
+			},
+			onremovefile(error,file){
+				triggerImageDelete(file.id)
+			}
+		});
+
+
+		// function
+
+		function triggerVideoDelete(el)
+		{
+			keluarkanDariVideo(el)
+			var id = $(el).attr('id');
+			keluarkanDariUrut($('button[id='+id+']'))
+		}
+
+		function triggerUrutDelete(el)
+		{
+			var tipe = $(el).data('tipe')
+			var id = $(el).attr('id')
+
+			keluarkanDariUrut(el);
+			if(tipe == 'video')
+				keluarkanDariVideo($('div[id='+id+']'))
+			else if(tipe == 'image')
+				keluarkanDariGambar(id)
+
+
+		}
+
+		function triggerImageDelete(id)
+		{
+			keluarkanDariUrut($('button[id='+id+']'))
+		}
+
+		function keluarkanDariGambar(id)
+		{
+			fp.removeFile(id);
+		}
+
+		function masukanKeUrut(caption,id, tipe,name,sumber)
+		{	
+			listUrut.push({
+				id: id,
+				judul: caption
+			});
+
+			if(listElUrut.css('visibility') == 'hidden')
+				listElUrut.css('visibility','visible')
+			
+			if(placeholderElUrut.css('visibility') == 'visible')
+				placeholderElUrut.css('visibility','hidden')
+
+			return '<div id="'+id+'" class="d-flex justify-content-between my-1 border border-light rounded urut-item">'+
+												'<div class="flex-shrink px-1"><i class="fas fa-grip-lines"></i></div>'+
+												'<div class="flex-grow-1 px-2">'+caption+'</div>'+
+												'<div class="flex-shrink px-1"><button type="button" id="'+id+'" data-tipe="'+tipe+'" data-name="'+name+'" data-sumber="'+sumber+'" data-pointer="true" onclick="triggerUrutDelete(this)" class="close"><span aria-hidden="true">&times;</span></button></div>'+
+											'</div>'
+		}
+
+		function keluarkanDariUrut(el)
+		{
+			// tembak ke buttonnya, lalu pilih kakeknya
+			var id = $(el).attr('id');
+			var p1 = $(el).parent()
+			var p2 = $(p1).parent()
+
+			p2.remove()
+
+
+
+			hapusDariArray(listUrut,id)
+
+			if(listUrut.length < 1)
+			{
+				listElUrut.css('visibility','hidden')
+				placeholderElUrut.css('visibility','visible')
+
+			}
+		}
+
+		function masukanKeVideo(videoid = null)
+		{
+
+				$('#video-warning').css("visibility","hidden")
+
+				if(videoid == null)
+					videoid = $("#video").val();
+
+				prosesLink(videoid)
+				
+		}
+
+		function keluarkanDariVideo(el)
+		{
+			
+			var id = $(el).attr('id')
+			var p = $("li#"+id)
+
+
+			$(el).remove();
+			p.remove()
+
+			hapusDariArray(listVideo,id);
+			
+
+			if(listVideo.length < 1)
+				$("#desc-list-video").css("visibility","hidden")
+
+		}
+
+		
+
+		function prosesLink(videoid)
+		{
+				/**
+				 * 	Credit : Salman Arshad
+				 *  Sumber : https://salman-w.blogspot.com/2010/01/retrieve-youtube-video-title.html
+				 * */
+
+				var videolink = videoid;
+				var matches = videoid.match(/^https?:\/\/www\.youtube\.com\/.*[?&]v=([^&]+)/i) || videoid.match(/^https?:\/\/youtu\.be\/([^?]+)/i);
+				if (matches) {
+					videoid = matches[1];
+				}
+				else
+				{
+					$('#video-warning').html('Gagal menambahkan link! Pastikan link sesuai format URL atau ID video youtube.')
+					$('#video-warning').css("visibility","visible")
+					return;
+				}
+				if (videoid.match(/^[a-z0-9_-]{11}$/i) === null) {
+					$('#video-warning').html('Gagal menambahkan link! Pastikan link sesuai format URL atau ID video youtube.')
+					$('#video-warning').css("visibility","visible")
+					return;
+				}
+				$.getJSON("https://www.googleapis.com/youtube/v3/videos", {
+					key: "AIzaSyBRNTvLv0DEHKUmtXM8xmI_tZeAbWTgfLw",
+					part: "snippet,statistics",
+					id: videoid
+				}, function(data) {
+					if (data.items.length === 0) {
+						$('#video-warning').html('Gagal mencapai link video! Pastikan link sudah benar dan video tidak di private.')
+						$('#video-warning').css("visibility","visible")
+						return;
+					}
+					// buat id untuk list
+					var testid = $.now();
+
+					// ambil judul
+					var judul = data.items[0].snippet.title;
+
+
+					// masukan ke list video
+					var ul = $("#desc-list-video")
+					if(ul.css("visibility") == "hidden")
+						ul.css("visibility","visible");
+					ul.append("<li id='"+testid+"' class='d-flex justify-content-between my-1 border border-light rounded'><div class='flex-grow-1 mx-1'><a href='"+videolink+"' target='_blank' >"+judul+"</a></div><div class='flex-shrink mx-1' style='cursor:pointer;' data-name='"+videolink+"' id='"+testid+"' onclick='triggerVideoDelete(this)'><i class='fas fa-trash-alt'></i></div></li>");
+					$("#video").val('')
+
+					// masukan ke array list video
+					listVideo.push({
+						id:testid,
+						url:videolink
+					});
+
+					// masukan ke list urutan
+					$("#urutan-sorter").append(masukanKeUrut(iconYoutube+judul,testid,'video',videolink,"youtube"))
+
+
+				}).fail(function(jqXHR, textStatus, errorThrown) {
+					$('#video-warning').html('Gagal mengambil informasi video! Terjadi kesalahan saat mengambil data video dari server tujuan.')
+					$('#video-warning').css("visibility","visible")
+					console.log("Kesalahan : ");
+					console.log(jqXHR.responseText);
+					console.log(errorThrown);
+				});
+		}
+
+		function submitGaleri()
+		{
+			
+			// $("#list-video").val(listVideo)
+			var arr = $("[data-pointer]")
+			var galeri = []
+			$.each(arr, function (indexInArray, valueOfElement) { 
+				var name = $(valueOfElement).data('name')
+				var tipe = $(valueOfElement).data('tipe')
+				var sumber = $(valueOfElement).data('sumber')
+
+				galeri.push({
+					index : indexInArray,
+					name : name,
+					tipe : tipe,
+					sumber : sumber
+				});
+			});
+			$("#list-upload").val(galeri)
+			// console.log(galeri)
+			$('#form-galeri').submit()
+			// console.log($("#list-upload").val())
+
+		}
+
+		function hapusDariArray(array, id)
+		{
+			var removeIndex = array.findIndex(item => item.id == id);
+
+
+			if(removeIndex > -1)
+				array.splice(removeIndex, 1);
+		}
+				
+	</script>
+@endpush
+
+

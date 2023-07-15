@@ -17,6 +17,7 @@ class Berita extends Model
         "judul",
         "slug",
         "summary",
+        "caption_highlight",
         "isi",
         "id_wilayah",
         "id_tipe",
