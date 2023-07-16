@@ -183,10 +183,7 @@
 					previewsInData:true // ini penting untuk embed media dari youtube, dsb
 				},
 				simpleUpload:{
-					uploadUrl : "/upload/ck-img",
-					headers:{
-						'X-CSRF-TOKEN': 'CSRF-Token',
-					}
+					uploadUrl : "{{route('cke5-img.up').'?_token='.csrf_token()}}",
 				}
 			} )
             .catch( error => {
