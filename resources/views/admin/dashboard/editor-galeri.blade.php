@@ -215,19 +215,46 @@
 			allowMultiple:true,
 			allowFileTypeValidation: true,
 			acceptedFileTypes : ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'],
-			// server:{
-			// 	url:"{{URL::to('')}}",
-			// 	timeout: 7000,
-			// 	process:{
-			// 		url:'/upload/img/process',
-			// 		method: 'POST',
-			// 		headers:{
-			// 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			// 		},
-			// 		withCredentials: false,
-			// 		onerror: (response) => console.log(response.data)
-			// 	}
-			// },
+			server:{
+				url:"{{URL::to('/').'/upload/img'}}",
+				timeout: 7000,
+				process:{
+					url:'/process',
+					method: 'POST',
+					headers:{
+						'X-CSRF-TOKEN': '{{csrf_token()}}'
+					},
+					withCredentials: false,
+					onerror: (response) => console.log(response.data)
+				},
+				revert:{
+					url:'/revert',
+					method: 'DELETE',
+					headers:{
+						'X-CSRF-TOKEN': '{{csrf_token()}}'
+					},
+					withCredentials: false,
+					onerror: (response) => console.log(response.data)
+				},
+				load:{
+					url:'/load',
+					method: 'GET',
+					headers:{
+						'X-CSRF-TOKEN': '{{csrf_token()}}'
+					},
+					withCredentials: false,
+					onerror: (response) => console.log(response.data)
+				},
+				restore:{
+					url:'/restore',
+					method: 'GET',
+					headers:{
+						'X-CSRF-TOKEN': '{{csrf_token()}}'
+					},
+					withCredentials: false,
+					onerror: (response) => console.log(response.data)
+				}
+			},
 			onaddfile(error,file){
 				var id = file.id;
 				var name = file.filename;

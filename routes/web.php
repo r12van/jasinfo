@@ -85,9 +85,13 @@ Route::get('/galeri', function () {
     return view('dashboard.galeri.index');
 });
 Route::post('/upload/ck-img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadCKEditor"])->name('cke5-img.up');
+// untuk filepond
 Route::post('/upload/img/process', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondProcess"]);
-Route::get('/upload/img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadGaleri"]);
-Route::patch('/upload/img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadGaleri"]);
+Route::get('/upload/img/load', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondLoad"]);
+Route::get('/upload/img/restore', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondRestore"]);
+Route::delete('/upload/img/revert', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondRevert"]);
+// Route::get('/upload/img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadGaleri"]);
+// Route::patch('/upload/img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadGaleri"]);
 
 
 //route untuk admin
