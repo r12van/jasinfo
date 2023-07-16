@@ -95,6 +95,17 @@
                                 <li class="menu-item">
                                     <a class="menu-link" href="/kegiatan"><div>Kegiatan</div></a>
                                 </li>
+                                <li class="menu-item">
+                                    <a class="menu-link" href="/pencegahan"><div></i>Galeri</div></a>
+                                    {{-- <ul class="sub-menu-container">
+                                        <li class="menu-item">
+                                            <a class="menu-link" href="/sosialisasi"><div>Foto</div></a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a class="menu-link" href="/pembinaan"><div>Video</div></a>
+                                        </li>
+                                    </ul> --}}
+                                </li>
                             </ul>
                         </li>
                         <li class="menu-item">

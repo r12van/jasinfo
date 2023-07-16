@@ -30,7 +30,7 @@
                                 <div style="background: url('{{asset('images/world-map.png')}}') no-repeat center center; background-size: 100%;">
                                     <address>
                                         
-                                        Jln. K.H. Zainul Arifin No.71, Duri Pulo, Gambir, Jakarta Pusat<br>
+                                        Jalan K.H. Zainul Arifin No.71, Duri Pulo, Gambir, Jakarta Pusat<br>
                                     </address>
                                     <abbr title="Phone Number"><strong>Phone:</strong></abbr> (021) 6344579/63855357<br>
                                     <abbr title="Email Address"><strong>Email:</strong></abbr> damkardki@jakarta.go.id <br>
@@ -51,9 +51,9 @@
                                 <div style="background: url('{{asset('images/world-map.png')}}') no-repeat center center; background-size: 100%;">
                                     <address>
                                         
-                                    Lt.8, Jln. K.H. Zainul Arifin No.71, Duri Pulo, Gambir, Jakarta Pusat<br>
+                                    Jalan. K.H. Zainul Arifin No.71, Duri Pulo, Gambir, Jakarta Pusat, Lt.8 <br>
                                     </address>
-                                    <abbr title="Phone Number"><strong>Phone:</strong></abbr> (021) 6344579/63855357<br>
+                                    {{-- <abbr title="Phone Number"><strong>Phone:</strong></abbr> (021) 6344579/63855357<br> --}}
                                     <abbr title="Email Address"><strong>Email:</strong></abbr> jasinfodamkar@gmail.com <br>
                                     <address></address>
                                     <abbr title="Phone">Hubungi 112 untuk laporan layanan kedaruratan.<br>
@@ -131,7 +131,7 @@
                                             <i class="fa-brands fa-twitter-square"></i>
                                             <i class="fa-brands fa-twitter-square"></i>
                                         </a>
-                                        <a href="https://twitter.com/humasjakfire" target="_blank" class="ms-1"><small class="d-block"><strong>Follow Kami</strong><br>di Instagram</small></a>
+                                        <a href="https://twitter.com/humasjakfire" target="_blank" class="ms-1"><small class="d-block"><strong>Follow Kami</strong><br>di Twitteer</small></a>
                                     </div>
                                 </div>
 

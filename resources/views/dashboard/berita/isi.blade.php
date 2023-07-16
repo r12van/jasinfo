@@ -1,9 +1,9 @@
 @extends('layout.canvas-dashboard')
 
 @section('kontainer')
-		<!-- Content
-		============================================= -->
-		<section id="content">
+	
+
+<section id="content">
 			<div class="content-wrap">
 				<div class="container">
 
@@ -53,5 +53,6 @@
 
 				</div>
 			</div>
-		</section>
+</section>
+
 @endsection

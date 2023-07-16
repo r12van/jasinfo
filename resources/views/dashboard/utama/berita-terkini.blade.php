@@ -10,20 +10,28 @@
         <h2>Berita Terkini</h2>
     </div>
     <div class="row justify-content-center col-mb-50">
+        @foreach ($beritaTerkini as $berita)
         <div class="col-sm-6 col-lg-4">
             <div class="feature-box fbox-sm fbox-plain" data-animate="fadeIn">
                 <div class="fbox-icon">
                     <a href="#"><i class="bi-card-text"></i></a>
                 </div>
                 <div class="fbox-content">
-                    <h3>Kebakaran di Jalan Peningkatan 1, Menteng Dalam</h3>
-                    <p>Senin (12 Juni 2023) Petugas #DamkarDKI Sektor Tebet menerima laporan bahwa bangunan rumah tinggal di Jl. Peningkatan 1, 010/003, Kel. Menteng Dalam, Kec. Tebet, Jakarta Selatan terbakar.</p>
-                    <a href="#" class="sm-icon">read more</a>
+                    <h3><a href="{{ route('artikel.show',['artikel' => $berita->slug]) }}">{{ $berita->judul }}</a></h3>
+                    <p>{{ $berita->tanggal }} {{ $berita->summary }}</p>
+                    <a href="{{ route('artikel.show',['artikel' => $berita->slug]) }}" class="sm-icon">read more</a>
                 </div>
             </div>
         </div>
+        @endforeach
 
-        <div class="col-sm-6 col-lg-4">
+        {{-- <div>
+            @foreach($beritaTerkini as $berita)
+            <div>test</div>
+            @endforeach
+        </div> --}}
+
+        {{-- <div class="col-sm-6 col-lg-4">
             <div class="feature-box fbox-sm fbox-plain" data-animate="fadeIn" data-delay="200">
                 <div class="fbox-icon">
                     <a href="#"><i class="bi-card-text"></i></a>
@@ -125,7 +133,9 @@
                     <a href="#" class="sm-icon">read more</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
 </div>
+
+

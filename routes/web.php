@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UtamaController;
+use App\Models\Berita;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,16 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::get('/', function () {
-    return view('dashboard.home');
+    $berita = new UtamaController;
+    $carousel = $berita->carousel();
+    $beritaTerkini = $berita->beritaTerkini();
+    $pers = $berita->pers();
+    $kegiatan = $berita->kegiatan();
+    $kebakaran = $berita->kebakaran();
+    $penyelamatan = $berita->penyelamatan();
+    $pencegahan = $berita->pencegahan();
+
+    return view('dashboard.home')->with(['beritaTerkini' => $beritaTerkini, 'carousel' => $carousel, 'pers' => $pers, 'kegiatan' => $kegiatan, 'kebakaran' => $kebakaran, 'penyelamatan' => $penyelamatan, 'pencegahan' => $pencegahan]);
 });
 //route profil
 Route::get('/sejarah', function () {
@@ -43,6 +54,7 @@ Route::get('/layanan_laboraturium', function () {
 Route::get('/layanan_penyelamatan', function () {
     return view('dashboard.layanan.penyelamatan');
 });
+
 //route pencegahan kebakaran
 Route::get('/sosialisasi', function () {
     return view('dashboard.layanan.pencegahan.sosialisasi_edukasi');
@@ -56,6 +68,7 @@ Route::get('/pemberdayaan', function () {
 
 // route publikasi
 Route::get('/berita', function () {
+
     return view('dashboard.publikasi.berita');
 });
 Route::get('/kegiatan', function () {

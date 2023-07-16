@@ -1,6 +1,8 @@
 @extends('layout.canvas-dashboard')
 
 @section('kontainer')
+
+
 <section id="content">
     <div class="content-wrap">
         <div class="container">
@@ -59,7 +61,7 @@
                                     <img class="mx-auto d-block" src="images/eselon/sugeng_wiyono.svg" alt="John Doe">
                                 </div>
                                 <div class="team-desc">
-                                    <div class="team-title"><h4>Sugeng Wiyono,S.Sos,M.Si</h4><span>Sekertaris Dinas</span></div>
+                                    <div class="title"><h4>Sugeng Wiyono,S.Sos,M.Si</h4><span>Sekertaris Dinas</span></div>
                                     <div class="d-flex justify-content-center mt-4">
                                         <a href="#" class="social-icon si-small bg-light rounded-circle h-bg-facebook">
                                             <i class="fa-brands fa-facebook-f"></i>
@@ -88,7 +90,7 @@
                                             <img class="mx-auto d-block" src="images/eselon/hardisiswan.svg" alt="John Doe">
                                         </div>
                                         <div class="team-desc">
-                                            <div class="team-title"><h4>Hardisiswan, Drs, MM</h4><span>Kepala Bidang Kerjasama Dan Informasi</span></div>
+                                            <div class="team-title"><h4>Hardisiswan, Drs, MM</h4><span>Kepala Bidang Kerjasama dan Informasi</span></div>
                                             <div class="d-flex justify-content-center mt-4">
                                                 <a href="#" class="social-icon si-small bg-light rounded-circle h-bg-facebook">
                                                     <i class="fa-brands fa-facebook-f"></i>
@@ -207,4 +209,5 @@
         </div>
     </div>
 </section>
+
 @endsection

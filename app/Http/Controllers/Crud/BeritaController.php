@@ -163,8 +163,8 @@ class BeritaController extends Controller
             $banner = $r->banner;
             $ext = (is_null($banner)) ? "jpg" : $banner->getClientOriginalExtension();
 
-            if(is_null($summary))
-                $summary = substr(strip_tags($isi),0,30);
+            if (is_null($summary))
+                $summary = substr(strip_tags($isi), 0, 30);
             // throw new Exception("Test");
 
             // untuk preview
@@ -188,24 +188,21 @@ class BeritaController extends Controller
                 ]);
             }
 
-                // buat slug
-                $slug = $tanggal . "_" . Str::slug($judul);
-                if (Berita::where("slug", $slug)->exists())
-                {
-                    $i = 0;
-                    $status = false;
-                    while(!$status)
-                    {
-                        error_log("status_pengulangan buat slug : ".$i);
-                        $tes_slug = $tanggal . "_" . Str::slug($judul) . "_" . $i;
-                        if (!Berita::where("slug", $tes_slug)->exists()) {
-                            $slug = $tes_slug;
-                            $status = true;
-                        }
-                        else
-                            $i++;
-                    }
+            // buat slug
+            $slug = $tanggal . "_" . Str::slug($judul);
+            if (Berita::where("slug", $slug)->exists()) {
+                $i = 0;
+                $status = false;
+                while (!$status) {
+                    error_log("status_pengulangan buat slug : " . $i);
+                    $tes_slug = $tanggal . "_" . Str::slug($judul) . "_" . $i;
+                    if (!Berita::where("slug", $tes_slug)->exists()) {
+                        $slug = $tes_slug;
+                        $status = true;
+                    } else
+                        $i++;
                 }
+            }
 
 
             // save ke db
@@ -263,7 +260,7 @@ class BeritaController extends Controller
                 ->where('slug', $slug)->first();
 
             if (is_null($berita))
-                throw new Exception("Artikel tidak ditemukan!");
+                return abort(404, "Artikel Tidak Ditemukan");
 
             return view('dashboard.berita.isi')->with([
                 "judul" => $berita->judul,
@@ -285,6 +282,7 @@ class BeritaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
     public function edit(string $id)
     {
         $this->middleware('auth');
@@ -317,6 +315,8 @@ class BeritaController extends Controller
         }
     }
 
+
+
     /**
      * Update the specified resource in storage.
      */
@@ -324,11 +324,42 @@ class BeritaController extends Controller
     {
         $this->middleware('auth');
         try {
-                $berita = Berita::find($id);
+            $berita = Berita::find($id);
 
-                if(is_null($berita))
-                {
-                    return abort(403,"Artikel tidak ditemukan!");
+            if (is_null($berita)) {
+                return abort(403, "Artikel tidak ditemukan!");
+            }
+
+            // fetch data
+            $judul = $r->input("judul");
+            $summary = $r->input("summary");
+            $isi = $r->input("isi");
+            $wilayah = $r->input("wilayah");
+            $tipe = $r->input("tipe");
+            $tanggal = $r->input("tanggal");
+            $banner = $r->banner;
+            $ext = (is_null($banner)) ? "jpg" : $banner->getClientOriginalExtension();
+
+
+            if (is_null($summary))
+                $summary = substr(strip_tags($isi), 0, 30);
+
+            // buat slug
+            $slug_lama = $berita->slug;
+            $slug = $tanggal . "_" . Str::slug($judul);
+            if ($slug_lama != $slug)
+                if (Berita::where("slug", $slug)->exists()) {
+                    $i = 0;
+                    $status = false;
+                    while (!$status) {
+                        error_log("status_pengulangan buat slug : " . $i);
+                        $tes_slug = $tanggal . "_" . Str::slug($judul) . "_" . $i;
+                        if (!Berita::where("slug", $tes_slug)->exists()) {
+                            $slug = $tes_slug;
+                            $status = true;
+                        } else
+                            $i++;
+                    }
                 }
 
                 // fetch data
@@ -345,42 +376,15 @@ class BeritaController extends Controller
                 $wilayah_lama = $berita->id_wilayah;
 
 
-                if(is_null($summary))
-                    $summary = substr(strip_tags($isi),0,30);
-
-                // buat slug
-                $slug_lama = $berita->slug;
-                $slug = $tanggal . "_" . Str::slug($judul);
-                if($slug_lama != $slug)
-                    if (Berita::where("slug", $slug)->exists())
-                    {
-                        $i = 0;
-                        $status = false;
-                        while(!$status)
-                        {
-                            error_log("status_pengulangan buat slug : ".$i);
-                            $tes_slug = $tanggal . "_" . Str::slug($judul) . "_" . $i;
-                            if (!Berita::where("slug", $tes_slug)->exists()) {
-                                $slug = $tes_slug;
-                                $status = true;
-                            }
-                            else
-                                $i++;
-                        }
-                    }
-                
-
-
-                // save ke db
-                $berita->judul = $judul;
-                $berita->slug = $slug;
-                $berita->penulis = (Auth::user())? Auth::user()->name : "Admin";
-                $berita->isi = $isi;
-                $berita->summary = $summary;
-                $berita->id_wilayah = $wilayah;
-                $berita->id_tipe = $tipe;
-                $berita->tanggal = $tanggal;
-                
+            // save ke db
+            $berita->judul = $judul;
+            $berita->slug = $slug;
+            $berita->penulis = (Auth::user()) ? Auth::user()->name : "Admin";
+            $berita->isi = $isi;
+            $berita->summary = $summary;
+            $berita->id_wilayah = $wilayah;
+            $berita->id_tipe = $tipe;
+            $berita->tanggal = $tanggal;
 
 
 
@@ -395,7 +399,14 @@ class BeritaController extends Controller
                         $gambar = $folder_banner . $nama_banner . "." . $ext;
                     }
 
-                    $berita->banner = $gambar;
+            // untuk banner
+            if (!is_null($banner)) {
+                $tipe_berita = TipeBerita::find($tipe)->nama_tipe;
+                $folder_banner = "image-berita/banner/" . $tipe_berita . "/" . $tanggal . "/";
+                $nama_banner = substr($id, -7);
+                if ($banner->isValid()) {
+                    $banner->move($folder_banner, $nama_banner . "." . $ext);
+                    $gambar = $folder_banner . $nama_banner . "." . $ext;
                 }
                 else{
                     if($tanggal != $tanggal_lama || $tipe != $tipe_lama || $wilayah != $wilayah_lama)
@@ -411,12 +422,15 @@ class BeritaController extends Controller
                     }
                 }
 
-                $berita->save();
+                $berita->banner = $gambar;
+            }
+
+            $berita->save();
 
 
 
             return redirect(route('adminBerita'))->with("alert.success", "Berita berhasil disimpan!");
-
+        }
         } catch (Throwable $e) {
             error_log("Berita Controller Error : Gagal menyimpan update pada berita at update() " . $e);
             Log::error("Berita Controller Error : Gagal menyimpan update pada berita at update() " . $e);
