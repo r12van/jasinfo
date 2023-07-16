@@ -2,7 +2,7 @@
 
 @section('kontainer')
 
-<section class="page-title bg-transparent">
+<section class="page-title bg-transparent mt-5">
     <div class="container">
         <div class="page-title-row">
 
@@ -26,112 +26,45 @@
             <!-- Posts
             ============================================= -->
             <div id="posts" class="post-grid row grid-container gutter-30" data-layout="fitRows">
-
+                @foreach ($kebakaran as $kebakarann)
                 <div class="entry col-lg-3 col-md-4 col-sm-6 col-12">
                     <div class="grid-inner">
                         <div class="entry-image">
-                            <a href="images/blog/full/17.jpg" data-lightbox="image"><img src="images/blog/grid/17.jpg" alt="Standard Post with Image"></a>
-                        </div>
-                        <div class="entry-title">
-                            <h2><a href="blog-single.html">This is a Standard post with a Preview Image</a></h2>
-                        </div>
-                        <div class="entry-meta">
-                            <ul>
-                                <li><i class="uil uil-schedule"></i> 10th Feb 2021</li>
-                                <li><a href="blog-single.html#comments"><i class="uil uil-comments-alt"></i> 13</a></li>
-                                <li><a href="#"><i class="uil uil-camera"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="entry-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, voluptatem, dolorem animi nisi autem blanditiis enim culpa reiciendis et explicabo tenetur!</p>
-                            <a href="blog-single.html" class="more-link">Read More</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="entry col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="grid-inner">
-                        <div class="entry-image">
-                            <iframe src="https://player.vimeo.com/video/87701971" width="500" height="281" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                        </div>
-                        <div class="entry-title">
-                            <h2><a href="blog-single-full.html">This is a Standard post with a Vimeo Video</a></h2>
-                        </div>
-                        <div class="entry-meta">
-                            <ul>
-                                <li><i class="uil uil-schedule"></i> 16th Feb 2021</li>
-                                <li><a href="blog-single-full.html#comments"><i class="uil uil-comments-alt"></i> 19</a></li>
-                                <li><a href="#"><i class="uil uil-film"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="entry-content">
-                            <p>Asperiores, tenetur, blanditiis, quaerat odit ex exercitationem consectetur pariatur quibusdam veritatis quisquam laboriosam esse beatae hic perferendis velit deserunt!</p>
-                            <a href="blog-single-full.html" class="more-link">Read More</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="entry col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="grid-inner">
-                        <div class="entry-image">
-                            <div class="fslider" data-arrows="false" data-lightbox="gallery">
-                                <div class="flexslider">
-                                    <div class="slider-wrap">
-                                        <div class="slide"><a href="images/blog/full/10.jpg" data-lightbox="gallery-item"><img src="images/blog/grid/10.jpg" alt="Standard Post with Gallery"></a></div>
-                                        <div class="slide"><a href="images/blog/full/20.jpg" data-lightbox="gallery-item"><img src="images/blog/grid/20.jpg" alt="Standard Post with Gallery"></a></div>
-                                        <div class="slide"><a href="images/blog/full/21.jpg" data-lightbox="gallery-item"><img src="images/blog/grid/21.jpg" alt="Standard Post with Gallery"></a></div>
+                            <div class="portfolio-image">
+                                <a href="{{ route('artikel.show',['artikel' => $kebakarann->slug]) }}">
+                                    <img src="{{ $kebakarann->banner }}" alt="Open Imagination">
+                                </a>
+                                <!-- Overlay: Start -->
+                                <div class="bg-overlay">
+                                    <div class="bg-overlay-content dark" data-hover-animate="fadeIn">
+                                        <a href="{{ $kebakarann->banner }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-lightbox="image" title=""><i class="uil uil-plus"></i></a>
+                                        <a href="{{ route('artikel.show',['artikel' => $kebakarann->slug]) }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350"><i class="uil uil-ellipsis-h"></i></a>
                                     </div>
+                                    <div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
                                 </div>
+                                <!-- Overlay: End -->
                             </div>
                         </div>
                         <div class="entry-title">
-                            <h2><a href="blog-single-small.html">This is a Standard post with a Slider Gallery</a></h2>
+                            <h2><a href="{{ route('artikel.show',['artikel' => $kebakarann->slug]) }}">{{ $kebakarann->judul }}</a></h2>
                         </div>
                         <div class="entry-meta">
                             <ul>
-                                <li><i class="uil uil-schedule"></i> 24th Feb 2021</li>
-                                <li><a href="blog-single-small.html#comments"><i class="uil uil-comments-alt"></i> 21</a></li>
-                                <li><a href="#"><i class="uil uil-images"></i></a></li>
+                                <li><i class="uil uil-schedule"></i>{{ $kebakarann->tanggal }}</li>
+                                
                             </ul>
                         </div>
                         <div class="entry-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, voluptatem, dolorem animi nisi autem blanditiis enim culpa reiciendis et explicabo tenetur!</p>
-                            <a href="blog-single-small.html" class="more-link">Read More</a>
+                            <p>{{ $kebakarann->summary }}</p>
+                            <a href="{{ route('artikel.show',['artikel' => $kebakarann->slug]) }}" class="more-link">Read More</a>
                         </div>
                     </div>
                 </div>
-
-                <div class="entry col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="grid-inner">
-                        <div class="entry-image">
-                            <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/301161123&amp;auto_play=false&amp;hide_related=true&amp;visual=true"></iframe>
-                        </div>
-                        <div class="entry-title">
-                            <h2><a href="blog-single.html">This is an Embedded SoundCloud Post</a></h2>
-                        </div>
-                        <div class="entry-meta">
-                            <ul>
-                                <li><i class="uil uil-schedule"></i> 28th Apr 2021</li>
-                                <li><a href="blog-single.html#comments"><i class="uil uil-comments-alt"></i> 16</a></li>
-                                <li><a href="#"><i class="uil uil-music"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="entry-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, voluptatem, dolorem animi nisi autem blanditiis enim culpa reiciendis et explicabo tenetur!</p>
-                            <a href="blog-single.html" class="more-link">Read More</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
-
+            
             <ul class="pagination mt-5 pagination-circle justify-content-center">
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="uil uil-angle-left-b"></i></a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i class="uil uil-angle-right-b"></i></a></li>
+                {{ $kebakaran->appends(['penyelamatan' =>$penyelamatan->currentPage()]) }}
             </ul>
         </div>
         <div class="mx-auto text-center" style="max-width: 900px;">
@@ -139,104 +72,45 @@
         </div>
         <div class="container">
             <div id="posts" class="post-grid row grid-container gutter-30" data-layout="fitRows">
+                @foreach ($penyelamatan as $penyelamatann)
                 <div class="entry col-lg-3 col-md-4 col-sm-6 col-12">
                     <div class="grid-inner">
                         <div class="entry-image">
-                            <a href="images/publikasi/penyelamatan/biawak1.jpg" data-lightbox="image"><img src="images/publikasi/penyelamatan/biawak1.jpg" alt="Standard Post with Image"></a>
+                            <div class="portfolio-image">
+                                <a href="{{ route('artikel.show',['artikel' => $penyelamatann->slug]) }}">
+                                    <img src="{{ $penyelamatann->banner }}" alt="Open Imagination">
+                                </a>
+                                <!-- Overlay: Start -->
+                                <div class="bg-overlay">
+                                    <div class="bg-overlay-content dark" data-hover-animate="fadeIn">
+                                        <a href="{{ $penyelamatann->banner }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-lightbox="image" title=""><i class="uil uil-plus"></i></a>
+                                        <a href="{{ route('artikel.show',['artikel' => $penyelamatann->slug]) }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350"><i class="uil uil-ellipsis-h"></i></a>
+                                    </div>
+                                    <div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
+                                </div>
+                                <!-- Overlay: End -->
+                            </div>
                         </div>
                         <div class="entry-title">
-                            <h2><a href="blog-single-full.html">Penyelamatan Sektor Tanjung Priok Evakuasi Biawak di Toko Kelontong Milik Warga</a></h2>
+                            <h2><a href="{{ route('artikel.show',['artikel' => $penyelamatann->slug]) }}">{{ $penyelamatann->judul }}</a></h2>
                         </div>
                         <div class="entry-meta">
                             <ul>
-                                <li><i class="uil uil-schedule"></i> 13 Juni 2022</li>
+                                <li><i class="uil uil-schedule"></i>{{ $penyelamatann->tanggal }}</li>
+                                
                             </ul>
                         </div>
                         <div class="entry-content">
-                            <p>Seekor Biawak dilaporkan oleh warga kepada petugas penyelamat Sektor Tanjung Priok, Jakarta Utara untuk dievakuasi. Hewan tersebut masuk ke toko kelontong dan membuat takut penghuni di dalamnya.</p>
-                            <a href="blog-single-full.html" class="more-link">Read More</a>
+                            <p>{{ $penyelamatann->summary }}</p>
+                            <a href="{{ route('artikel.show',['artikel' => $penyelamatann->slug]) }}" class="more-link">Read More</a>
                         </div>
                     </div>
                 </div>
-
-                <div class="entry col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="grid-inner">
-                        <div class="entry-image">
-                            <a href="images/blog/full/1.jpg" data-lightbox="image"><img src="images/blog/grid/1.jpg" alt="Standard Post with Image"></a>
-                        </div>
-                        <div class="entry-title">
-                            <h2><a href="blog-single-thumbs.html">This is a Standard post with Fade Gallery</a></h2>
-                        </div>
-                        <div class="entry-meta">
-                            <ul>
-                                <li><i class="uil uil-schedule"></i> 3rd Mar 2021</li>
-                                <li><a href="blog-single-thumbs.html#comments"><i class="uil uil-comments-alt"></i> 21</a></li>
-                                <li><a href="#"><i class="uil uil-images"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="entry-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, voluptatem, dolorem animi nisi autem blanditiis enim culpa reiciendis et explicabo tenetur!</p>
-                            <a href="blog-single-thumbs.html" class="more-link">Read More</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="entry col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="grid-inner">
-                        <div class="entry-image">
-                            <a href="images/blog/full/1.jpg" data-lightbox="image"><img src="images/blog/grid/1.jpg" alt="Standard Post with Image"></a>
-                        </div>
-                        <div class="entry-title">
-                            <h2><a href="blog-single.html">This is a Standard post with another Preview Image</a></h2>
-                        </div>
-                        <div class="entry-meta">
-                            <ul>
-                                <li><i class="uil uil-schedule"></i> 5th May 2021</li>
-                                <li><a href="blog-single.html#comments"><i class="uil uil-comments-alt"></i> 6</a></li>
-                                <li><a href="#"><i class="uil uil-camera"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="entry-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, voluptatem, dolorem animi nisi autem blanditiis enim culpa reiciendis et explicabo tenetur!</p>
-                            <a href="blog-single.html" class="more-link">Read More</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="entry col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="grid-inner">
-                        <div class="entry-image">
-                            <iframe width="480" height="270" src="https://www.dailymotion.com/embed/video/x18murk" allowfullscreen></iframe>
-                        </div>
-                        <div class="entry-title">
-                            <h2><a href="blog-single-full.html">This is a Standard post with a Dailymotion Video</a></h2>
-                        </div>
-                        <div class="entry-meta">
-                            <ul>
-                                <li><i class="uil uil-schedule"></i> 11th May 2021</li>
-                                <li><a href="blog-single-full.html#comments"><i class="uil uil-comments-alt"></i> 9</a></li>
-                                <li><a href="#"><i class="uil uil-film"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="entry-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, voluptatem, dolorem animi nisi autem blanditiis enim culpa reiciendis et explicabo tenetur!</p>
-                            <a href="blog-single-full.html" class="more-link">Read More</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div><!-- #posts end -->
-
-            <!-- Pagination
-            ============================================= -->
+                @endforeach
+            </div>
+            
             <ul class="pagination mt-5 pagination-circle justify-content-center">
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="uil uil-angle-left-b"></i></a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i class="uil uil-angle-right-b"></i></a></li>
+                {{ $penyelamatan->appends(['kebakaran' =>$kebakaran->currentPage()]) }}
             </ul>
 
         </div>

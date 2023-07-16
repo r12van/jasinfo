@@ -2,8 +2,7 @@
 
 @section('kontainer')
 	
-
-<section id="content">
+<section id="content" class="page-title bg-transparent mt-3">
 			<div class="content-wrap">
 				<div class="container">
 

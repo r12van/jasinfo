@@ -69,13 +69,26 @@ Route::get('/pemberdayaan', function () {
 // route publikasi
 Route::get('/berita', function () {
 
-    return view('dashboard.publikasi.berita');
+    $berita = new UtamaController;
+    $pers = $berita->pers();
+    $kegiatan = $berita->kegiatan();
+    $kebakaran = $berita->publikasikebakaran();
+    $penyelamatan = $berita->publikasiPenyelamatan();
+    $pencegahan = $berita->pencegahan();
+
+    return view('dashboard.publikasi.berita')->with(['pers' => $pers, 'kegiatan' => $kegiatan, 'kebakaran' => $kebakaran, 'penyelamatan' => $penyelamatan, 'pencegahan' => $pencegahan]);
 });
 Route::get('/kegiatan', function () {
-    return view('dashboard.publikasi.kegiatan');
+    $berita = new UtamaController;
+    $kegiatan = $berita->publikasiKegiatan();
+
+    return view('dashboard.publikasi.kegiatan')->with(['kegiatan' => $kegiatan]);
 });
 Route::get('/pers', function () {
-    return view('dashboard.publikasi.pers');
+    $berita = new UtamaController;
+    $pers = $berita->publikasiPers();
+
+    return view('dashboard.publikasi.pers')->with(['pers' => $pers]);
 });
 
 Route::get('/pencegahan', function () {

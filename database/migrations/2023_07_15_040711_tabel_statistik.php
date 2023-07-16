@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tabel_tipe_berita', function (Blueprint $table) {
+        Schema::create('tabel_statistik', function (Blueprint $table) {
             $table->id('id_statistik')->autoIncrement();
             $table->string('kebakaran');
             $table->string('penyelamatan');
             $table->string('sosialisasi');
             $table->string('bulan');
             $table->string('tahun');
-            $table->timestamp('created_at')->nullable();
-            $table->timestamps('updated_at');
+            $table->timestamps();
         });
     }
 
