@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -224,7 +225,8 @@ class BeritaController extends Controller
             // untuk banner
             if (!is_null($banner)) {
                 $tipe_berita = TipeBerita::find($tipe)->nama_tipe;
-                $folder_banner = "image-berita/banner/" . $tipe_berita . "/" . $tanggal . "/";
+                $nama_wilayah = Wilayah::find($wilayah)->nama_wilayah;
+                $folder_banner = "image-berita/banner/" . Str::slug($tipe_berita) . "/" . Str::slug($nama_wilayah) . "/" . $tanggal . "/";
                 $nama_banner = substr($ulid, -7);
                 if ($banner->isValid()) {
                     $banner->move($folder_banner, $nama_banner . "." . $ext);
@@ -338,6 +340,9 @@ class BeritaController extends Controller
                 $tanggal = $r->input("tanggal");
                 $banner = $r->banner;
                 $ext = (is_null($banner)) ? "jpg" : $banner->getClientOriginalExtension();
+                $tanggal_lama = $berita->tanggal;
+                $tipe_lama = $berita->id_tipe;
+                $wilayah_lama = $berita->id_wilayah;
 
 
                 if(is_null($summary))
@@ -382,7 +387,8 @@ class BeritaController extends Controller
                 // untuk banner
                 if (!is_null($banner)) {
                     $tipe_berita = TipeBerita::find($tipe)->nama_tipe;
-                    $folder_banner = "image-berita/banner/" . $tipe_berita . "/" . $tanggal . "/";
+                    $wilayah_berita = Wilayah::find($wilayah)->nama_wilayah;
+                    $folder_banner = "image-berita/banner/" . Str::slug($tipe_berita) . "/" . Str::slug($wilayah_berita) . "/" . $tanggal . "/";
                     $nama_banner = substr($id, -7);
                     if ($banner->isValid()) {
                         $banner->move($folder_banner, $nama_banner . "." . $ext);
@@ -390,6 +396,19 @@ class BeritaController extends Controller
                     }
 
                     $berita->banner = $gambar;
+                }
+                else{
+                    if($tanggal != $tanggal_lama || $tipe != $tipe_lama || $wilayah != $wilayah_lama)
+                    {
+                        $lokasi_lama = $berita->banner;
+
+                        $tipe_berita = TipeBerita::find($tipe)->nama_tipe;
+                        $wilayah_berita = Wilayah::find($wilayah)->nama_wilayah;
+                        $folder_banner = "image-berita/banner/" . Str::slug($tipe_berita) . "/" . Str::slug($wilayah_berita) . "/" . $tanggal . "/";
+            
+                        File::move(public_path($lokasi_lama),public_path($folder_banner.basename($lokasi_lama)));
+
+                    }
                 }
 
                 $berita->save();
