@@ -95,6 +95,9 @@
                                 <li class="menu-item">
                                     <a class="menu-link" href="/kegiatan"><div>Kegiatan</div></a>
                                 </li>
+                                <li class="menu-item">
+                                    <a class="menu-link" href="/galeri"><div>Galeri</div></a>
+                                </li>
                             </ul>
                         </li>
                         <li class="menu-item">

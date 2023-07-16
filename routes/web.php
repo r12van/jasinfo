@@ -79,8 +79,11 @@ Route::get('/pencegahan', function () {
 Route::get('/editor-berita', [AdminController::class, 'adminBuatBerita'])->name('adminBuatBerita');
 
 Route::resource('artikel', \App\Http\Controllers\Crud\BeritaController::class);
-Route::resource('galeri',\App\Http\Controllers\Crud\GalleryController::class)->except('create');
-Route::get('/editor-galeri',[App\Http\Controllers\Crud\GalleryController::class,'create'])->name('galeri.editor');
+Route::resource('galeri', \App\Http\Controllers\Crud\GalleryController::class)->except('create');
+Route::get('/editor-galeri', [App\Http\Controllers\Crud\GalleryController::class, 'create'])->name('galeri.editor');
+Route::get('/galeri', function () {
+    return view('dashboard.galeri.index');
+});
 Route::post('/upload/ck-img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadCKEditor"])->name('cke5-img.up');
 Route::post('/upload/img/process', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondProcess"]);
 Route::get('/upload/img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadGaleri"]);
