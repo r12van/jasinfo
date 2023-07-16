@@ -26,6 +26,7 @@
 
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href="{{asset('css/custom.css')}}">
+	<link rel="stylesheet" href="{{asset('ckeditor_sementara.css')}}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Document Title

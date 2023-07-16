@@ -58,7 +58,6 @@ class BeritaController extends Controller
                         ->editColumn(
                             "highlight",
                             function ($berita) {
-                                error_log("highlight : " . $berita->highlight);
                                 return view('kolom.highlight-tabel-berita')->with("highlight", $berita->highlight)->with("id", $berita->id_berita);
                             }
                         )
@@ -116,36 +115,76 @@ class BeritaController extends Controller
             if ($r->exists('update')) {
                 if ($r->input("update") == 'table') {
                     $input_highlight = $r->input("highlight");
+                    // return dd($input_highlight);
 
-                    $array_cek = [];
-                    $list_urutan_ganda = [];
-                    foreach ($input_highlight as $id => $h) {
-                        if ($h != 0)
-                            $array_cek[$h][] = $id;
-                    }
-                    foreach ($array_cek as $urut => $cek_urutan) {
-                        if (count($cek_urutan) > 1)
-                            foreach ($cek_urutan as $id) {
-                                $list_urutan_ganda[$urut][] = $id;
+                    // pengecekan highlight ganda
+                    if(!is_null($input_highlight))
+                    {
+                        $array_cek = [];
+                        $list_urutan_ganda = [];
+                        
+                        // foreach ($input_highlight as $id => $h) {
+                        //     $db_h = Berita::find($id)->highlight;
+                        //     if ($h != 0)
+                        //         $array_cek[$h][] = $id;
+                        //     if($db_h != 0)
+                        //         $array_cek[$db_h][] = $id;
+                        // }
+                        foreach(Berita::all() as $b)
+                        {
+                            $highlight = $b->highlight;
+
+                            if ($highlight != 0)
+                            {
+                                if(isset($input_highlight[$b->id_berita]))
+                                {
+                                    if($input_highlight[$b->id_berita] != 0)
+                                        $array_cek[$input_highlight[$b->id_berita]][] = $b->id_berita;
+                                }
+                                    
+                                else
+                                {
+                                    $array_cek[$highlight][] = $b->id_berita;
+                                }
                             }
-                    }
-                    if (count($list_urutan_ganda) > 0) {
-                        $text = "<br>";
-                        foreach ($list_urutan_ganda as $urut => $item) {
-                            $text = $text . "Berita dengan urutan " . $urut . " : <br>";
-                            foreach ($item as $id)
-                                $text = $text . "- " . Berita::find($id)->judul . "<br>";
+                            else
+                            {
+                                if(isset($input_highlight[$b->id_berita]))
+                                    if($input_highlight[$b->id_berita] != 0)
+                                    $array_cek[$input_highlight[$b->id_berita]][] = $b->id_berita;
+                            }
+                                
                         }
-                        return redirect()->back()->with('alert.warning', 'Terdapat duplikasi pada urutan highlight. Periksa kembali dan pastikan tidak ada duplikasi urutan pada berita highlight.' . $text);
+                        // return dd($array_cek);
+                        foreach ($array_cek as $urut => $cek_urutan) {
+                            if (count($cek_urutan) > 1)
+                                foreach ($cek_urutan as $id) {
+                                    $list_urutan_ganda[$urut][] = $id;
+                                }
+                        }
+                        if (count($list_urutan_ganda) > 0) {
+                            $text = "<br>";
+                            foreach ($list_urutan_ganda as $urut => $item) {
+                                $text = $text . "Berita dengan urutan " . $urut . " : <br>";
+                                foreach ($item as $id)
+                                    $text = $text . "- " . Berita::find($id)->judul . "<br>";
+                            }
+                            return redirect()->back()->with('alert.warning', 'Terdapat duplikasi pada urutan highlight. Periksa kembali dan pastikan tidak ada duplikasi urutan pada berita highlight.' . $text);
+                        }
                     }
+                    
 
                     $list_id = Berita::all()->pluck('id_berita');
                     $input_publish = $r->input("publish");
-
                     foreach ($list_id as $id) {
                         $berita = Berita::find($id);
-                        $berita->highlight = $input_highlight[$id];
-                        $berita->publish = (isset($input_publish[$id])) ? true : false;
+                        if(isset($input_highlight[$id]))
+                            $berita->highlight = $input_highlight[$id];
+                        if(isset($input_publish[$id]))
+                            {
+                                $berita->publish = ($input_publish[$id] == "true") ? true : false;
+                            }
+                        
                         $berita->save();
                     }
 

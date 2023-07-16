@@ -44,8 +44,18 @@
 
               <a type="button" class="waves-effect waves-light btn btn-rounded btn-primary mb-5" href="{{route('adminBuatBerita')}}" target="_blank">Berita Baru</a>
                 <form id="tabel-berita" action="{{route('artikel.store',['update' => 'table'])}}" method="post">
-                    @csrf 
-                    <div class="table-responsive">
+                  @csrf
+
+                  <div class="collapse" id="wait-div">
+                    <div class="jumbotron text-center text-info">
+                      <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                      Memproses . . .
+                    </div>
+                  </div>
+                  
+                    <div class="table-responsive" id="table-div">
                       <table id="tabel-berita-all" class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <tr>
@@ -63,8 +73,8 @@
                             </tr>
                         </thead>
                         
-                        <tfoot>
-                            <tr>
+                            <tfoot>
+                              <tr>
                                 <th>No</th>
                                 <th>Judul</th>
                                 <th>Penulis</th>
@@ -76,17 +86,18 @@
                                 <th>Highlight</th>
                                 <th>Publish</th>
                                 <th>Tindakan</th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                              </tr>
+                            </tfoot>
+                        </table>
                     </div>
-                </form>
-          </div>
+                  </div>
           <!-- /.box-body -->
           <div class="box-footer">
-              <button class="btn btn-primary align-self-right" onclick="submitPerubahan()">Simpan Perubahan</button>
+              <button class="btn btn-primary align-self-right" type="submit">Simpan Perubahan</button>
           </div>
        </div>
+      </form>
+
 
         <!-- /.box -->      
       </div> 
@@ -114,17 +125,22 @@
 @push('stack-body')
 
     <script>
-        var tabelBerita = $("#tabel-berita-all");
         var tabelPublish = $("#tabel-berita-publish");
         var tabelHighlight = $("#tabel-berita-highlight");
 
-        tabelBerita.DataTable({
+        var tabelBerita = $("#tabel-berita-all").DataTable({
                             processing : true,
                             serverSide : true,
+                            paging:true,
+                            pageLength:5,
+                            lengthMenu:[
+                              [5,10,25,-1],
+                              [5,10,25,"All"]
+                            ],
                             ajax : {
                                 url : "artikel?tabel='all'"
                             },
-                            dom: 'frtip',
+                            dom: 'lfrtip',
                             
                             columns : [
                                 {data : "DT_RowIndex",  title: "No", searchable:false, orderable:false},
@@ -148,33 +164,131 @@
                             columnDefs: [
                               {targets: '_all',defaultContent : ''},
                               ],
+                            drawCallback : function(){
+                              var api = this.api();
+
+                              api.column(8).data().each(function(value){
+                                var s1 = value.substring(value.indexOf("-id="))
+                                var s2 = s1.substring(s1.indexOf("id="), s1.indexOf('>'))
+                                var id = s2.substring(s2.indexOf('"')+1,s2.lastIndexOf('"'))
+                                console.log(id)
+
+                                var target = $("input[name='highlight["+id+"]']")
+                                if(target.length > 0)
+                                {
+                                  $("select[id='highlight-"+id+"'] option[value='"+target.val()+"']").prop('selected',true)
+                                }
+                                console.log(target.val())
+                              })
+
+                              api.column(9).data().each( function(value,index){
+                                // console.log($('*').data('id'))
+                                var s1 = value.substring(value.indexOf("-id="))
+                                var s2 = s1.substring(s1.indexOf("id="), s1.indexOf('>'))
+                                var id = s2.substring(s2.indexOf('"')+1,s2.lastIndexOf('"'))
+                                console.log(id)
+
+                                var target = $("input[name='publish["+id+"]']")
+                                if(target.length > 0)
+                                {
+                                  if(target.val() == 'true')
+                                    $("input[id='publish-"+id+"']").prop('checked', true)
+                                  else
+                                    $("input[id='publish-"+id+"']").prop('checked', false)
+                                }
+                                console.log(target.val())
+                              })
+
+                            }
         })
 
-        function checkboxPublish(status, id){
+        var shouldWait = false;
+        var submiting = false;
 
-          console.log("publish change : "+status);
-          $.ajax({
-               type:'PATCH',
-               url:'/artikel/'+id,
-               data:{
-                  '_token' : '<?php echo csrf_token() ?>',
-                  'set-status' : "publish",
-                  'value' : status
-               },
-               success:function() {
-                    
-                    tabelBerita.ajax.reload(null, false);
-                    
-               }
-            });
+        tabelBerita.on( 'draw', function ( e, settings, processing ) {
+        shouldWait = processing;
+      })
+
+        var p_arr = []
+        var h_arr = []
+
+        function publishChange(el){
+          var id = $(el).data('id');
+          var val = $(el).prop('checked')
+
+          var target = $("input[name='publish["+id+"]']")
+          if(target.length)
+            {
+              target.val(val)
+            }
+          else
+          {
+            $("form").append("<input type='hidden' name='publish["+id+"]' value='"+val+"'>")
+          }
+          
         }
 
-        function submitPerubahan()
-        {
-          tabelBerita.$('select','checkbox').serialize()
-          $('#tabel-berita').submit()
+        function highlightChange(el){
+
+            var id = $(el).data('id');
+            var val = $(el).val()
+
+            var target = $("input[name='highlight["+id+"]']")
+            if(target.length)
+              {
+                target.val(val)
+              }
+            else
+            {
+              $("form").append("<input type='hidden' name='highlight["+id+"]' value='"+val+"'>")
+            }
+            
+          
         }
-      
+
+        // magic untuk mengatasi submit hanya current page dan tidak semua input di tiap page
+        // shouldwait, submiting, dan processing.dt jangan sampai lupa
+        $("#tabel-berita").on("submit", function(e){
+          $("#table-div").hide()
+          $("#wait-div").collapse('show')
+
+          e.preventDefault();
+
+          // var form = this;
+
+          // console.log(p_arr)
+          // console.log(h_arr)
+
+          // $.each(p_arr, function (index, value) { 
+          //   console.log(index)
+          //   console.log(form)
+          //    $(form).append($('<input>').attr('type','hidden').attr('name','publish['+index+']').val(value))
+          // });
+
+          // $.each(h_arr, function (index, value) { 
+          //   console.log(index)
+          //    $(form).append($('<input>').attr('type','hidden').attr('name','highlight['+index+']').val(value))
+          // });
+          this.submit()
+
+          // tabelBerita.page.len(-1)
+          // // tabelBerita.draw()
+          // e.preventDefault();
+          
+          // setInterval(() => {
+          //   console.log(shouldWait)
+          //   if(!shouldWait && !submiting)
+          //   {
+          //     var arr = tabelBerita.$('select').serializeArray()
+          //     $("#hidden1").val(arr)
+          //     submiting = true;
+          //     // console.log(arr);
+          //     this.submit()
+          //   }
+          // }, 1000);
+          
+        })
+
     </script>
 
 @endpush

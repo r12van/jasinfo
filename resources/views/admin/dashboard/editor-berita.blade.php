@@ -74,7 +74,7 @@
 									<div class="form-group row">
 										<label for="example-text-input" class="col-sm-2 col-form-label">Judul</label>
 										<div class="col-sm-10">
-											<input class="form-control" type="text" placeholder="Masukan judul berita" id="judul" name="judul" value="{{(isset($judul)) ? $judul : old('judul')}}">
+											<input class="form-control" type="text" placeholder="Masukan judul berita" id="judul" name="judul" value="{{(isset($judul)) ? $judul : old('judul')}}" required>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -136,7 +136,7 @@
 										</div>
 										<!-- /.box-header -->
 										<div class="box-body">
-											<textarea id="editor-berita" name="isi">{{(isset($isi)) ? $isi : old('isi')}}</textarea>
+											<textarea id="editor-berita" name="isi" required>{{(isset($isi)) ? $isi : old('isi')}}</textarea>
 										</div>
 									</div>
 									

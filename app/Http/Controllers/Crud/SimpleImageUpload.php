@@ -24,7 +24,7 @@ class SimpleImageUpload extends Controller
             $tanggal = now()->toDateString();
             $nama = $file->getClientOriginalName();
 
-            $dir = $this->base_dir."/".$tanggal;
+            $dir = $this->base_dir.$tanggal;
 
             $file->move($dir,$nama);
 
