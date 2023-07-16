@@ -84,7 +84,7 @@
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-              <button class="btn btn-primary align-self-right" onclick="$('#tabel-berita').submit()">Simpan Perubahan</button>
+              <button class="btn btn-primary align-self-right" onclick="submitPerubahan()">Simpan Perubahan</button>
           </div>
        </div>
 
@@ -167,6 +167,12 @@
                     
                }
             });
+        }
+
+        function submitPerubahan()
+        {
+          tabelBerita.$('select','checkbox').serialize()
+          $('#tabel-berita').submit()
         }
       
     </script>
