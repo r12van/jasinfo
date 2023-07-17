@@ -60,6 +60,7 @@
 								<!-- Post Single - Content End -->
 
 							</div>
+							
 						</div><!-- .entry end -->
 
 					</div>

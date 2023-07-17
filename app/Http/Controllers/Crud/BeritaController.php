@@ -118,11 +118,10 @@ class BeritaController extends Controller
                     // return dd($input_highlight);
 
                     // pengecekan highlight ganda
-                    if(!is_null($input_highlight))
-                    {
+                    if (!is_null($input_highlight)) {
                         $array_cek = [];
                         $list_urutan_ganda = [];
-                        
+
                         // foreach ($input_highlight as $id => $h) {
                         //     $db_h = Berita::find($id)->highlight;
                         //     if ($h != 0)
@@ -130,30 +129,21 @@ class BeritaController extends Controller
                         //     if($db_h != 0)
                         //         $array_cek[$db_h][] = $id;
                         // }
-                        foreach(Berita::all() as $b)
-                        {
+                        foreach (Berita::all() as $b) {
                             $highlight = $b->highlight;
 
-                            if ($highlight != 0)
-                            {
-                                if(isset($input_highlight[$b->id_berita]))
-                                {
-                                    if($input_highlight[$b->id_berita] != 0)
+                            if ($highlight != 0) {
+                                if (isset($input_highlight[$b->id_berita])) {
+                                    if ($input_highlight[$b->id_berita] != 0)
                                         $array_cek[$input_highlight[$b->id_berita]][] = $b->id_berita;
-                                }
-                                    
-                                else
-                                {
+                                } else {
                                     $array_cek[$highlight][] = $b->id_berita;
                                 }
+                            } else {
+                                if (isset($input_highlight[$b->id_berita]))
+                                    if ($input_highlight[$b->id_berita] != 0)
+                                        $array_cek[$input_highlight[$b->id_berita]][] = $b->id_berita;
                             }
-                            else
-                            {
-                                if(isset($input_highlight[$b->id_berita]))
-                                    if($input_highlight[$b->id_berita] != 0)
-                                    $array_cek[$input_highlight[$b->id_berita]][] = $b->id_berita;
-                            }
-                                
                         }
                         // return dd($array_cek);
                         foreach ($array_cek as $urut => $cek_urutan) {
@@ -172,19 +162,18 @@ class BeritaController extends Controller
                             return redirect()->back()->with('alert.warning', 'Terdapat duplikasi pada urutan highlight. Periksa kembali dan pastikan tidak ada duplikasi urutan pada berita highlight.' . $text);
                         }
                     }
-                    
+
 
                     $list_id = Berita::all()->pluck('id_berita');
                     $input_publish = $r->input("publish");
                     foreach ($list_id as $id) {
                         $berita = Berita::find($id);
-                        if(isset($input_highlight[$id]))
+                        if (isset($input_highlight[$id]))
                             $berita->highlight = $input_highlight[$id];
-                        if(isset($input_publish[$id]))
-                            {
-                                $berita->publish = ($input_publish[$id] == "true") ? true : false;
-                            }
-                        
+                        if (isset($input_publish[$id])) {
+                            $berita->publish = ($input_publish[$id] == "true") ? true : false;
+                        }
+
                         $berita->save();
                     }
 
@@ -294,12 +283,25 @@ class BeritaController extends Controller
     {
         try {
 
+
             $berita = Berita::join('tabel_wilayah', 'tabel_berita.id_wilayah', '=', 'tabel_wilayah.id_wilayah')
                 ->join('tabel_tipe_berita', 'tabel_berita.id_tipe', '=', 'tabel_tipe_berita.id_tipe')
                 ->where('slug', $slug)->first();
 
             if (is_null($berita))
                 return abort(404, "Artikel Tidak Ditemukan");
+
+            if ($berita->id_tipe == '6')
+                return view('dashboard.publikasi.pengumuman')->with([
+                    "judul" => $berita->judul,
+                    "summary" => $berita->summary,
+                    "wilayah" => $berita->nama_wilayah,
+                    "penulis" => $berita->penulis,
+                    "tipe" => $berita->nama_tipe,
+                    "tanggal" => $berita->tanggal,
+                    "banner" => $berita->banner,
+                    "isi" => $berita->isi
+                ]);
 
             return view('dashboard.berita.isi')->with([
                 "judul" => $berita->judul,
@@ -401,18 +403,18 @@ class BeritaController extends Controller
                     }
                 }
 
-                // fetch data
-                $judul = $r->input("judul");
-                $summary = $r->input("summary");
-                $isi = $r->input("isi");
-                $wilayah = $r->input("wilayah");
-                $tipe = $r->input("tipe");
-                $tanggal = $r->input("tanggal");
-                $banner = $r->banner;
-                $ext = (is_null($banner)) ? "jpg" : $banner->getClientOriginalExtension();
-                $tanggal_lama = $berita->tanggal;
-                $tipe_lama = $berita->id_tipe;
-                $wilayah_lama = $berita->id_wilayah;
+            // fetch data
+            $judul = $r->input("judul");
+            $summary = $r->input("summary");
+            $isi = $r->input("isi");
+            $wilayah = $r->input("wilayah");
+            $tipe = $r->input("tipe");
+            $tanggal = $r->input("tanggal");
+            $banner = $r->banner;
+            $ext = (is_null($banner)) ? "jpg" : $banner->getClientOriginalExtension();
+            $tanggal_lama = $berita->tanggal;
+            $tipe_lama = $berita->id_tipe;
+            $wilayah_lama = $berita->id_wilayah;
 
 
             // save ke db
@@ -427,49 +429,46 @@ class BeritaController extends Controller
 
 
 
-                // untuk banner
-                if (!is_null($banner)) {
-                    $tipe_berita = TipeBerita::find($tipe)->nama_tipe;
-                    $wilayah_berita = Wilayah::find($wilayah)->nama_wilayah;
-                    $folder_banner = "image-berita/banner/" . Str::slug($tipe_berita) . "/" . Str::slug($wilayah_berita) . "/" . $tanggal . "/";
-                    $nama_banner = substr($id, -7);
-                    if ($banner->isValid()) {
-                        $banner->move($folder_banner, $nama_banner . "." . $ext);
-                        $gambar = $folder_banner . $nama_banner . "." . $ext;
-                    }
-
             // untuk banner
             if (!is_null($banner)) {
                 $tipe_berita = TipeBerita::find($tipe)->nama_tipe;
-                $folder_banner = "image-berita/banner/" . $tipe_berita . "/" . $tanggal . "/";
+                $wilayah_berita = Wilayah::find($wilayah)->nama_wilayah;
+                $folder_banner = "image-berita/banner/" . Str::slug($tipe_berita) . "/" . Str::slug($wilayah_berita) . "/" . $tanggal . "/";
                 $nama_banner = substr($id, -7);
                 if ($banner->isValid()) {
                     $banner->move($folder_banner, $nama_banner . "." . $ext);
                     $gambar = $folder_banner . $nama_banner . "." . $ext;
                 }
-                else{
-                    if($tanggal != $tanggal_lama || $tipe != $tipe_lama || $wilayah != $wilayah_lama)
-                    {
-                        $lokasi_lama = $berita->banner;
 
-                        $tipe_berita = TipeBerita::find($tipe)->nama_tipe;
-                        $wilayah_berita = Wilayah::find($wilayah)->nama_wilayah;
-                        $folder_banner = "image-berita/banner/" . Str::slug($tipe_berita) . "/" . Str::slug($wilayah_berita) . "/" . $tanggal . "/";
-            
-                        File::move(public_path($lokasi_lama),public_path($folder_banner.basename($lokasi_lama)));
+                // untuk banner
+                if (!is_null($banner)) {
+                    $tipe_berita = TipeBerita::find($tipe)->nama_tipe;
+                    $folder_banner = "image-berita/banner/" . $tipe_berita . "/" . $tanggal . "/";
+                    $nama_banner = substr($id, -7);
+                    if ($banner->isValid()) {
+                        $banner->move($folder_banner, $nama_banner . "." . $ext);
+                        $gambar = $folder_banner . $nama_banner . "." . $ext;
+                    } else {
+                        if ($tanggal != $tanggal_lama || $tipe != $tipe_lama || $wilayah != $wilayah_lama) {
+                            $lokasi_lama = $berita->banner;
 
+                            $tipe_berita = TipeBerita::find($tipe)->nama_tipe;
+                            $wilayah_berita = Wilayah::find($wilayah)->nama_wilayah;
+                            $folder_banner = "image-berita/banner/" . Str::slug($tipe_berita) . "/" . Str::slug($wilayah_berita) . "/" . $tanggal . "/";
+
+                            File::move(public_path($lokasi_lama), public_path($folder_banner . basename($lokasi_lama)));
+                        }
                     }
+
+                    $berita->banner = $gambar;
                 }
 
-                $berita->banner = $gambar;
+                $berita->save();
+
+
+
+                return redirect(route('adminBerita'))->with("alert.success", "Berita berhasil disimpan!");
             }
-
-            $berita->save();
-
-
-
-            return redirect(route('adminBerita'))->with("alert.success", "Berita berhasil disimpan!");
-        }
         } catch (Throwable $e) {
             error_log("Berita Controller Error : Gagal menyimpan update pada berita at update() " . $e);
             Log::error("Berita Controller Error : Gagal menyimpan update pada berita at update() " . $e);

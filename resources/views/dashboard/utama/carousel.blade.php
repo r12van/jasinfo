@@ -38,7 +38,7 @@
                             data-elementdelay="0.1"
                             data-endelementdelay="0.1"
                             data-endspeed="1000"
-                            data-endeasing="Power4.easeIn" style="z-index: 3; white-space: nowrap; color: rgb(252, 250, 250); line-height: 1.2; max-width: 450px; width: 450px; white-space: normal;">{{ $carousell->judul }} <a href="{{ route('artikel.show',['artikel' => $carousell->slug]) }}"> >></a></div>
+                            data-endeasing="Power4.easeIn" style="z-index: 3; white-space: nowrap; color: rgb(252, 250, 250); line-height: 1.2; max-width: 450px; width: 450px; white-space: normal;">{{ $carousell->judul }} <a href="{{ route('artikel.show',['artikel' => $carousell->slug]) }}"><p class="h2">Klik disini</p></a></div>
                     </li>
                     @endforeach
                     
