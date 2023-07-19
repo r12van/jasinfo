@@ -15,6 +15,7 @@ return new class extends Migration
             $table->ulid('id_galeri');
             $table->string('judul');
             $table->string('slug')->nullable();
+            $table->longText('artikel')->nullable();
             $table->string('tanggal');
             $table->string('pengupload')->default("Admin");
             $table->boolean('publish')->default(false);

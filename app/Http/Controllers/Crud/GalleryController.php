@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Galeri;
 use App\Models\TipeGaleri;
 use App\Models\Wilayah;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
@@ -55,7 +58,8 @@ class GalleryController extends Controller
         {
             error_log("Galeri Controller Error : Gagal melakukan index galeri at index() " . $e);
             Log::error("Galeri Controller Error : Gagal melakukan index galeri at index() " . $e);
-            return abort(503, "Tidak dapat mengakses galeri.");
+            $time = now();
+            return abort(503, "Tidak dapat mengakses galeri." . " (".$time.")");
         }
         
     }
@@ -81,7 +85,8 @@ class GalleryController extends Controller
         {
             error_log("Galeri Controller Error : Gagal menampilkan editor galeri at create() " . $e);
             Log::error("Galeri Controller Error : Gagal menampilkan editor galeri at create() " . $e);
-            return abort(503, "Tidak dapat mengakses editor galeri.");
+            $time = now();
+            return abort(503, "Tidak dapat mengakses editor galeri." . " (".$time.")");
         }
     }
 
@@ -93,13 +98,80 @@ class GalleryController extends Controller
         $this->middleware('auth');
         try
         {
-            
+            return dd($r->input());
+            $judul = $r->input('judul');
+            $tipe = $r->input('tipe');
+            $tanggal = $r->input('tanggal');
+            $wilayah = $r->input('wilayah');
+
+            // untuk media yang diupload
+            $index = $r->input('index');
+            $media = $r->input('media');
+            $sumber = $r->input('sumber');
+
+            $userid = $r->input("gambar");
+
+
+            $data_galeri = [];
+            foreach($index as $i=>$d)
+            {
+                $data_galeri[$i] = [
+                    "urut" => $i,
+                    "tipe" => $media[$i],
+                    "file" => $d,
+                    "sumber" => $sumber[$i]
+                ];
+            }
+
+            // pindahkan gambar ke folder public
+            $uploadController = new SimpleImageUpload;
+            foreach($data_galeri as $i => $data)
+            {
+                if($data["tipe"] == "image")
+                {
+                    // galeri/dokumentasi/jakarta-pusat/2023-01-20/image/1.jpg
+                    $file_path = $uploadController->dirGaleri( Str::slug(TipeGaleri::find($tipe)->nama_tipe), Str::slug(Wilayah::find($wilayah)), $tanggal ) . "/". $data["tipe"] . "/" . $i . pathinfo($data["file"], PATHINFO_EXTENSION);
+
+                    File::move(
+                        $file_path,
+                        $uploadController->dirTempGaleri($userid) . "/" . $data["file"]
+                        );
+                    
+                    $data["file"] = $file_path;
+                }
+            }   
+
+            // simpan ke db
+            $galeri = new Galeri([
+                "judul" => $judul,
+                "id_tipe" => $tipe,
+                "tanggal" => $tanggal,
+                "id_wilayah" => $wilayah,
+                "data" => json_encode($data_galeri),
+                // "pengupload" => (Auth::user()->name) ? Auth::user()->name : "Admin",
+            ]);
+
+            $galeri->save();
+
+            // hapus directory upload sementara
+            try{
+
+                File::delete($uploadController->dirTempGaleri($userid));
+            }
+            catch(Throwable $e)
+            {
+                error_log("Galeri Controller Error : kesalahan saat menghpus folder galeri sementara at store() " . $e);
+                Log::error("Galeri Controller Error : kesalahan saat menghpus folder galeri sementara at store() " . $e);
+            }
+
+            return redirect()->route('galeri.editor')->with('alert.success'.'Berhasil menyimpan galeri!');
         }
         catch(Throwable $e)
         {
-            error_log("Galeri Controller Error : Gagal menampilkan editor galeri at create() " . $e);
-            Log::error("Galeri Controller Error : Gagal menampilkan editor galeri at create() " . $e);
-            return redirect()->route('galeri.editor')->withInput()->with('alert.danger','Gagal menyimpan media untuk galeri ke database!');
+            error_log("Galeri Controller Error : Gagal menampilkan editor galeri at store() " . $e);
+            Log::error("Galeri Controller Error : Gagal menampilkan editor galeri at store() " . $e);
+            $time = now();
+            return redirect()->route('galeri.editor')->withInput()->with('alert.danger','Gagal menyimpan media untuk galeri ke database!' . " (".$time.")");
         }
     }
 

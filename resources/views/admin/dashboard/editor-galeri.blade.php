@@ -150,7 +150,7 @@
 									</div>
 									
 									
-									<input type="hidden" name="data" id="list-upload">
+									{{-- <input type="hidden" name="data[]" id="list-upload"> --}}
 								</div>
 								<!-- /.col -->
 							</div>
@@ -442,25 +442,21 @@
 		function submitGaleri()
 		{
 			
-			// $("#list-video").val(listVideo)
+			
 			var arr = $("[data-pointer]")
 			var galeri = []
-			$.each(arr, function (indexInArray, valueOfElement) { 
-				var name = $(valueOfElement).data('name')
-				var tipe = $(valueOfElement).data('tipe')
-				var sumber = $(valueOfElement).data('sumber')
+			$.each(arr, function (index, value) { 
+				var name = $(value).data('name')
+				var tipe = $(value).data('tipe')
+				var sumber = $(value).data('sumber')
 
-				galeri.push({
-					index : indexInArray,
-					name : name,
-					tipe : tipe,
-					sumber : sumber
-				});
+					
+				$('#form-galeri').append("<input type='hidden' name='index["+index+"]' value='"+name+"'>");
+				$('#form-galeri').append("<input type='hidden' name='media["+index+"]' value='"+tipe+"'>");
+				$('#form-galeri').append("<input type='hidden' name='sumber["+index+"]' value='"+sumber+"'>");
+
 			});
-			$("#list-upload").val(galeri)
-			// console.log(galeri)
 			$('#form-galeri').submit()
-			// console.log($("#list-upload").val())
 
 		}
 

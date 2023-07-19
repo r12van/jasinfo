@@ -14,7 +14,7 @@ class SimpleImageUpload extends Controller
 {
     protected $base_dir = "image-berita/editor/upload/";
     protected $filepond_temp = "tmp/";
-    protected $galeri_dir = "image-galeri/galeri/";
+    protected $galeri_dir = "galeri/";
 
     public function uploadCKEditor(Request $r)
     {
@@ -133,13 +133,16 @@ class SimpleImageUpload extends Controller
         }
     }
 
-    public function dirTempGaleri(User $user)
+    public function dirTempGaleri(User|string $user)
     {
-        return $this->filepond_temp.$user->id;
+        if($user instanceof User)
+            $user = $user->id;
+
+        return $this->filepond_temp.$user;
     }
 
-    public function dirGaleri(string|int $tipe_galeri, string $tanggal)
+    public function dirGaleri(string $tipe_galeri, string $wilayah, string $tanggal)
     {
-        
+        return $this->galeri_dir . "/" . $tipe_galeri ."/" . $wilayah . "/" . $tanggal;
     }
 }
