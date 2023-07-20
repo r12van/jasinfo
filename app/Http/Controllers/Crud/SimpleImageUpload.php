@@ -7,7 +7,9 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 use Throwable;
 
 class SimpleImageUpload extends Controller
@@ -50,15 +52,15 @@ class SimpleImageUpload extends Controller
     {
         $this->middleware('auth');
         try{
-                if($r->hasFile('gambar'))
-                {
+                // if($r->hasFile('gambar'))
+                // {
                     $file = $r->file('gambar');
                     $user = Auth::user();
                     // error_log("nama file : ".$file->getClientOriginalName());
                     $file->move($this->dirTempGaleri($user),$file->getClientOriginalName());
                     return $user->id;
-                }
-               return 'gagal';
+                // }
+            //    return 'gagal';
 
         }
         catch(Throwable $e)
@@ -101,18 +103,23 @@ class SimpleImageUpload extends Controller
         }
     }
 
-    public function filepondRestore(Request $r)
+    public function filepondRestore(string $file)
     {
         $this->middleware('auth');
         try{
-                return dd($r);
+                // return dd($r);
                 // return response()->noContent()
+
+            $path = public_path("\\tmp\\".Auth::user()->id."\\".$file);
+            if(File::exists($path))
+                return Response::make(File::get($path,200))->header('Content-Disposition','inline')->header('filename',$file);
+
 
         }
         catch(Throwable $e)
         {
-            error_log("Simple Image Upload Error : kesalahan saat upload file gambar melalui plugin FilePond at uploadGaleri() ".$e);
-            Log::error("Simple Image Upload Error : kesalahan saat upload file gambar melalui plugin FilePond at uploadGaleri() ".$e);
+            error_log("Simple Image Upload Error : kesalahan saat upload file gambar melalui plugin FilePond at filepondRestore() ".$e);
+            Log::error("Simple Image Upload Error : kesalahan saat upload file gambar melalui plugin FilePond at filepondRestore() ".$e);
             return 'error';
         }
     }
@@ -143,6 +150,6 @@ class SimpleImageUpload extends Controller
 
     public function dirGaleri(string $tipe_galeri, string $wilayah, string $tanggal)
     {
-        return $this->galeri_dir . "/" . $tipe_galeri ."/" . $wilayah . "/" . $tanggal;
+        return $this->galeri_dir . $tipe_galeri ."/" . $wilayah . "/" . $tanggal;
     }
 }

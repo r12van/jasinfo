@@ -79,8 +79,9 @@ Route::get('/pencegahan', function () {
 Route::get('/editor-berita', [AdminController::class, 'adminBuatBerita'])->name('adminBuatBerita');
 
 Route::resource('artikel', \App\Http\Controllers\Crud\BeritaController::class);
-Route::resource('galeri', \App\Http\Controllers\Crud\GalleryController::class)->except('create');
+Route::resource('gallery', \App\Http\Controllers\Crud\GalleryController::class);//->except(['create','store']);
 Route::get('/editor-galeri', [App\Http\Controllers\Crud\GalleryController::class, 'create'])->name('galeri.editor');
+Route::post('/editor-galeri/store',[\App\Http\Controllers\Crud\GalleryController::class, 'store'])->name("galeri.store");
 Route::get('/galeri', function () {
     return view('dashboard.galeri.index');
 });
@@ -88,7 +89,7 @@ Route::post('/upload/ck-img', [\App\Http\Controllers\Crud\SimpleImageUpload::cla
 // untuk filepond
 Route::post('/upload/img/process', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondProcess"]);
 Route::get('/upload/img/load', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondLoad"]);
-Route::get('/upload/img/restore', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondRestore"]);
+Route::get('/upload/img/restore/{file}', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondRestore"]);
 Route::delete('/upload/img/revert', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondRevert"]);
 // Route::get('/upload/img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadGaleri"]);
 // Route::patch('/upload/img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadGaleri"]);

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class GalleryController extends Controller
@@ -98,7 +99,7 @@ class GalleryController extends Controller
         $this->middleware('auth');
         try
         {
-            return dd($r->input());
+            
             $judul = $r->input('judul');
             $tipe = $r->input('tipe');
             $tanggal = $r->input('tanggal');
@@ -109,7 +110,15 @@ class GalleryController extends Controller
             $media = $r->input('media');
             $sumber = $r->input('sumber');
 
-            $userid = $r->input("gambar");
+            // return dd($r->input());
+
+            // return redirect()->back()->withInput()->with(
+            //     [
+            //         "alert.success" => "Test gagal",
+            //         "reference_folder" => Auth::user()->id
+            //     ]);
+
+            $userid = Auth::user()->id;
 
 
             $data_galeri = [];
@@ -129,34 +138,44 @@ class GalleryController extends Controller
             {
                 if($data["tipe"] == "image")
                 {
-                    // galeri/dokumentasi/jakarta-pusat/2023-01-20/image/1.jpg
-                    $file_path = $uploadController->dirGaleri( Str::slug(TipeGaleri::find($tipe)->nama_tipe), Str::slug(Wilayah::find($wilayah)), $tanggal ) . "/". $data["tipe"] . "/" . $i . pathinfo($data["file"], PATHINFO_EXTENSION);
+                    // galeri/dokumentasi/jakarta-pusat/2023-01-20/judul/image/1.jpg
+                    $file_path = $uploadController->dirGaleri( Str::slug(TipeGaleri::find($tipe)->nama_tipe), Str::slug(Wilayah::find($wilayah)->nama_wilayah), $tanggal ) . "/" .  Str::slug($judul) . "/". $data["tipe"] ;
+                    $file_name =  $i . "." . pathinfo($data["file"], PATHINFO_EXTENSION);
+
+                    // if(!File::exists($file_path))
+                    // error_log(public_path(str_replace("/","\\",$file_path)));
+                        File::makeDirectory(public_path(str_replace("/","\\",$file_path)), 0777, true,true);
 
                     File::move(
-                        $file_path,
-                        $uploadController->dirTempGaleri($userid) . "/" . $data["file"]
+                        public_path(str_replace("/","\\",$uploadController->dirTempGaleri($userid) . "/" . $data["file"])),
+                        public_path(str_replace("/","\\",$file_path . "/" . $file_name))
                         );
+
                     
-                    $data["file"] = $file_path;
+                    
+                    $data_galeri[$i]["file"] = $file_path . "/" . $file_name;
                 }
             }   
 
+            // return dd($data_galeri);
+
             // simpan ke db
-            $galeri = new Galeri([
-                "judul" => $judul,
-                "id_tipe" => $tipe,
-                "tanggal" => $tanggal,
-                "id_wilayah" => $wilayah,
-                "data" => json_encode($data_galeri),
+            $galeri = new Galeri();
+            $galeri->judul =  $judul;
+            $galeri->slug = Str::slug($judul);
+            $galeri->id_tipe =  $tipe;
+            $galeri->tanggal =  $tanggal;
+            $galeri->id_wilayah =  $wilayah;
+            $galeri->data =  json_encode($data_galeri);
                 // "pengupload" => (Auth::user()->name) ? Auth::user()->name : "Admin",
-            ]);
+            
 
             $galeri->save();
 
             // hapus directory upload sementara
             try{
 
-                File::delete($uploadController->dirTempGaleri($userid));
+                File::delete(public_path(str_replace("/","\\",$uploadController->dirTempGaleri($userid))));
             }
             catch(Throwable $e)
             {
@@ -164,14 +183,14 @@ class GalleryController extends Controller
                 Log::error("Galeri Controller Error : kesalahan saat menghpus folder galeri sementara at store() " . $e);
             }
 
-            return redirect()->route('galeri.editor')->with('alert.success'.'Berhasil menyimpan galeri!');
+            return redirect()->back()->with('alert.success'.'Berhasil menyimpan galeri!');
         }
         catch(Throwable $e)
         {
-            error_log("Galeri Controller Error : Gagal menampilkan editor galeri at store() " . $e);
-            Log::error("Galeri Controller Error : Gagal menampilkan editor galeri at store() " . $e);
+            error_log("Galeri Controller Error : Gagal menyimpan galeri at store() " . $e);
+            Log::error("Galeri Controller Error : Gagal menyimpan galeri at store() " . $e);
             $time = now();
-            return redirect()->route('galeri.editor')->withInput()->with('alert.danger','Gagal menyimpan media untuk galeri ke database!' . " (".$time.")");
+            return redirect()->back()->withInput()->with('alert.danger','Gagal menyimpan media untuk galeri ke database!' . " (".$time.")");
         }
     }
 

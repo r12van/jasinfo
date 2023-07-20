@@ -14,6 +14,8 @@
 
 			if(!isset($id_tipe))
 				$id_tipe = old('tipe');
+
+			
 		@endphp
 
 		@if (isset($editMode) && $editMode)
@@ -24,7 +26,8 @@
 			</div>
 		@endif
 
-		<form id="form-galeri" @if (isset($editMode) && $editMode) action="{{route('galeri.update',['galeri' => $id])}}" @else action="{{route('galeri.store')}}"  @endif method="POST" enctype="multipart/form-data">
+
+		<form id="form-galeri" @if (isset($editMode) && $editMode) action="{{route('galer.update',['galeri' => $id])}}" @else action="{{route('galeri.store')}}"  @endif method="POST" enctype="multipart/form-data">
 			@csrf
 			@if (isset($editMode) && $editMode)
 				@method('PATCH')
@@ -66,6 +69,7 @@
 						</button>
 						</div>
 					@endif
+
 
 					
 
@@ -154,15 +158,15 @@
 								</div>
 								<!-- /.col -->
 							</div>
-					</form>
 				</div>
 				<!-- /.box-body -->
 				<div class="box-footer">
 					<div class="row">
 						
 						<div class="col text-right">
-							<a class="btn btn-primary" onclick="if(confirm('Selesai dan submit galeri?')) submitGaleri()">Submit</a>
+							<a class="btn btn-primary" id="accept" onclick="if(confirm('Selesai dan submit galeri?')){ submitGaleri()}" aria-disabled="true">Submit</a>
 						</div>
+					</form>
 					</div>
 					
 				</div>
@@ -184,6 +188,7 @@
 	<script src="{{asset('filepond-4.28.2/dist/filepond.min.js')}}"></script>
 	<script src="{{asset('filepond-plugin/filepond-plugin-file-validate-type-1.2.8/dist/filepond-plugin-file-validate-type.min.js')}}"></script>
 	<script src="{{asset('filepond-plugin/filepond-plugin-image-preview-4.5.0/dist/filepond-plugin-image-preview.min.js')}}"></script>
+	<script src="{{asset('filepond-plugin/filepond-plugin-file-validate-size-2.2.0/dist/filepond-plugin-file-validate-size.min.js')}}"></script>
 @endpush
 
 @push('stack-body')
@@ -194,6 +199,10 @@
 @push('stack-body')
 	<script>
 
+		
+
+		
+
 		var listVideo = [];
 		var listUrut = [];
 
@@ -203,11 +212,14 @@
 		var listElUrut = $("#urutan-sorter")
 		var placeholderElUrut = $("#urutan-placeholder")
 
+		
+
 
 		// file uploader
 		const inputElement = document.querySelector('#gambar-uploader-input');
 
 		FilePond.registerPlugin(FilePondPluginFileValidateType)
+		FilePond.registerPlugin(FilePondPluginFileValidateSize)
 		FilePond.registerPlugin(FilePondPluginImagePreview)
 
 		var fp = FilePond.create(inputElement,{
@@ -215,6 +227,10 @@
 			allowMultiple:true,
 			allowFileTypeValidation: true,
 			acceptedFileTypes : ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'],
+			allowFileSizeValidation: true,
+			maxFileSize: '5MB',
+			labelMaxFileSizeExceeded: "Ukuran file melebihi 5 MB",
+			labelMaxFileSize: "Max {filesize}",
 			server:{
 				url:"{{URL::to('/').'/upload/img'}}",
 				timeout: 7000,
@@ -255,15 +271,33 @@
 					onerror: (response) => console.log(response.data)
 				}
 			},
+			// onaddfilestart(file){
+			// 	$('#accept').css("click-event","none");
+			// },
 			onaddfile(error,file){
 				var id = file.id;
 				var name = file.filename;
 				console.log(error)
 				$("#urutan-sorter").append(masukanKeUrut(iconGambar+name,id,'image',name,'image'))
+				// $('#accept').attr("disabled",true);
 			},
 			onremovefile(error,file){
 				triggerImageDelete(file.id)
-			}
+			},
+			@php 
+				if(old('index')!=null)
+				{
+						echo "files : [";
+							foreach(old('index') as $key => $item)
+							{
+								if(old('sumber')[$key] == "image")
+									echo "{source: '/".$item."', options : {type: 'limbo'}},";
+								
+							}
+						echo "]";
+				}
+				
+			@endphp
 		});
 
 
@@ -441,7 +475,7 @@
 
 		function submitGaleri()
 		{
-			
+			console.log("submitting")
 			
 			var arr = $("[data-pointer]")
 			var galeri = []
@@ -468,6 +502,26 @@
 			if(removeIndex > -1)
 				array.splice(removeIndex, 1);
 		}
+
+		// edit mode
+		@php 
+
+			if(old('index') != null)
+			{
+				foreach(old('index') as $key => $item)
+				{
+					if(old('sumber')[$key] == "image")
+					{
+						echo " $('#urutan-sorter').append(masukanKeUrut(iconGambar+'".$item."','".strtotime(now())."','image','".$item."','image'));";
+					}
+					else
+					{
+						echo "prosesLink('".$item."');";
+					}
+				}
+			}	
+		
+		@endphp
 				
 	</script>
 @endpush
