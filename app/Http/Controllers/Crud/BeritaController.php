@@ -192,7 +192,7 @@ class BeritaController extends Controller
             $ext = (is_null($banner)) ? "jpg" : $banner->getClientOriginalExtension();
 
             if (is_null($summary))
-                $summary = substr(strip_tags($isi), 0, 30);
+                $summary = implode(' ', array_slice(explode(' ',strip_tags($isi)),0, 30));
             // throw new Exception("Test");
 
             // untuk preview
