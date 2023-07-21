@@ -23,19 +23,40 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $user = new User([
-            "name" => 'test',
+            "name" => 'admin',
             "password" => Hash::make('123456'),
-            'email' => 'test@example.com'
+            'email' => 'zahra@example.com'
+        ]);
+        $user->save();
+
+        $user = new User([
+            "name" => 'admin',
+            "password" => Hash::make('123456'),
+            'email' => 'uly@example.com'
+        ]);
+        $user->save();
+
+        $user = new User([
+            "name" => 'admin',
+            "password" => Hash::make('123456'),
+            'email' => 'rima@example.com'
         ]);
 
         $user->save();
 
+        $user = new User([
+            "name" => 'admin',
+            "password" => Hash::make('123456'),
+            'email' => 'rizki@example.com'
+        ]);
+
+        $user->save();
         $list_wilayah = [
             ["id_wilayah" => 1, "nama_wilayah" => "Jakarta Pusat"],
             ["id_wilayah" => 2, "nama_wilayah" => "Jakarta Utara"],
             ["id_wilayah" => 3, "nama_wilayah" => "Jakarta Barat"],
             ["id_wilayah" => 4, "nama_wilayah" => "Jakarta Selatan"],
-            ["id_wilayah" => 5, "nama_wilayah" => "Jakarta Barat"],
+            ["id_wilayah" => 5, "nama_wilayah" => "Jakarta Timur"],
             ["id_wilayah" => 6, "nama_wilayah" => "Kepulauan Seribu"],
         ];
 
