@@ -146,7 +146,7 @@
 									<small>Gunakan list dibawah ini untuk mengatur urutan penyajian item galeri untuk pengunjung ketika mereka mengklik thumbnail galeri.</small><br>
 									<small>Tekan dan geser  <i class="fas fa-grip-lines"></i>  untuk mengganti urutan. Urutan paling atas disajikan pertama dan urutan paling bawah disajikan terakhir.</small>
 									<div id="card-sortir" class="card-body overflow-auto bg-grey" style="max-height: 800px">
-										<div id="urutan-sorter" style="visibility: hidden">
+										<div id="urutan-sorter" class="urut-parent" style="visibility: hidden">
 										</div>
 										<div id="urutan-placeholder" class="jumbotron text-center">
 											<strong>Tidak ada data yang dapat ditampilkan. Masukan gambar atau link video terlebih dahulu.</strong>
@@ -205,6 +205,7 @@
 
 		var listVideo = [];
 		var listUrut = [];
+		// var tempListUrut = [];
 
 		var iconGambar = "<i class='far fa-image mx-1'></i>"
 		var iconYoutube = "<i class='fab fa-youtube-square mx-1'></i>"
@@ -284,22 +285,43 @@
 			onremovefile(error,file){
 				triggerImageDelete(file.id)
 			},
-			@php 
-				if(old('index')!=null)
-				{
-						echo "files : [";
-							foreach(old('index') as $key => $item)
-							{
-								if(old('sumber')[$key] == "image")
-									echo "{source: '/".$item."', options : {type: 'limbo'}},";
-								
-							}
-						echo "]";
-				}
-				
-			@endphp
+			onprocessfiles(){
+				@php
+					if(old('index') != null)
+					{
+						$before = "";
+						foreach(old('index') as $key => $item)
+						{
+							if($key == 0)
+								echo "aturUlang('".$item."');";
+							else
+								echo "aturUlang('".$item."','".$before."');";
+							$before = $item;
+						}
+					}
+					elseif(isset($editMode) && $editMode)
+					{
+
+					}
+				@endphp
+			}
+			
 		});
 
+		// @php 
+			// 	if(old('index')!=null)
+			// 	{
+			// 			echo "files : [";
+			// 				foreach(old('index') as $key => $item)
+			// 				{
+			// 					if(old('sumber')[$key] == "image")
+			// 						echo "{source: '/".$item."', options : {type: 'limbo'}},";
+								
+			// 				}
+			// 			echo "]";
+			// 	}
+				
+			// @endphp
 
 		// function
 
@@ -347,7 +369,7 @@
 			if(placeholderElUrut.css('visibility') == 'visible')
 				placeholderElUrut.css('visibility','hidden')
 
-			return '<div id="'+id+'" class="d-flex justify-content-between my-1 border border-light rounded urut-item">'+
+			return '<div id="'+id+'" class="d-flex justify-content-between my-1 border border-light rounded urut-item" data-represent="'+name+'">'+
 												'<div class="flex-shrink px-1"><i class="fas fa-grip-lines"></i></div>'+
 												'<div class="flex-grow-1 px-2">'+caption+'</div>'+
 												'<div class="flex-shrink px-1"><button type="button" id="'+id+'" data-tipe="'+tipe+'" data-name="'+name+'" data-sumber="'+sumber+'" data-pointer="true" onclick="triggerUrutDelete(this)" class="close"><span aria-hidden="true">&times;</span></button></div>'+
@@ -503,6 +525,22 @@
 				array.splice(removeIndex, 1);
 		}
 
+		function aturUlang(targetItemName, beforeItemName = null)
+		{
+			var parent = $("div.urut-parent");
+			var target = $("div.urut-item[data-represent='"+targetItemName+"']");
+
+			if(beforeItemName != null)
+			{
+				var previous = $("div.urut-item[data-represent='"+beforeItemName+"']");
+				target.insertAfter(previous);
+			}
+			else
+			{
+				parent.append(target);
+			}
+		}
+
 		// edit mode
 		@php 
 
@@ -510,18 +548,28 @@
 			{
 				foreach(old('index') as $key => $item)
 				{
+					echo "console.log('index : '+'".$key."'+' Item : '+'".$item."');";
 					if(old('sumber')[$key] == "image")
 					{
-						echo " $('#urutan-sorter').append(masukanKeUrut(iconGambar+'".$item."','".strtotime(now())."','image','".$item."','image'));";
+						echo "fp.addFile('./tmp/".session('reference_folder')."/".$item."');";
 					}
 					else
 					{
 						echo "prosesLink('".$item."');";
 					}
+					// echo "tempListUrut[".$key."] = '".$item."';";
 				}
-			}	
+			}
+			elseif(isset($editMode) && $editMode)
+			{
+				
+			}
 		
 		@endphp
+
+	// console.log($("div.urut-parent"));
+	// console.log($("div.urut-item[data-represent='Capture.JPG']"));
+		
 				
 	</script>
 @endpush
