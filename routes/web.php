@@ -44,6 +44,9 @@ Route::get('/identitas_logo', function () {
 Route::get('/tugas_pokok', function () {
     return view('dashboard.profil.tugas_pokok');
 });
+Route::get('/produk_hukum', function () {
+    return view('dashboard.produk_hukum');
+});
 //route layanan
 Route::get('/layanan_kebakaran', function () {
     return view('dashboard.layanan.kebakaran');

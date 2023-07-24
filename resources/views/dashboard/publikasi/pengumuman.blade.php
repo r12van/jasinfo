@@ -1,4 +1,4 @@
-@extends('layout.canvas-dashboard')
+@extends('layout.dashboard')
 
 @section('kontainer')
 	

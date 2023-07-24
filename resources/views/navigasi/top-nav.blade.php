@@ -81,7 +81,7 @@
                             </ul>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="/"><div style="text-shadow: 0 0 5px #FFFFFF;">Produk Hukum</div></a>
+                            <a class="menu-link" href="/produk_hukum"><div style="text-shadow: 0 0 5px #FFFFFF;">Produk Hukum</div></a>
                         </li>
                         <li class="menu-item">
                             <a class="menu-link" ><div style="text-shadow: 0 0 5px #FFFFFF;">Publikasi</div></a>
