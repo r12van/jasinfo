@@ -4,9 +4,9 @@
 
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta http-equiv="x-ua-compatible" content="IE=edge">
-	<meta name="author" content="SemiColonWeb">
-	<meta name="description" content="Get Canvas to build powerful websites easily with the Highly Customizable &amp; Best Selling Bootstrap Template, today.">
-	<link rel="icon" type="image/png" href="http://example.com/image.png" />
+	<meta name="author" content="Pemadam DKI">
+	<meta name="description" content="Pemadam Kebakaran dan Penyelamatan DKI Jakarta.">
+	<link rel="icon" type="image/png" href="/" />
 
 	<!-- Font Imports -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,7 +75,7 @@
 		</section>
 	</div>
 	@include('navigasi.footer')
-	<div id="gotoTop" class="uil uil-angle-up"></div>
+	
 	<!-- JavaScripts
 	============================================= -->
 	<script src="{{asset('js/jquery.js')}}"></script>

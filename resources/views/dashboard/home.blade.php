@@ -76,4 +76,5 @@
 
     </div>
     </section><!-- #content end -->
+    <div id="gotoTop" class="uil uil-angle-up"></div>
 @endsection
