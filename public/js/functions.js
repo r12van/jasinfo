@@ -499,7 +499,7 @@ if( typeof jQuery !== 'undefined' ) {
 				}
 
 				htmlScript.id = htmlID;
-				htmlScript.src = jsFolder ? options.jsFolder+file : file;
+				htmlScript.src = jsFolder ? window.location.origin + "/" + options.jsFolder+file : window.location.origin + "/" +  file;
 				if( type ) {
 					htmlScript.type = type;
 				}
