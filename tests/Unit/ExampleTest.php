@@ -2,7 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Models\Berita;
 use Tests\TestCase;
+use Illuminate\Support\Str;
 
 class ExampleTest extends TestCase
 {
@@ -11,14 +13,32 @@ class ExampleTest extends TestCase
      */
     public function test_that_true_is_true(): void
     {
-        $isi = '<p>Jakarta - Presiden Joko Widodo (Jokowi) mengatakan pertemuannya dengan Surya Paloh merupakan hal yang wajar. Jokowi menyebut memang sering bertemu dengan Ketua Umum Partai NasDem itu.</p>
-"Pertemuan dengan Pak Surya Paloh. Ya pertemuan biasa. Kita kan sering ketemu, sering ketemu, ya berbicara wajar, masa mau tahu semuanya," kata Jokowi dalam tayangan video di akun YouTube Sekretariat Presiden, Kamis (20/7/2023).</p>
+        // $slug = "2023-03-07" . "_" . Str::slug(implode(' ', array_slice(explode(' ', "tes judul dengan sesuatu yang istimewah dan wah wah wah"), 0, 5))) . "_" . substr("123456789101112131415", -7);
+        // print_r($slug);
 
-<p>Baca artikel detiknews, "Bocoran Jokowi soal Isi Pertemuan dengan Surya Paloh: Politik, 2024" selengkapnya https://news.detik.com/pemilu/d-6832778/bocoran-jokowi-soal-isi-pertemuan-dengan-surya-paloh-politik-2024.</p>
+        $berita = Berita::all();
 
-<p>Download Apps Detikcom Sekarang https://apps.detik.com/detik/';
-        $summary = implode(' ', array_slice(explode(' ',strip_tags($isi)),0, 30));
-        print_r($summary);
+        foreach ($berita as $b) {
+            $slug = $b->tanggal . "_" . Str::slug(implode(' ', array_slice(explode(' ', $b->judul), 0, 5))) . "_" . substr($b->id_berita, -7);
+            if (Berita::where("slug", $slug)->exists()) {
+                $i = 0;
+                $status = false;
+                while (!$status) {
+                    error_log("status_pengulangan buat slug : " . $i);
+                    $tes_slug = $b->tanggal . "_" . Str::slug(implode(' ', array_slice(explode(' ', $b->judul), 0, 5))) . "_" . substr($b->id_berita, -7) . "_" . $i;
+                    if (!Berita::where("slug", $tes_slug)->exists()) {
+                        $slug = $tes_slug;
+                        $status = true;
+                    } else
+                        $i++;
+                }
+            }
+            $b = Berita::find($b->id_berita);
+            $b->slug = $slug;
+            $b->save();
+        }
+
+
         $this->assertTrue(true);
     }
 }

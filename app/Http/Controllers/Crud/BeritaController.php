@@ -192,7 +192,7 @@ class BeritaController extends Controller
             $ext = (is_null($banner)) ? "jpg" : $banner->getClientOriginalExtension();
 
             if (is_null($summary))
-                $summary = implode(' ', array_slice(explode(' ',strip_tags($isi)),0, 30));
+                $summary = implode(' ', array_slice(explode(' ', strip_tags($isi)), 0, 30));
             // throw new Exception("Test");
 
             // untuk preview
@@ -216,27 +216,13 @@ class BeritaController extends Controller
                 ]);
             }
 
-            // buat slug
-            $slug = $tanggal . "_" . Str::slug($judul);
-            if (Berita::where("slug", $slug)->exists()) {
-                $i = 0;
-                $status = false;
-                while (!$status) {
-                    error_log("status_pengulangan buat slug : " . $i);
-                    $tes_slug = $tanggal . "_" . Str::slug($judul) . "_" . $i;
-                    if (!Berita::where("slug", $tes_slug)->exists()) {
-                        $slug = $tes_slug;
-                        $status = true;
-                    } else
-                        $i++;
-                }
-            }
+
 
 
             // save ke db
             $ulid = Berita::create([
                 "judul" => $judul,
-                "slug" => $slug,
+                "slug" => "",
                 "penulis" => (Auth::user()) ? Auth::user()->name : "Admin",
                 "isi" => $isi,
                 "summary" => $summary,
@@ -245,6 +231,24 @@ class BeritaController extends Controller
                 "tanggal" => $tanggal,
             ])->id_berita;
 
+            // buat slug
+            $slug = $tanggal . "_" . Str::slug(implode(' ', array_slice(explode(' ', $judul), 0, 5))) . "_" . substr($ulid, -7);
+            if (Berita::where("slug", $slug)->exists()) {
+                $i = 0;
+                $status = false;
+                while (!$status) {
+                    error_log("status_pengulangan buat slug : " . $i);
+                    $tes_slug = $tanggal . "_" . Str::slug(implode(' ', array_slice(explode(' ', $judul), 0, 5))) . "_" . substr($ulid, -7) . "_" . $i;
+                    if (!Berita::where("slug", $tes_slug)->exists()) {
+                        $slug = $tes_slug;
+                        $status = true;
+                    } else
+                        $i++;
+                }
+            }
+            $b = Berita::find($ulid);
+            $b->slug = $slug;
+            $b->save();
 
 
             // untuk banner
@@ -419,7 +423,6 @@ class BeritaController extends Controller
 
             // save ke db
             $berita->judul = $judul;
-            $berita->slug = $slug;
             $berita->penulis = (Auth::user()) ? Auth::user()->name : "Admin";
             $berita->isi = $isi;
             $berita->summary = $summary;
@@ -427,7 +430,23 @@ class BeritaController extends Controller
             $berita->id_tipe = $tipe;
             $berita->tanggal = $tanggal;
 
-
+            // buat slug
+            $slug = $tanggal . "_" . Str::slug(implode(' ', array_slice(explode(' ', $judul), 0, 5))) . "_" . substr($id, -7);
+            if (Berita::where("slug", $slug)->exists()) {
+                $i = 0;
+                $status = false;
+                while (!$status) {
+                    error_log("status_pengulangan buat slug : " . $i);
+                    $tes_slug = $tanggal . "_" . Str::slug(implode(' ', array_slice(explode(' ', $judul), 0, 5))) . "_" . substr($id, -7) . "_" . $i;
+                    if (!Berita::where("slug", $tes_slug)->exists()) {
+                        $slug = $tes_slug;
+                        $status = true;
+                    } else
+                        $i++;
+                }
+            }
+            $b = Berita::find($id);
+            $b->slug = $slug;
 
             // untuk banner
             if (!is_null($banner)) {

@@ -499,13 +499,15 @@ if( typeof jQuery !== 'undefined' ) {
 				}
 
 				htmlScript.id = htmlID;
-				htmlScript.src = jsFolder ? options.jsFolder+file : file;
+
+				htmlScript.src = jsFolder ? window.location.origin+'/'+options.jsFolder+file : window.location.origin+'/'+file;
 				if( type ) {
 					htmlScript.type = type;
 				}
 				htmlScript.async = async ? true : false;
 				htmlScript.defer = defer ? true : false;
 
+				// var baseUrl = window.location.origin;
 				vars.elBody.appendChild(htmlScript);
 				return true;
 			},
