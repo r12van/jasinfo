@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 use Throwable;
 
 class GalleryController extends Controller
@@ -25,33 +26,57 @@ class GalleryController extends Controller
         {
             $galeri = Galeri::query();
             
-            if($r->expectsJson())
+            if($r->ajax())
             {
                 $this->middleware('auth');
+                error_log("ajax galeri called");
+                $galeri = $galeri->join('tabel_wilayah', 'tabel_galeri.id_wilayah', '=', 'tabel_wilayah.id_wilayah')
+                    ->join('tabel_tipe_galeri', 'tabel_galeri.id_tipe', '=', 'tabel_tipe_galeri.id_tipe');
 
+                if($r->exists('tabel'))
+                {
+                    error_log("tabel called");
+                    return DataTables::eloquent($galeri)
+                    ->addIndexColumn()
+                    ->addColumn("tindakan", function($galeri){
+                        return view("kolom.tindakan-tabel-galeri")->with(["id" => $galeri->id_galeri]);
+                    })
+                    ->addColumn("publish", function($galeri){
+                        return view("kolom.publish-tabel-galeri")->with(["publish" => $galeri->publish,"id"=>$galeri->id_galeri]);
+                    })
+                    ->addColumn("item", function($galeri){
+                        return view("kolom.item-tabel-galeri")->with(["data" => $galeri->data]);
+                    })
+                    ->toJson();
+                }
             }
             
-            if($r->exists('tipe'))
+            elseif($r->exists('tipe'))
             {
+                    error_log("tipe called");
                 return view('dashboard.galeri.list')->with('galeri', $galeri->where('id_tipe',$r->input('tipe'))->where('publish',true));
             }
+            elseif($r->exists("index")){
+                    error_log("normal called");
+                $list_tipe = TipeGaleri::all();
+                $index_galeri = [];
+                foreach($list_tipe as $tipe)
+                {
+                    $data = $galeri->where('id_tipe',$tipe->id_tipe)->where('publish',true);
+
+                    if(is_null($data))
+                        continue;
+
+                    $index_galeri[] = [
+                        'tipe' => $tipe->nama_tipe,
+                        'data' => $data
+                    ];
+                }
+
+                return view('dashboard.galeri.index')->with('galeri',$index_galeri);
+                }
             
-            $list_tipe = TipeGaleri::all();
-            $index_galeri = [];
-            foreach($list_tipe as $tipe)
-            {
-                $data = $galeri->where('id_tipe',$tipe->id_tipe)->where('publish',true);
-
-                if(is_null($data))
-                    continue;
-
-                $index_galeri[] = [
-                    'tipe' => $tipe->nama_tipe,
-                    'data' => $data
-                ];
-            }
-
-            return view('dashboard.galeri.index')->with('galeri',$index_galeri);
+            
                 
 
         }
@@ -162,7 +187,7 @@ class GalleryController extends Controller
             // simpan ke db
             $galeri = new Galeri();
             $galeri->judul =  $judul;
-            $galeri->slug = Str::slug($judul);
+            $galeri->slug = $tanggal."_".Str::slug($judul);
             $galeri->id_tipe =  $tipe;
             $galeri->tanggal =  $tanggal;
             $galeri->id_wilayah =  $wilayah;
@@ -221,7 +246,30 @@ class GalleryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try
+        {
+            $galeri = Galeri::find($id);
+
+            if(is_null($galeri))
+                return abort(404, 'Media tidak ditemukan!');
+            
+            $data = json_decode($galeri->data);
+
+            return view("admin.dashboard.editor-galeri")->with([
+                "editMode" => true,
+                "judul" => $galeri->judul,
+                "tanggal" => $galeri->tanggal,
+                "id_wilayah" => $galeri->id_wilayah,
+                "id_tipe" => $galeri->id_tipe,
+                "data" => $data,
+            ]);
+        }
+        catch(Throwable $e)
+        {
+            error_log("Galeri Controller Error : Gagal menampilkan media galeri untuk edit at edit() " . $e);
+            Log::error("Galeri Controller Error : Gagal menampilkan media galeri untuk edit at edit() " . $e);
+            return abort(503,'Kesalahan saat mencoba mengakses galeri untuk diedit');
+        }
     }
 
     /**
@@ -237,6 +285,23 @@ class GalleryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try
+        {
+            $galeri = Galeri::find($id);
+
+            if(is_null($galeri))
+                return redirect()->back()->with("alert.danger","Galeri tidak ditemukan didatabase!");
+
+            $galeri->delete();
+
+            return redirect()->back()->with("alert.success","Galeri berhasil dihapus!");
+        }
+        catch(Throwable $e)
+        {
+            error_log("Galeri Controller Error : Gagal menghapus galeri at destroy() " . $e);
+            Log::error("Galeri Controller Error : Gagal menghapus galeri at destroy() " . $e);
+            $time = now();
+            return redirect()->back()->with("alert.danger","Kesalahan saat mencoba menghapus galeri. (".$time.")");
+        }
     }
 }

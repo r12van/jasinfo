@@ -35,4 +35,9 @@ class HomeController extends Controller
     {
         return view('admin.dashboard.berita');
     }
+
+    public function adminGaleri()
+    {
+        return view('admin.dashboard.galeri');
+    }
 }
