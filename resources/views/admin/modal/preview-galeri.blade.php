@@ -7,15 +7,20 @@
 			</div>
 			<div class="modal-body">
 				<div class="box-body">
-					<div id="loading-preview" style="visibility: hidden">
 
-					</div>
+          <div id="loading-preview" style="visibility: hidden">
+            <div class="spinner-border text-info" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            Memuat Data...
+          </div>
+
 					<div id="preview-div" style="visibility: hidden">
-						
 					</div>
-					<div id="previwe-err" class="jumbotron" style="visibility: hidden">
-						
+
+					<div id="preview-err" class="jumbotron" style="visibility: hidden">
 					</div>
+
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -32,6 +37,7 @@
       function previewGaleri(el)
       {
         var id = $(el).data('id');
+        console.log("id "+id);
 
         var spinner = $("div#loading-preview");
         var preview = $("div#preview-div");
@@ -42,17 +48,31 @@
 
         $.ajax({
           type: "GET",
-          url: "{{route('gallery.index',['preview','"+id+"'])}}",
+          url: "{{route('gallery.index')}}?gallery-item="+id,
           success: function (response) {
+            var html = "<p>Berikut ini adalah isi dari galeri dimulai dari urutan pertama hingga akhir :</p>";
+            $.each(response,function(index,value){
+              if(value.tipe == "image")
+                html+= "<img class='my-1' src='{{URL::to('/')}}/"+value.file+"' >";
+              else
+              {
+                if(value.sumber == "youtube")
+                  html+= '<iframe class="my-1" width="560" height="345" src="https://www.youtube.com/embed/'+value.file+'"></iframe>'
+              }
+            })
+            preview.html(html)
             spinner.css("visibility","hidden");
             preview.css("visibility","visible");
           },
           error: function (response){
-            previewErr.HTML("<strong>Gagal menampilkan preview galeri :</strong> "+response);
+            console.log("error");
+            previewErr.html("<strong>Gagal menampilkan preview galeri :</strong> "+response);
             spinner.css("visibility","hidden");
             previewErr.css("visibility","visible");
           }
         });
+
+        $("#modal-preview-galeri").modal('show');
       }
     </script>
 @endpush

@@ -27,7 +27,7 @@
 		@endif
 
 
-		<form id="form-galeri" @if (isset($editMode) && $editMode) action="{{route('galer.update',['galeri' => $id])}}" @else action="{{route('galeri.store')}}"  @endif method="POST" enctype="multipart/form-data">
+		<form id="form-galeri" @if (isset($editMode) && $editMode) action="{{route('gallery.update',['gallery' => $id])}}" @else action="{{route('galeri.store')}}"  @endif method="POST" enctype="multipart/form-data">
 			@csrf
 			@if (isset($editMode) && $editMode)
 				@method('PATCH')
@@ -43,27 +43,27 @@
 				<!-- /.box-header -->
 				<div class="box-body">
 
-					@if (session()->has("alert.success"))
+					@if (session()->has('alert-success'))
 						<div class="alert alert-success alert-dismissible fade show" role="alert">
-						<i class="fas fa-check-square"></i> {{session("alert.success")}}
+						<i class="fas fa-check-square"></i> {{session('alert-success')}}
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 						</div>
 					@endif
 
-					@if (session()->has("alert.warning"))
+					@if (session()->has('alert-warning'))
 						<div class="alert alert-warning alert-dismissible fade show" role="alert">
-						<i class="far fa-exclamation-triangle"></i> {{session("alert.warning")}}
+						<i class="far fa-exclamation-triangle"></i> {{session('alert-warning')}}
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 						</div>
 					@endif
 
-					@if (session()->has("alert.danger"))
+					@if (session()->has('alert-danger'))
 						<div class="alert alert-danger alert-dismissible fade show" role="alert">
-						<i class="fas fa-exclamation-circle"></i> {{session("alert.danger")}}
+						<i class="fas fa-exclamation-circle"></i> {{session('alert-danger')}}
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -116,6 +116,14 @@
 											</div>
 										</div>
 									</div>
+
+									<div class="form-group row">
+										<label for="artikel" class="col-sm-2 col-form-label">Artikel</label>
+										<div class="col-sm-10">
+											<textarea class="form-control" name="artikel" id="artikel" cols="30" rows="10" placeholder="(opsional) Tambahkan artikel untuk galeri.">{{(isset($artikel)) ? $artikel : old('artikel')}}</textarea>
+										</div>
+									</div>
+
 									<div class="card-body overflow-auto" style="max-height: 1000px">
 										<div class="row">
 											<div class="col-lg-6 mb-4">
@@ -153,8 +161,9 @@
 										</div>
 									</div>
 									
-									
-									{{-- <input type="hidden" name="data[]" id="list-upload"> --}}
+									@if (isset($editMode) && $editMode)
+										<input type="hidden" name="basepath" value="{{$basepath}}">
+									@endif
 								</div>
 								<!-- /.col -->
 							</div>
@@ -287,22 +296,55 @@
 			},
 			onprocessfiles(){
 				@php
-					if(old('index') != null)
+					if(isset($editMode) && $editMode)
 					{
-						$before = "";
-						foreach(old('index') as $key => $item)
+						if(old('index') != null)
 						{
-							if($key == 0)
-								echo "aturUlang('".$item."');";
-							else
-								echo "aturUlang('".$item."','".$before."');";
-							$before = $item;
+							$before = "";
+							foreach(old('index') as $key => $item)
+							{
+								if($key == 0)
+									echo "aturUlang('".$item."');";
+								else
+									echo "aturUlang('".$item."','".$before."');";
+								$before = $item;
+							}
+						}
+						else
+						{
+							$before = "";
+							foreach($data as $item)
+							{
+								$file = $item->file;
+								if($item->tipe =="image")
+									$file = basename($file);
+
+								if($item->urut == 0)
+									echo "aturUlang('".$file."');";
+								else
+									echo "aturUlang('".$file."','".$before."');";
+								$before = $file;
+							}
+						}
+						
+					}
+					else
+					{
+						if(old('index') != null)
+						{
+							$before = "";
+							foreach(old('index') as $key => $item)
+							{
+								if($key == 0)
+									echo "aturUlang('".$item."');";
+								else
+									echo "aturUlang('".$item."','".$before."');";
+								$before = $item;
+							}
 						}
 					}
-					elseif(isset($editMode) && $editMode)
-					{
-
-					}
+					
+					
 				@endphp
 			}
 			
@@ -483,7 +525,7 @@
 					});
 
 					// masukan ke list urutan
-					$("#urutan-sorter").append(masukanKeUrut(iconYoutube+judul,testid,'video',videolink,"youtube"))
+					$("#urutan-sorter").append(masukanKeUrut(iconYoutube+judul,testid,'video',videoid,"youtube"))
 
 
 				}).fail(function(jqXHR, textStatus, errorThrown) {
@@ -541,10 +583,48 @@
 			}
 		}
 
-		// edit mode
+		// untuk edit atau kembali saat ada kesalahan saat submit
 		@php 
 
-			if(old('index') != null)
+			if(isset($editMode) && $editMode)
+			{
+				if(old('index') != null)
+				{
+					foreach(old('index') as $key => $item)
+					{
+						echo "console.log('index : '+'".$key."'+' Item : '+'".$item."');";
+						if(old('sumber')[$key] == "image")
+						{
+							echo "fp.addFile('./tmp/".session('reference_folder')."/".$item."');";
+						}
+						else
+						{
+							if(old('sumber')[$key] == "youtube")
+							echo "prosesLink('https://www.youtube.com/watch?v=".$item."');";
+						}
+						// echo "tempListUrut[".$key."] = '".$item."';";
+					}
+				}
+				else
+				{
+					foreach($data as $item)
+					{
+						echo "console.log('index : '+'".$item->urut."'+' Item : '+'".basename($item->file)."');";
+						if( $item->tipe == "image")
+						{
+							echo "fp.addFile('".asset($item->file)."');";
+						}
+						else
+						{
+							if($item->sumber == "youtube")
+							echo "prosesLink('https://www.youtube.com/watch?v=".$item->file."');";
+						}
+						// echo "tempListUrut[".$key."] = '".$item."';";
+					}
+				}
+				
+			}
+			elseif(old('index') != null)
 			{
 				foreach(old('index') as $key => $item)
 				{
@@ -555,15 +635,13 @@
 					}
 					else
 					{
-						echo "prosesLink('".$item."');";
+						if($item->sumber == "youtube")
+						echo "prosesLink('https://www.youtube.com/watch?v=".$item."');";
 					}
 					// echo "tempListUrut[".$key."] = '".$item."';";
 				}
 			}
-			elseif(isset($editMode) && $editMode)
-			{
-				
-			}
+			
 		
 		@endphp
 

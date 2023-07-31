@@ -44,14 +44,25 @@
 
               <a type="button" class="waves-effect waves-light btn btn-rounded btn-primary mb-5" href="{{route('galeri.editor')}}" target="_blank">gallery Baru</a>
                 <form id="tabel-gallery" action="{{route('gallery.store',['update' => 'table'])}}" method="post">
-                    @csrf 
-                    <div class="table-responsive">
+                    @csrf
+
+                    <div class="collapse" id="wait-div">
+                    <div class="jumbotron text-center text-info">
+                      <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                      Memproses . . .
+                    </div>
+                  </div>
+
+                    <div class="table-responsive" id="tabel-div">
                       <table id="tabel-gallery-all" class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Judul</th>
-                                <th>Penulis</th>
+                                <th>Pengupload</th>
+                                <th>Artikel</th>
                                 <th>Isi</th>
                                 <th>Wilayah</th>
                                 <th>Tipe</th>
@@ -65,7 +76,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Judul</th>
-                                <th>Penulis</th>
+                                <th>Pengupload</th>
+                                <th>Artikel</th>
                                 <th>Isi</th>
                                 <th>Wilayah</th>
                                 <th>Tipe</th>
@@ -90,7 +102,7 @@
       <!-- /.col -->
     </div>
     <!-- /.row -->
-    @include('admin.modal.preview-banner')
+    @include('admin.modal.preview-galeri')
     </section>
     </div>
 </div>
@@ -126,6 +138,17 @@
                                 {data : "DT_RowIndex",  title: "No", searchable:false, orderable:false},
                                 {data : 'judul', title : "Judul"},
                                 {data : 'pengupload', title : "Pengupload"},
+                                {data : 'artikel', title : "Artikel", 
+                                  render : function(data, type, row, meta){
+                                    if(data !== null)
+                                    {
+                                      if(data.length > 30)
+                                        return data.substring(0, 30)+"...";
+                                      else
+                                        return data;
+                                    }
+                                      
+                                  }},
                                 {data : 'item', title : "Isi", searchable:false, orderable:false},
                                 {data : 'nama_wilayah',name : 'tabel_wilayah.nama_wilayah', title : "Wilayah"},
                                 {data : 'nama_tipe', name: 'tabel_tipe_galeri.nama_tipe', title : "Tipe"},
@@ -136,7 +159,55 @@
                             columnDefs: [
                               {targets: '_all',defaultContent : ''},
                               ],
+                              drawCallback : function(){
+                              var api = this.api();
+
+                              api.column(8).data().each( function(value,index){
+                                // console.log($('*').data('id'))
+                                var s1 = value.substring(value.indexOf('id="'))
+                                var s2 = s1.substring(s1.indexOf("id="), s1.indexOf('name'))
+                                var id = s2.substring(s2.indexOf('-')+1,s2.lastIndexOf('"'))
+                                console.log(id)
+
+                                var target = $("input[name='publish["+id+"]']")
+                                if(target.length > 0)
+                                {
+                                  if(target.val() == 'true')
+                                    $("input[id='publish-"+id+"']").prop('checked', true)
+                                  else
+                                    $("input[id='publish-"+id+"']").prop('checked', false)
+                                }
+                                console.log(target.val())
+                              })
+
+                            }
         })
+
+        var shouldWait = false;
+        var submiting = false;
+
+          tabelgallery.on( 'draw', function ( e, settings, processing ) {
+          shouldWait = processing;
+        })
+
+          var p_arr = []
+          var h_arr = []
+
+          function publishChange(el){
+            var id = $(el).data('id');
+            var val = $(el).prop('checked')
+
+            var target = $("input[name='publish["+id+"]']")
+            if(target.length)
+              {
+                target.val(val)
+              }
+            else
+            {
+              $("form").append("<input type='hidden' name='publish["+id+"]' value='"+val+"'>")
+            }
+
+          }
 
         function checkboxPublish(status, id){
 
@@ -156,6 +227,14 @@
                }
             });
         }
+
+        $("#tabel-gallery").on("submit", function(e){
+          $('#tabel-div').hide();
+          $('#wait-div').collapse('show')
+
+          e.preventDefault();
+          this.submit();
+        })
       
     </script>
 

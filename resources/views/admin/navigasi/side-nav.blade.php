@@ -25,7 +25,7 @@
         </li> 
         <li class="treeview">
               <a href="#">
-                <i class="fas fa-images"></i>
+                <i class="mdi mdi-burst-mode"></i>
                 <span>Galeri</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-right pull-right"></i>
@@ -33,7 +33,7 @@
               </a>
               <ul class="treeview-menu">
                 {{-- <li><a href="widgets_blog.html"><i class="ti-more"></i>Banner Berita</a></li> --}}
-                <li><a href="#"><i class="ti-more"></i>Tabel Galeri</a></li>
+                <li><a href="{{ route('adminGaleri')}}"><i class="ti-more"></i>Tabel Galeri</a></li>
                 <li><a href="{{ route('galeri.editor') }}"><i class="ti-more"></i>Buat Galeri</a></li>
               </ul>
         </li> 
