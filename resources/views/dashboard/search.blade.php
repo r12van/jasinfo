@@ -51,7 +51,7 @@
 
 					<div class="page-title-content"  id="pencarian">
 						<h1>Hasil Pencarian</h1>
-                        <span><i>"Pencarian"</i></span>
+                        <span><i>"{{$keyword}}"</i></span>
 					</div>
 
 
@@ -81,37 +81,65 @@
 
                     <div class="tab-content" id="pills-tabContent">
                         {{-- start bagian berita --}}
+                        {{-- isi berita dirender dibawah, di bagian pagination berita --}}
                         <div class="tab-pane fade show active" id="pills-berita" role="tabpanel" aria-labelledby="pills-berita-tab" tabindex="0">
-                            <h3>Artikel Terkait</h3>
-                            <div id="item-berita-container"></div>
-                            <div id="berita-pagination-container"></div>
+                            @if(is_string($berita))
+                                <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
+                                    <div class="container-fluid py-5">
+                                        <strong><i>{{$berita . $keyword}}</i></strong>
+                                    </div>
+                                </div>
+                            @elseif (count($berita))
+                                <h3>Artikel Terkait</h3>
+                                <div id="item-berita-container"></div>
+                                <div id="berita-pagination-container"></div>
+                            
+                            @else
+                                <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
+                                    <div class="container-fluid py-5">
+                                        <strong><i>Tidak ditemukan artikel yang sesuai dengan kata pencarian.</i></strong>
+                                    </div>
+                                </div>
+                            @endif
+                            
                         </div>
                         {{-- end bagian berita --}}
 
                         {{-- start bagian galeri --}}
                         {{-- isi galeri dirender dibawah, di bagian pagination galeri --}}
                         <div class="tab-pane fade" id="pills-galeri" role="tabpanel" aria-labelledby="pills-galeri-tab" tabindex="0">
+                            @if(is_string($galeri))
+                                <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
+                                    <div class="container-fluid py-5">
+                                        <strong><i>{{$galeri . $keyword}}</i></strong>
+                                    </div>
+                                </div>
+                            @elseif (count($galeri))
                                 <div class="d-flex" id="item-galeri-container"> 
                                 </div>
                                 <div id="galeri-pagination-container">
                                 </div>
-                                {{-- <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
+                            @else
+                                <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
                                     <div class="container-fluid py-5">
                                         <strong><i>Tidak ditemukan galeri yang sesuai dengan kata pencarian.</i></strong>
                                     </div>
-                                </div> --}}
+                                </div>
+                            @endif
+                                
+                                
                         </div>
                         {{-- end bagian galeri --}}
 
                         {{-- start bagian pengumuman --}}
                         <div class="tab-pane fade" id="pills-pengumuman" role="tabpanel" aria-labelledby="pills-pengumuman-tab" tabindex="0">
-                            <div class="collapse div-collapse fade" id="div-pengumuman">
+                            
                                 <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
                                     <div class="container-fluid py-5">
                                         <strong><i>Tidak ditemukan pengumuman yang sesuai dengan kata pencarian.</i></strong>
                                     </div>
                                 </div>
-                            </div>
+
                         </div>
                         {{-- end bagian pengumuman --}}
                     </div>
@@ -161,26 +189,21 @@
             return html;
         }
 
-        $("#berita-pagination-container").pagination({
-            dataSource : [
-                {banner : '{{asset("images/blog/small/17.jpg")}}', link : "#", judul : "This is a Standard post with a Preview Image1", tanggal : " 10th Feb 2021", penulis : "Admin", tipe : "Berita Picisan", wilayah : "Jakarta Tenggara", summary : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere."},
-                {banner : '{{asset("images/blog/small/17.jpg")}}', link : "#", judul : "This is a Standard post with a Preview Image2", tanggal : " 10th Feb 2021", penulis : "Admin", tipe : "Berita Picisan", wilayah : "Jakarta Tenggara", summary : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere."},
-                {banner : '{{asset("images/blog/small/17.jpg")}}', link : "#", judul : "This is a Standard post with a Preview Image3", tanggal : " 10th Feb 2021", penulis : "Admin", tipe : "Berita Picisan", wilayah : "Jakarta Tenggara", summary : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere."},
-                {banner : '{{asset("images/blog/small/17.jpg")}}', link : "#", judul : "This is a Standard post with a Preview Image4", tanggal : " 10th Feb 2021", penulis : "Admin", tipe : "Berita Picisan", wilayah : "Jakarta Tenggara", summary : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere."},
-                {banner : '{{asset("images/blog/small/17.jpg")}}', link : "#", judul : "This is a Standard post with a Preview Image5", tanggal : " 10th Feb 2021", penulis : "Admin", tipe : "Berita Picisan", wilayah : "Jakarta Tenggara", summary : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere."},
-                {banner : '{{asset("images/blog/small/17.jpg")}}', link : "#", judul : "This is a Standard post with a Preview Image6", tanggal : " 10th Feb 2021", penulis : "Admin", tipe : "Berita Picisan", wilayah : "Jakarta Tenggara", summary : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere."},
-                {banner : '{{asset("images/blog/small/17.jpg")}}', link : "#", judul : "This is a Standard post with a Preview Image7", tanggal : " 10th Feb 2021", penulis : "Admin", tipe : "Berita Picisan", wilayah : "Jakarta Tenggara", summary : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere."},
-                {banner : '{{asset("images/blog/small/17.jpg")}}', link : "#", judul : "This is a Standard post with a Preview Image8", tanggal : " 10th Feb 2021", penulis : "Admin", tipe : "Berita Picisan", wilayah : "Jakarta Tenggara", summary : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere."},
-                {banner : '{{asset("images/blog/small/17.jpg")}}', link : "#", judul : "This is a Standard post with a Preview Image9", tanggal : " 10th Feb 2021", penulis : "Admin", tipe : "Berita Picisan", wilayah : "Jakarta Tenggara", summary : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere."},
-                {banner : '{{asset("images/blog/small/17.jpg")}}', link : "#", judul : "This is a Standard post with a Preview Image10", tanggal : " 10th Feb 2021", penulis : "Admin", tipe : "Berita Picisan", wilayah : "Jakarta Tenggara", summary : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere."},
+        @if(!is_string($berita) && count($berita))
+            $("#berita-pagination-container").pagination({
+                dataSource : [
+                    @foreach($berita as $b)
+                        {banner : '{{asset($b->banner)}}', link : '{{$b->slug}}', judul : '{{$b->judul}}', tanggal : '{{$b->tanggal}}', penulis : '{{$b->penulis}}', tipe : '{{\App\Models\TipeBerita::find($b->id_tipe)->nama_tipe}}', wilayah : '{{\App\Models\Wilayah::find($b->id_wilayah)->nama_wilayah}}', summary : '{{$b->summary}}' },
 
-            ],
-            callback: function(data,pagination){
-                var html = beritaRendering(data);
-                $("#item-berita-container").html(html)
-            },
-            pageSize : 6
-        })
+                    @endforeach
+                ],
+                callback: function(data,pagination){
+                    var html = beritaRendering(data);
+                    $("#item-berita-container").html(html)
+                },
+                pageSize : 6
+            })
+        @endif
     </script>
 @endpush
 
@@ -194,14 +217,17 @@
                 html+= '<div class="item-galeri card col-lg-4 col-sm-6 mb-4">'+
                             '<div class="card-body">'+
                                 '<div class="product-image">'+
-                                    '<a href='+value.slug+'>'+
-                                        '<img src='+value.img+' alt="Image 1">'+
-                                        '<span class="badge">'+value.tipe+'</span>'+
+                                    '<a href='+value.slug+'>';
+
+                                        '<img src='+value.img+' alt="Image 1">';
+
+                                        
+                html+=                  '<span class="badge">'+value.tipe+'</span>'+
                                     '</a>'+
                                 '</div>'+
                                 '<div class="product-desc">'+
                                     '<h3><a href='+value.slug+'></a>'+value.judul+'</h3>'+
-                                    '<p>'+value.artikel+'</p>'+
+                                    '<p>'+value.summary+'</p>'+
                                 '</div>'+
                             '</div>'+
                             '<div class="card-footer">'+
@@ -212,17 +238,17 @@
             
             return html;
         }
+        @if(!is_string($galeri) && count($galeri))
         $("#galeri-pagination-container").pagination({
             dataSource : [
-                {slug:"demo-crowdfunding-single.html", img: '{{asset("image-berita/preview/no-img.jpg")}}', tanggal: '2023-05-13', judul:"iDrone 20190", tipe:"Gadgets",artikel:"test"},
-                {slug:"demo-crowdfunding-single.html", img: '{{asset("image-berita/preview/no-img.jpg")}}', tanggal: '2023-05-13', judul:"iDrone 20191", tipe:"Gadgets",artikel:"test"},
-                {slug:"demo-crowdfunding-single.html", img: '{{asset("image-berita/preview/no-img.jpg")}}', tanggal: '2023-05-13', judul:"iDrone 20192", tipe:"Gadgets",artikel:"test"},
-                {slug:"demo-crowdfunding-single.html", img: '{{asset("image-berita/preview/no-img.jpg")}}', tanggal: '2023-05-13', judul:"iDrone 20193", tipe:"Gadgets",artikel:"test"},
-                {slug:"demo-crowdfunding-single.html", img: '{{asset("image-berita/preview/no-img.jpg")}}', tanggal: '2023-05-13', judul:"iDrone 20194", tipe:"Gadgets",artikel:"test"},
-                {slug:"demo-crowdfunding-single.html", img: '{{asset("image-berita/preview/no-img.jpg")}}', tanggal: '2023-05-13', judul:"iDrone 20195", tipe:"Gadgets",artikel:"test"},
-                {slug:"demo-crowdfunding-single.html", img: '{{asset("image-berita/preview/no-img.jpg")}}', tanggal: '2023-05-13', judul:"iDrone 20196", tipe:"Gadgets",artikel:"test"},
-                {slug:"demo-crowdfunding-single.html", img: '{{asset("image-berita/preview/no-img.jpg")}}', tanggal: '2023-05-13', judul:"iDrone 20197", tipe:"Gadgets",artikel:"test"},
-                {slug:"demo-crowdfunding-single.html", img: '{{asset("image-berita/preview/no-img.jpg")}}', tanggal: '2023-05-13', judul:"iDrone 20198", tipe:"Gadgets",artikel:"test"},
+                @foreach($galeri as $g)
+                    @php
+                        $item_pertama = json_decode($g->data)[0];
+                        $img = $item_pertama->file;
+                        $img_tipe = $item_pertama->tipe;
+                    @endphp
+                    {slug:'{{$g->slug}}', img: '{{$img}}', imgTipe : '{{$img_tipe}}', tanggal: '{{$g->tanggal}}', judul: '{{$g->judul}}', tipe:'{{\App\Models\TipeGaleri::find($g->id_tipe)->nama_tipe}}', wilayah : '{{\App\Models\Wilayah::find($g->id_wilayah)->nama_wilayah}}',summary:'{{$g->summary}}'},
+                @endforeach
                 ],
             callback: function(data,pagination){
                 var html = galeriRendering(data);
@@ -233,7 +259,7 @@
             ulClassName : "pagination pagination-inside-transparent",
 
         });
-
+        @endif
         
         
     </script>

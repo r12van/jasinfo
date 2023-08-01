@@ -9,12 +9,12 @@
                     <a href="/" class="menu-link">
                         <div class="row">
                             <div class="col">
-                                <img class="logo-default" srcset="{{asset('images/logo/damkar.png, images/logo/damkar.png 2x')}}" src="{{asset('images/logo/damkar.png')}}" alt="Logo Damkar">
-                                <img class="logo-dark" srcset="{{asset('images/logo/damkar.png, images/logo/damkar.png 2x')}}" src="{{asset('images/logo/damkar.png')}}" alt="Logo Damkar">
+                                <img class="logo-default" srcset="{{asset('images/logo/damkar.png') . ' , ' . asset('images/logo/damkar.png 2x')}}" src="{{asset('images/logo/damkar.png')}}" alt="Logo Damkar">
+                                <img class="logo-dark" srcset="{{asset('images/logo/damkar.png') . ' , ' . asset('images/logo/damkar.png 2x')}}" src="{{asset('images/logo/damkar.png')}}" alt="Logo Damkar">
                             </div>
                             <div class="col">
-                                <img class="logo-default" srcset="{{asset('images/logo/jayaraya.png, images/logo/jayaraya.png 2x')}}" src="{{asset('images/logo/jayaraya.png')}}" alt="Canvas Logo"> 
-                                <img class="logo-dark" srcset="{{asset('images/logo/jayaraya.png, images/logo/jayaraya.png 2x')}}" src="{{asset('images/logo/jayaraya.png')}}" alt="Canvas Logo">
+                                <img class="logo-default" srcset="{{asset('images/logo/jayaraya.png') . ' , ' . asset('images/logo/jayaraya.png 2x')}}" src="{{asset('images/logo/jayaraya.png')}}" alt="Logo"> 
+                                <img class="logo-dark" srcset="{{asset('images/logo/jayaraya.png') . ' , ' . asset('images/logo/jayaraya.png 2x')}}" src="{{asset('images/logo/jayaraya.png')}}" alt="Logo">
                             </div>
                         </div>
                        
@@ -81,7 +81,7 @@
                             </ul>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="/"><div style="text-shadow: 0 0 5px #FFFFFF;">Produk Hukum</div></a>
+                            <a class="menu-link" href="/produk_hukum"><div style="text-shadow: 0 0 5px #FFFFFF;">Produk Hukum</div></a>
                         </li>
                         <li class="menu-item">
                             <a class="menu-link" ><div style="text-shadow: 0 0 5px #FFFFFF;">Publikasi</div></a>
@@ -95,18 +95,45 @@
                                 <li class="menu-item">
                                     <a class="menu-link" href="/kegiatan"><div>Kegiatan</div></a>
                                 </li>
+                                {{-- <li class="menu-item">
+                                    <a class="menu-link" href="/"><div>Pengumuman</div></a>
+                                </li> --}}
                                 <li class="menu-item">
-                                    <a class="menu-link" href="/galeri"><div>Galeri</div></a>
+                                    <a class="menu-link" href="/"><div></i>Galeri</div></a>
+                                    {{-- <ul class="sub-menu-container">
+                                        <li class="menu-item">
+                                            <a class="menu-link" href="/sosialisasi"><div>Foto</div></a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a class="menu-link" href="/pembinaan"><div>Video</div></a>
+                                        </li>
+                                    </ul> --}}
                                 </li>
                             </ul>
                         </li>
                         <li class="menu-item">
                             <a class="menu-link" href="/"><div style="text-shadow: 0 0 5px #FFFFFF; ">Kontak</div></a>
                         </li>
+                        {{-- search icon --}}
+                        <li class="menu-item"> 
+                            <div id="top-search" class="header-misc-icon">
+                                <a href="#" id="top-search-trigger"><i class="uil uil-search"></i><i class="bi-x-lg"></i></a>
+                            </div>
+                        </li>
                     </ul>
                 </nav><!-- #primary-menu end -->
+                {{-- search form --}}
+                <form class="top-search-form" action="{{route('pencarian')}}" method="get" style="">
+                    <input type="text" name="q" class="form-control" value="" placeholder="Ketik kata pencarian anda &amp; tekan Enter.." autocomplete="off">
+                </form>
             </div>
         </div>
     </div>
-    <div class="header-wrap-clone"></div>
+    <div class="header-wrap-clone">
+    </div>
 </header>
+
+{{-- js search --}}
+@push('stack-body')
+    <script src="{{asset('js/modules/topsearch.js')}}"></script>
+@endpush

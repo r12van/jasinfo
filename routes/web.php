@@ -92,9 +92,7 @@ Route::delete('/upload/img/revert', [\App\Http\Controllers\Crud\SimpleImageUploa
 // Route::get('/upload/img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadGaleri"]);
 // Route::patch('/upload/img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadGaleri"]);
 
-Route::get('/cari',function(){
-    return view('dashboard.search');
-});
+Route::get('/cari',[\App\Http\Controllers\SearchController::class, "search"])->name('pencarian');
 
 
 //route untuk admin
