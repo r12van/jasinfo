@@ -49,7 +49,6 @@ class GalleryController extends Controller
                 // read data untuk datatable
                 if($r->exists('tabel'))
                 {
-                    error_log("tabel called");
                     return DataTables::eloquent($galeri)
                     ->addIndexColumn()
                     ->addColumn("tindakan", function($galeri){
@@ -159,13 +158,12 @@ class GalleryController extends Controller
         $this->middleware('auth');
         try
         {
-
+            // untuk ceklist publish
             if($r->exists("update")){
                 if($r->input("update") == "table")
                 {
                     $list_id = Galeri::all()->pluck('id_galeri');
                     $input_publish = $r->input("publish");
-                    // return dd($input_publish);
 
                     foreach ($list_id as $id) {
                         $berita = Galeri::find($id);
@@ -183,11 +181,13 @@ class GalleryController extends Controller
             $tanggal = $r->input('tanggal');
             $wilayah = $r->input('wilayah');
             $artikel = $r->input('artikel');
+            $summary = $r->input('summary');
 
             // untuk media yang diupload
             $index = $r->input('index');
             $media = $r->input('media');
             $sumber = $r->input('sumber');
+
 
             // return dd($r->input());
 
@@ -211,7 +211,9 @@ class GalleryController extends Controller
                 ];
             }
 
-            // pindahkan gambar ke folder public
+            // daftar nama file untuk disimpan ke database
+            $daftar_file = [];
+            $file_path = "";
             $uploadController = new SimpleImageUpload;
             foreach($data_galeri as $i => $data)
             {
@@ -221,36 +223,54 @@ class GalleryController extends Controller
                     $file_path = $uploadController->dirGaleri( Str::slug(TipeGaleri::find($tipe)->nama_tipe), Str::slug(Wilayah::find($wilayah)->nama_wilayah), $tanggal ) . "/" .  Str::slug($judul) . "/". $data["tipe"] ;
                     $file_name =  $i . "." . pathinfo($data["file"], PATHINFO_EXTENSION);
 
-                    // if(!File::exists($file_path))
-                    // error_log(public_path(str_replace("/","\\",$file_path)));
-                        File::makeDirectory(public_path(str_replace("/","\\",$file_path)), 0777, true,true);
-
-                    File::move(
-                        public_path(str_replace("/","\\",$uploadController->dirTempGaleri($userid) . "/" . $data["file"])),
-                        public_path(str_replace("/","\\",$file_path . "/" . $file_name))
-                        );
-
                     
-                    
+                    $nama_file = $data_galeri[$i]["file"];
                     $data_galeri[$i]["file"] = $file_path . "/" . $file_name;
+                    $daftar_file[$nama_file] = $file_path . "/" . $file_name;
+                    
                 }
-            }   
+            }             
 
-            // return dd($data_galeri);
+            if(is_null($summary))
+            {
+                if(!is_null($artikel))
+                    $summary = implode(' ', array_slice(explode(' ', strip_tags($artikel)), 0, 30));
+                else
+                    $summary = "";
+            }
 
             // simpan ke db
-            $galeri = new Galeri();
-            $galeri->judul =  $judul;
-            $galeri->slug = $tanggal."_".Str::slug($judul);
-            $galeri->id_tipe =  $tipe;
-            $galeri->tanggal =  $tanggal;
-            $galeri->id_wilayah =  $wilayah;
-            $galeri->artikel = $artikel;
-            $galeri->data =  json_encode($data_galeri);
-            $galeri->pengupload =  (Auth::user()->name) ? Auth::user()->name : "Admin";
-            
+            $ulid = Galeri::create([
+                "judul" => $judul,
+                "id_tipe" => $tipe,
+                "tanggal" => $tanggal,
+                "id_wilayah" => $wilayah,
+                "artikel" => $artikel,
+                "summary" => $summary,
+                "data" => json_encode($data_galeri),
+                "pengupload" => (Auth::user()->name) ? Auth::user()->name : "Admin"
+            ])->id_galeri;
 
+             // buat slug
+            $slug = $tanggal . "_" . Str::slug(implode(' ', array_slice(explode(' ', $judul), 0, 5))) . "_" . substr($ulid, -7);
+            if (Galeri::where("slug", $slug)->exists()) {
+                $i = 0;
+                $status = false;
+                while (!$status) {
+                    $tes_slug = $tanggal . "_" . Str::slug(implode(' ', array_slice(explode(' ', $judul), 0, 5))) . "_" . substr($ulid, -7) . "_" . $i;
+                    if (!Galeri::where("slug", $tes_slug)->exists()) {
+                        $slug = $tes_slug;
+                        $status = true;
+                    } else
+                        $i++;
+                }
+            }
+
+            $galeri = Galeri::find($ulid);
+            $galeri->slug = $slug;
             $galeri->save();
+
+              
 
             // hapus directory upload sementara
             try{
@@ -338,6 +358,8 @@ class GalleryController extends Controller
                 "id_wilayah" => $galeri->id_wilayah,
                 "id_tipe" => $galeri->id_tipe,
                 "data" => $data,
+                "artikel"=>$galeri->artikel,
+                "summary"=>$galeri->summary,
                 "basepath" => $basepath
             ]);
         }
@@ -365,6 +387,7 @@ class GalleryController extends Controller
             $tanggal = $r->input('tanggal');
             $wilayah = $r->input('wilayah');
             $artikel = $r->input('artikel');
+            $summary = $r->input('summary');
 
             // untuk media yang diupload
             $index = $r->input('index');
@@ -398,10 +421,10 @@ class GalleryController extends Controller
                 ];
             }
 
-            // pindahkan gambar ke folder public
+            // daftar nama file untuk disimpan ke database
+            $daftar_file = [];
+            $file_path = "";
             $uploadController = new SimpleImageUpload;
-            $path_baru = "";
-
             foreach($data_galeri as $i => $data)
             {
                 if($data["tipe"] == "image")
@@ -411,45 +434,70 @@ class GalleryController extends Controller
                     $file_name =  $i . "." . pathinfo($data["file"], PATHINFO_EXTENSION);
 
                     
-                    // jika folder directory belum ada, maka buat directory
-                    if(!File::exists(public_path(str_replace("/","\\",$file_path))))
-                    {
-                        File::makeDirectory(public_path(str_replace("/","\\",$file_path)), 0777, true,true);
-                    }
-                    else
-                    {
-                        // jika file sudah ada dengan nama yang sama, maka hapus file lama
-                        if(File::exists(public_path(str_replace("/","\\",$file_path . "/" . $file_name))))
-                        {
-                            File::delete(public_path(str_replace("/","\\",$file_path . "/" . $file_name)));
-                        }
-                    }
-
-                    
-
-                    File::copy(
-                        public_path(str_replace("/","\\",$uploadController->dirTempGaleri($userid) . "/" . $data["file"])),
-                        public_path(str_replace("/","\\",$file_path . "/" . $file_name))
-                        );
-
-                    
+                    $nama_file = $data_galeri[$i]["file"];
                     $data_galeri[$i]["file"] = $file_path . "/" . $file_name;
-                    if($path_baru == "")
-                        $path_baru = $file_path;
+                    $daftar_file[$nama_file] = $file_path . "/" . $file_name;
+                    
+                }
+            }
+            $path_baru = $file_path;
+
+            // buat summary jika tidak dibuat.
+            if(is_null($summary))
+            {
+                if(!is_null($artikel))
+                    $summary = implode(' ', array_slice(explode(' ', strip_tags($artikel)), 0, 30));
+                else
+                    $summary = "";
+            }
+
+             // buat slug
+            $slug = $tanggal . "_" . Str::slug(implode(' ', array_slice(explode(' ', $judul), 0, 5))) . "_" . substr($id, -7);
+            if (Galeri::where("slug", $slug)->exists()) {
+                $i = 0;
+                $status = false;
+                while (!$status) {
+                    error_log("status_pengulangan buat slug : " . $i);
+                    $tes_slug = $tanggal . "_" . Str::slug(implode(' ', array_slice(explode(' ', $judul), 0, 5))) . "_" . substr($id, -7) . "_" . $i;
+                    if (!Galeri::where("slug", $tes_slug)->exists()) {
+                        $slug = $tes_slug;
+                        $status = true;
+                    } else
+                        $i++;
                 }
             }
 
             $galeri->judul =  $judul;
-            $galeri->slug = $tanggal."_".Str::slug($judul);
+            $galeri->slug = $slug;
             $galeri->id_tipe =  $tipe;
             $galeri->tanggal =  $tanggal;
             $galeri->id_wilayah =  $wilayah;
             $galeri->artikel = $artikel;
+            $galeri->summary = $summary;
             $galeri->data =  json_encode($data_galeri);
             $galeri->pengupload =  (Auth::user()->name) ? Auth::user()->name : "Admin";
             
 
             $galeri->save();
+
+             // pindahkan gambar ke folder public
+            if(!File::exists(public_path(str_replace("/","\\",$file_path))))
+                        File::makeDirectory(public_path(str_replace("/","\\",$file_path)), 0777, true,true);
+            foreach($daftar_file as $nama_tmp_file => $tujuan)
+            {
+
+                // jika file sudah ada dengan nama yang sama, maka hapus file lama
+                if(File::exists(public_path(str_replace("/","\\",$tujuan))))
+                {
+                    File::delete(public_path(str_replace("/","\\",$tujuan)));
+                }
+
+                File::move(
+                    public_path(str_replace("/","\\",$uploadController->dirTempGaleri($userid) . "/" . $nama_tmp_file)),
+                    public_path(str_replace("/","\\",$tujuan))
+                    );
+                    
+            }
 
             // hapus directory upload sementara dan directory lama jika berbeda dengan directory baru
             try{

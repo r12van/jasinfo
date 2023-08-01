@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('slug')->nullable();
             $table->longText('artikel')->nullable();
+            $table->text('summary')->nullable();
             $table->string('tanggal');
             $table->string('pengupload')->default("Admin");
             $table->boolean('publish')->default(false);

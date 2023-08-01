@@ -118,6 +118,13 @@
 									</div>
 
 									<div class="form-group row">
+										<label for="summary" class="col-sm-2 col-form-label">Summary</label>
+										<div class="col-sm-10">
+											<textarea class="form-control" name="summary" id="summary" cols="30" rows="3" placeholder="(opsional) Tambahkan summary untuk galeri.">{{(isset($summary)) ? $summary : old('summary')}}</textarea>
+										</div>
+									</div>
+
+									<div class="form-group row">
 										<label for="artikel" class="col-sm-2 col-form-label">Artikel</label>
 										<div class="col-sm-10">
 											<textarea class="form-control" name="artikel" id="artikel" cols="30" rows="10" placeholder="(opsional) Tambahkan artikel untuk galeri.">{{(isset($artikel)) ? $artikel : old('artikel')}}</textarea>
@@ -635,7 +642,7 @@
 					}
 					else
 					{
-						if($item->sumber == "youtube")
+						if(old('sumber')[$key] == "youtube")
 						echo "prosesLink('https://www.youtube.com/watch?v=".$item."');";
 					}
 					// echo "tempListUrut[".$key."] = '".$item."';";

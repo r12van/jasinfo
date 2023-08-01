@@ -18,7 +18,9 @@ class Galeri extends Model
         "slug",
         "data",
         "artikel",
+        "summary",
         "id_tipe",
+        "id_wilayah",
         "tanggal",
         "publish",
     ];

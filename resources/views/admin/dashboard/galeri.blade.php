@@ -62,6 +62,7 @@
                                 <th>No</th>
                                 <th>Judul</th>
                                 <th>Pengupload</th>
+                                <th>Summary</th>
                                 <th>Artikel</th>
                                 <th>Isi</th>
                                 <th>Wilayah</th>
@@ -77,6 +78,7 @@
                                 <th>No</th>
                                 <th>Judul</th>
                                 <th>Pengupload</th>
+                                <th>Summary</th>
                                 <th>Artikel</th>
                                 <th>Isi</th>
                                 <th>Wilayah</th>
@@ -138,6 +140,17 @@
                                 {data : "DT_RowIndex",  title: "No", searchable:false, orderable:false},
                                 {data : 'judul', title : "Judul"},
                                 {data : 'pengupload', title : "Pengupload"},
+                                {data : 'summary', title : "Summary", 
+                                  render : function(data, type, row, meta){
+                                    if(data !== null)
+                                    {
+                                      if(data.length > 30)
+                                        return data.substring(0, 30)+"...";
+                                      else
+                                        return data;
+                                    }
+                                      
+                                  }},
                                 {data : 'artikel', title : "Artikel", 
                                   render : function(data, type, row, meta){
                                     if(data !== null)
@@ -162,7 +175,7 @@
                               drawCallback : function(){
                               var api = this.api();
 
-                              api.column(8).data().each( function(value,index){
+                              api.column(9).data().each( function(value,index){
                                 // console.log($('*').data('id'))
                                 var s1 = value.substring(value.indexOf('id="'))
                                 var s2 = s1.substring(s1.indexOf("id="), s1.indexOf('name'))
