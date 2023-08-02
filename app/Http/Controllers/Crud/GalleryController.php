@@ -270,7 +270,18 @@ class GalleryController extends Controller
             $galeri->slug = $slug;
             $galeri->save();
 
-              
+             // pindahkan gambar ke folder public
+            if(!File::exists(public_path(str_replace("/","\\",$file_path))))
+                        File::makeDirectory(public_path(str_replace("/","\\",$file_path)), 0777, true,true);
+            foreach($daftar_file as $nama_tmp_file => $tujuan)
+            {
+
+                File::move(
+                    public_path(str_replace("/","\\",$uploadController->dirTempGaleri($userid) . "/" . $nama_tmp_file)),
+                    public_path(str_replace("/","\\",$tujuan))
+                    );
+                    
+            }
 
             // hapus directory upload sementara
             try{
