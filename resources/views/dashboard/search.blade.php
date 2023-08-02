@@ -49,10 +49,18 @@
 			<div class="container">
 				<div class="page-title-row">
 
-					<div class="page-title-content"  id="pencarian">
-						<h1>Hasil Pencarian</h1>
-                        <span><i>"{{$keyword}}"</i></span>
-					</div>
+                    @if (isset($keyword))
+                        <div class="page-title-content"  id="pencarian">
+                            <h1>Hasil Pencarian</h1>
+                            <span><i>"{{$keyword}}"</i></span>
+                        </div>
+                    @else
+                        <div class="page-title-content"  id="pencarian">
+                            <h1>Pencarian</h1>
+                            <span class="text-muted">Gunakan textbox dibawah untuk melakukan pencarian.</span>
+                        </div>
+                    @endif
+					
 
 
 				</div>
@@ -65,86 +73,95 @@
 			<div class="content-wrap">
 				<div class="container">
 
-                    <div class="grid-filter-wrap">
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-berita-tab" data-bs-toggle="pill" data-bs-target="#pills-berita" type="button" role="tab" aria-controls="pills-berita" aria-selected="true">Artikel</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-galeri-tab" data-bs-toggle="pill" data-bs-target="#pills-galeri" type="button" role="tab" aria-controls="pills-galeri" aria-selected="false">Galeri</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-pengumuman-tab" data-bs-toggle="pill" data-bs-target="#pills-pengumuman" type="button" role="tab" aria-controls="pills-pengumuman" aria-selected="false">Pengumuman</button>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="tab-content" id="pills-tabContent">
-                        {{-- start bagian berita --}}
-                        {{-- isi berita dirender dibawah, di bagian pagination berita --}}
-                        <div class="tab-pane fade show active" id="pills-berita" role="tabpanel" aria-labelledby="pills-berita-tab" tabindex="0">
-                            @if(is_string($berita))
-                                <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
-                                    <div class="container-fluid py-5">
-                                        <strong><i>{{$berita . $keyword}}</i></strong>
-                                    </div>
-                                </div>
-                            @elseif (count($berita))
-                                <h3>Artikel Terkait</h3>
-                                <div id="item-berita-container"></div>
-                                <div id="berita-pagination-container"></div>
-                            
-                            @else
-                                <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
-                                    <div class="container-fluid py-5">
-                                        <strong><i>Tidak ditemukan artikel yang sesuai dengan kata pencarian.</i></strong>
-                                    </div>
-                                </div>
-                            @endif
-                            
+                    {{-- search text box selain di topnav --}}
+                    <form action="{{route('pencarian')}}" method="get" class="m-0 w-100">
+                        <div class="input-group mb-6">
+                            <div class="input-group-text"><i class="uil uil-search"></i></div>
+                            <input type="text" name="q" class="form-control" value="{{ (isset($keyword)) ? $keyword : "" }}" placeholder="Cari...">
                         </div>
-                        {{-- end bagian berita --}}
+                    </form>
 
-                        {{-- start bagian galeri --}}
-                        {{-- isi galeri dirender dibawah, di bagian pagination galeri --}}
-                        <div class="tab-pane fade" id="pills-galeri" role="tabpanel" aria-labelledby="pills-galeri-tab" tabindex="0">
-                            @if(is_string($galeri))
-                                <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
-                                    <div class="container-fluid py-5">
-                                        <strong><i>{{$galeri . $keyword}}</i></strong>
+                    @isset($keyword)
+                        {{-- navigasi hasil pencarian --}}
+                        <div class="grid-filter-wrap">
+                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="pills-berita-tab" data-bs-toggle="pill" data-bs-target="#pills-berita" type="button" role="tab" aria-controls="pills-berita" aria-selected="true">Artikel</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-galeri-tab" data-bs-toggle="pill" data-bs-target="#pills-galeri" type="button" role="tab" aria-controls="pills-galeri" aria-selected="false">Galeri</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-pengumuman-tab" data-bs-toggle="pill" data-bs-target="#pills-pengumuman" type="button" role="tab" aria-controls="pills-pengumuman" aria-selected="false">Pengumuman</button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            {{-- start bagian berita --}}
+                            {{-- isi berita dirender dibawah, di bagian pagination berita --}}
+                            <div class="tab-pane fade show active" id="pills-berita" role="tabpanel" aria-labelledby="pills-berita-tab" tabindex="0">
+                                @if(is_string($berita))
+                                    <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
+                                        <div class="container-fluid py-5">
+                                            <strong><i>{{$berita . $keyword}}</i></strong>
+                                        </div>
                                     </div>
-                                </div>
-                            @elseif (count($galeri))
-                                <div class="d-flex" id="item-galeri-container"> 
-                                </div>
-                                <div id="galeri-pagination-container">
-                                </div>
-                            @else
-                                <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
-                                    <div class="container-fluid py-5">
-                                        <strong><i>Tidak ditemukan galeri yang sesuai dengan kata pencarian.</i></strong>
-                                    </div>
-                                </div>
-                            @endif
+                                @elseif (count($berita))
+                                    <h3>Artikel Terkait</h3>
+                                    <div id="item-berita-container"></div>
+                                    <div id="berita-pagination-container"></div>
                                 
-                                
-                        </div>
-                        {{-- end bagian galeri --}}
-
-                        {{-- start bagian pengumuman --}}
-                        <div class="tab-pane fade" id="pills-pengumuman" role="tabpanel" aria-labelledby="pills-pengumuman-tab" tabindex="0">
-                            
-                                <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
-                                    <div class="container-fluid py-5">
-                                        <strong><i>Tidak ditemukan pengumuman yang sesuai dengan kata pencarian.</i></strong>
+                                @else
+                                    <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
+                                        <div class="container-fluid py-5">
+                                            <strong><i>Tidak ditemukan artikel yang sesuai dengan kata pencarian.</i></strong>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
+                                
+                            </div>
+                            {{-- end bagian berita --}}
 
+                            {{-- start bagian galeri --}}
+                            {{-- isi galeri dirender dibawah, di bagian pagination galeri --}}
+                            <div class="tab-pane fade" id="pills-galeri" role="tabpanel" aria-labelledby="pills-galeri-tab" tabindex="0">
+                                @if(is_string($galeri))
+                                    <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
+                                        <div class="container-fluid py-5">
+                                            <strong><i>{{$galeri . $keyword}}</i></strong>
+                                        </div>
+                                    </div>
+                                @elseif (count($galeri))
+                                    <div class="d-flex" id="item-galeri-container"> 
+                                    </div>
+                                    <div id="galeri-pagination-container">
+                                    </div>
+                                @else
+                                    <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
+                                        <div class="container-fluid py-5">
+                                            <strong><i>Tidak ditemukan galeri yang sesuai dengan kata pencarian.</i></strong>
+                                        </div>
+                                    </div>
+                                @endif
+                                    
+                                    
+                            </div>
+                            {{-- end bagian galeri --}}
+
+                            {{-- start bagian pengumuman --}}
+                            <div class="tab-pane fade" id="pills-pengumuman" role="tabpanel" aria-labelledby="pills-pengumuman-tab" tabindex="0">
+                                
+                                    <div class="p-5 mb-4 bg-body-tertiary rounded-3 text-center">
+                                        <div class="container-fluid py-5">
+                                            <strong><i>Tidak ditemukan pengumuman yang sesuai dengan kata pencarian.</i></strong>
+                                        </div>
+                                    </div>
+
+                            </div>
+                            {{-- end bagian pengumuman --}}
                         </div>
-                        {{-- end bagian pengumuman --}}
-                    </div>
-
-
+                    @endisset
 
 				</div>
 			</div>
@@ -218,10 +235,14 @@
                             '<div class="card-body">'+
                                 '<div class="product-image">'+
                                     '<a href='+value.slug+'>';
-
-                                        '<img src='+value.img+' alt="Image 1">';
-
-                                        
+                                    if(value.imgTipe == "image")
+                                    {
+                                       html+= '<img src="'+value.img+'" alt="Image 1">';
+                                    }
+                                    else
+                                    {
+                                        html+= '<img src="'+value.img+'" alt="Video Thumbnail 1">'
+                                    }   
                 html+=                  '<span class="badge">'+value.tipe+'</span>'+
                                     '</a>'+
                                 '</div>'+
@@ -244,8 +265,15 @@
                 @foreach($galeri as $g)
                     @php
                         $item_pertama = json_decode($g->data)[0];
-                        $img = $item_pertama->file;
                         $img_tipe = $item_pertama->tipe;
+                        $img_sumber = $item_pertama->sumber;
+                        if($img_tipe == "image")
+                            $img = asset($item_pertama->file);
+                        elseif($img_tipe == "video")
+                        {
+                            if($img_sumber == "youtube")
+                                $img = "http://img.youtube.com/vi/".$item_pertama->file."/0.jpg";
+                        }
                     @endphp
                     {slug:'{{$g->slug}}', img: '{{$img}}', imgTipe : '{{$img_tipe}}', tanggal: '{{$g->tanggal}}', judul: '{{$g->judul}}', tipe:'{{\App\Models\TipeGaleri::find($g->id_tipe)->nama_tipe}}', wilayah : '{{\App\Models\Wilayah::find($g->id_wilayah)->nama_wilayah}}',summary:'{{$g->summary}}'},
                 @endforeach
