@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tabel_berita', function (Blueprint $table) {
-            $table->ulid("id_berita");
+            $table->ulid("id_berita")->unique();
             $table->string('judul');
             $table->string('slug');
             $table->string('penulis')->default("admin");
             $table->string('summary')->nullable();
+            $table->string('caption_highlight')->nullable();
             $table->string('banner')->nullable();
             $table->longText('isi');
             $table->foreignId('id_wilayah')->references('id_wilayah')->on('tabel_wilayah');

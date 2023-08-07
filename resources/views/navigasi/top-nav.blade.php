@@ -114,10 +114,26 @@
                         <li class="menu-item">
                             <a class="menu-link" href="/"><div style="text-shadow: 0 0 5px #FFFFFF; ">Kontak</div></a>
                         </li>
+                        {{-- search icon --}}
+                        <li class="menu-item"> 
+                            <div id="top-search" class="header-misc-icon">
+                                <a href="#" id="top-search-trigger"><i class="uil uil-search"></i><i class="bi-x-lg"></i></a>
+                            </div>
+                        </li>
                     </ul>
                 </nav><!-- #primary-menu end -->
+                {{-- search form --}}
+                <form class="top-search-form" action="{{route('pencarian')}}" method="get" style="">
+                    <input type="text" name="q" class="form-control" value="" placeholder="Ketik kata pencarian anda &amp; tekan Enter.." autocomplete="off">
+                </form>
             </div>
         </div>
     </div>
-    <div class="header-wrap-clone"></div>
+    <div class="header-wrap-clone">
+    </div>
 </header>
+
+{{-- js search --}}
+@push('stack-body')
+    <script src="{{asset('js/modules/topsearch.js')}}"></script>
+@endpush

@@ -105,15 +105,29 @@ Route::get('/pencegahan', function () {
 // Route::post('/kerjasama', [LoginController::class, 'authenticate'])->name('loginProses');
 // Route::get('/admin-dashboard', [LoginController::class, 'adminHome'])->name('adminHome');
 // Route::get('/admin-berita', [AdminController::class, 'adminBerita'])->name('adminBerita');
-Route::get('/buat-berita', [AdminController::class, 'adminBuatBerita'])->name('adminBuatBerita');
+Route::get('/editor-berita', [AdminController::class, 'adminBuatBerita'])->name('adminBuatBerita');
 
 Route::resource('artikel', \App\Http\Controllers\Crud\BeritaController::class);
-Route::post('/upload/ck-img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "upload"])->name('cke5-img.up');
+Route::resource('gallery', \App\Http\Controllers\Crud\GalleryController::class);//->except(['create','store']);
+Route::get('/editor-galeri', [App\Http\Controllers\Crud\GalleryController::class, 'create'])->name('galeri.editor');
+Route::post('/editor-galeri/store',[\App\Http\Controllers\Crud\GalleryController::class, 'store'])->name("galeri.store");
+
+Route::post('/upload/ck-img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadCKEditor"])->name('cke5-img.up');
+// untuk filepond
+Route::post('/upload/img/process', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondProcess"]);
+Route::get('/upload/img/load', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondLoad"]);
+Route::get('/upload/img/restore/{file}', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondRestore"]);
+Route::delete('/upload/img/revert', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "filepondRevert"]);
+// Route::get('/upload/img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadGaleri"]);
+// Route::patch('/upload/img', [\App\Http\Controllers\Crud\SimpleImageUpload::class, "uploadGaleri"]);
+
+Route::get('/cari',[\App\Http\Controllers\SearchController::class, "search"])->name('pencarian');
 
 
 //route untuk admin
 Auth::routes();
-Route::get('/admin-berita', [App\Http\Controllers\HomeController::class, 'adminBerita'])->name('adminBerita');
+Route::get('/tabel-berita', [App\Http\Controllers\HomeController::class, 'adminBerita'])->name('adminBerita');
+Route::get('/tabel-galeri', [App\Http\Controllers\HomeController::class, 'adminGaleri'])->name('adminGaleri');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
