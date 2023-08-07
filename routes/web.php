@@ -30,44 +30,47 @@ Route::get('/', function () {
     $pencegahan = $berita->pencegahan();
 
     return view('dashboard.home')->with(['beritaTerkini' => $beritaTerkini, 'carousel' => $carousel, 'pers' => $pers, 'kegiatan' => $kegiatan, 'kebakaran' => $kebakaran, 'penyelamatan' => $penyelamatan, 'pencegahan' => $pencegahan]);
-});
+})->name('depan');
 //route profil
 Route::get('/sejarah', function () {
     return view('dashboard.profil.sejarah');
-});
+})->name('sejarah');
 Route::get('/struktur', function () {
     return view('dashboard.profil.struktur_organisasi');
-});
+})->name('struktur');
 Route::get('/identitas_logo', function () {
     return view('dashboard.profil.identitas_logo');
-});
+})->name('identitas_logo');
 Route::get('/tugas_pokok', function () {
     return view('dashboard.profil.tugas_pokok');
-});
+})->name('tugas_pokok');
 Route::get('/produk_hukum', function () {
     return view('dashboard.produk_hukum');
-});
+})->name('produk_hukum');
 //route layanan
 Route::get('/layanan_kebakaran', function () {
     return view('dashboard.layanan.kebakaran');
-});
+})->name('layanan_kebakaran');
 Route::get('/layanan_laboraturium', function () {
     return view('dashboard.layanan.laboraturium');
-});
+})->name('layanan_laboraturium');
+Route::get('/jenis_laboratorium', function () {
+    return view('dashboard.layanan.laboratorium.jenis');
+})->name('jenis_laboratorium');
 Route::get('/layanan_penyelamatan', function () {
     return view('dashboard.layanan.penyelamatan');
-});
+})->name('layanan_penyelamatan');
 
 //route pencegahan kebakaran
 Route::get('/sosialisasi', function () {
     return view('dashboard.layanan.pencegahan.sosialisasi_edukasi');
-});
+})->name('sosialisasi');
 Route::get('/pembinaan', function () {
     return view('dashboard.layanan.pencegahan.pembinaan');
-});
+})->name('pembinaan');
 Route::get('/pemberdayaan', function () {
     return view('dashboard.layanan.pencegahan.pemberdayaan');
-});
+})->name('pemberdayaan');
 
 // route publikasi
 Route::get('/berita', function () {
