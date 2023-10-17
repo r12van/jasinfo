@@ -1,0 +1,12 @@
+
+figure.image.image-style-side img{
+    display: block;
+    margin-left: auto;
+    margin-right: 0% !important; 
+}
+
+figure.image img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
