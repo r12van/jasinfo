@@ -1,4 +1,4 @@
-<section id="slider" class="slider-element slider-parallax swiper_wrapper min-vh-60 min-vh-md-100 include-header" data-autoplay="5000" data-speed="650" data-loop="true">
+{{-- <!--section id="slider" class="slider-element slider-parallax swiper_wrapper min-vh-60 min-vh-md-100 include-header" data-autoplay="5000" data-speed="650" data-loop="true">
     <div class="slider-inner">
 
         <div class="swiper-container swiper-parent">
@@ -21,4 +21,17 @@
         </div>
 
     </div>
-</section>
+</section--> --}}
+
+<section id="slider" class="slider-element boxed-slider">
+
+			<div class="container">
+
+				<div id="oc-slider" class="owl-carousel carousel-widget" data-margin="0" data-items="1" data-animate-in="zoomIn" data-speed="450" data-animate-out="fadeOut">
+                @foreach ($carousel as $carouselData)
+					<a href="#"><img src="{{ $carouselData->banner }}" alt="Slider"></a>
+				</div>
+
+			</div>
+
+		</section>

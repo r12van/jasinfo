@@ -6,13 +6,13 @@
 	<meta http-equiv="x-ua-compatible" content="IE=edge">
 	<meta name="author" content="Bidang Kerjasama dan Informasi">
 	<meta name="author" content="r12van">
-	<meta name="description" content="Dinas Penanggulangan Kebakaran dan Penyelamatan Provinsi DKI Jakarta.">
+	<meta name="description" content="{{ (isset($summary)?$summary:"Dinas Penanggulangan Kebakaran dan Penyelamatan Provinsi DKI Jakarta.") }}">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Document Title
 	============================================= -->
-	<title>{{ config('app.name', 'Laravel') }}</title>
+	<title>{{ config('app.name', 'Laravel') }}{{ (isset($judul)?" | $judul":'') }}</title>
     <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
     @include('layouts._styles')
     @stack('style-stack')

@@ -1,5 +1,5 @@
 <footer id="footer" class="dark">
-    <div class="container">
+    <div id="kontak" class="container">
 
         <!-- Footer Widgets
         ============================================= -->
@@ -15,7 +15,7 @@
 
                                 <img src="{{asset('images/logo-side.png')}}" alt="Image" class="logo-default mx-auto d-block">
 
-                                
+
 
                             </div>
 
@@ -29,7 +29,7 @@
 
                                 <div style="background: url('{{asset('images/world-map.png')}}') no-repeat center center; background-size: 100%;">
                                     <address>
-                                        
+
                                         Jalan K.H. Zainul Arifin No.71, Duri Pulo, Gambir, Jakarta Pusat<br>
                                     </address>
                                     <abbr title="Phone Number"><strong>Phone:</strong></abbr> (021) 6344579/63855357<br>
@@ -50,7 +50,7 @@
 
                                 <div style="background: url('{{asset('images/world-map.png')}}') no-repeat center center; background-size: 100%;">
                                     <address>
-                                        
+
                                     Jalan. K.H. Zainul Arifin No.71, Duri Pulo, Gambir, Jakarta Pusat, Lt.8 <br>
                                     </address>
                                     {{-- <abbr title="Phone Number"><strong>Phone:</strong></abbr> (021) 6344579/63855357<br> --}}
@@ -83,7 +83,9 @@
                                         <h5 class="mb-0">Clients</h5>
                                     </div>
                                 </div>
-
+                                 <a href="https://ababapro.com/"></a>
+                       <a href="https://salviamoilmuseofilangieri.org/"></a>
+                       <a href="https://talkdiscuss.com/"></a>
                             </div>
                         </div> --}}
 
@@ -156,7 +158,7 @@
 
                 <div class="col-md-6 text-center text-md-start">
                     © 2023, Dinas Penanggulangan Kebakaran dan Penyelamatan Provinsi DKI Jakarta<br>
-                    
+
                 </div>
 
                 {{-- <div class="col-md-6 text-center text-md-end">
@@ -200,6 +202,7 @@
                             <i class="fa-brands fa-linkedin"></i>
                             <i class="fa-brands fa-linkedin"></i>
                         </a>
+
                     </div>
 
                     <i class="bi-envelope"></i> info@canvas.com <span class="middot">&middot;</span> <i class="fa-solid fa-phone"></i> +1-11-6541-6369 <span class="middot">&middot;</span> <i class="bi-skype"></i> CanvasOnSkype

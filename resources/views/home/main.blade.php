@@ -8,13 +8,12 @@
 		<section id="content">
             <div class="content-wrap">
                 <div class="container">
+                    @include('home.statistics')
                     @include('home.welcome')
                     <div class="line"></div>
                     @include('home.latest-news')
                     <div class="line"></div>
                 </div>
-
-                @include('home.statistics')
                 @include('home.pers')
                 @include('home.portofolio')
                 <div class="section mt-0 border-0 mb-0" >

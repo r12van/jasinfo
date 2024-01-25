@@ -1,5 +1,5 @@
 <footer id="footer" class="dark">
-    <div class="container">
+    <div id="kontak" class="container">
         <!-- Footer Widgets
         ============================================= -->
         <div class="footer-widgets-wrap">
@@ -45,32 +45,38 @@
                             <div class="widget">
                                 <div class="row col-mb-30">
                                     <div class="col-6 col-md-12 col-lg-6 d-flex align-items-center">
+                                        <strong>Follow Kami</strong>
+                                    </div>
+                                    <div class="col-6 col-md-12 col-lg-6 d-flex align-items-center">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-6 col-md-12 col-lg-6 d-flex align-items-center">
                                         <a href="https://www.facebook.com/humasjakfire" target="_blank" class="social-icon text-white border-transparent bg-facebook me-2 mb-0 float-none">
                                             <i class="fa-brands fa-facebook-f"></i>
                                             <i class="fa-brands fa-facebook-f"></i>
                                         </a>
-                                        <a href="https://www.facebook.com/humasjakfire" target="_blank" class="ms-1"><small class="d-block"><strong>Follow Kami</strong><br>di Facebook</small></a>
+                                        <a href="https://www.facebook.com/humasjakfire" target="_blank" class="ms-1"><small class="d-block"><strong>Facebook</strong></small></a>
                                     </div>
                                     <div class="col-6 col-md-12 col-lg-6 d-flex align-items-center">
                                         <a href="https://www.instagram.com/humasjakfire/" target="_blank" class="social-icon text-white border-transparent bg-instagram me-2 mb-0 float-none">
                                             <i class="fa-brands fa-instagram"></i>
                                             <i class="fa-brands fa-instagram"></i>
                                         </a>
-                                        <a href="https://www.instagram.com/humasjakfire/" target="_blank" class="ms-1"><small class="d-block"><strong>Follow Kami</strong><br>di Instagram</small></a>
+                                        <a href="https://www.instagram.com/humasjakfire/" target="_blank" class="ms-1"><small class="d-block"><strong>Instagram</strong></small></a>
                                     </div>
                                     <div class="col-6 col-md-12 col-lg-6 d-flex align-items-center">
                                         <a href="https://www.youtube.com/@humasjakfire" target="_blank" class="social-icon text-white border-transparent bg-youtube me-2 mb-0 float-none">
                                             <i class="fa-brands fa-youtube-square"></i>
                                             <i class="fa-brands fa-youtube-square"></i>
                                         </a>
-                                        <a href="https://www.youtube.com/@humasjakfire" target="_blank" class="ms-1"><small class="d-block"><strong>Follow Kami</strong><br>di Instagram</small></a>
+                                        <a href="https://www.youtube.com/@humasjakfire" target="_blank" class="ms-1"><small class="d-block"><strong>Youtube</strong></small></a>
                                     </div>
                                     <div class="col-6 col-md-12 col-lg-6 d-flex align-items-center">
-                                        <a href="https://twitter.com/humasjakfire" target="_blank" class="social-icon text-white border-transparent bg-twitter me-2 mb-0 float-none">
+                                        <a href="https://twitter.com/humasjakfire" target="_blank" class="social-icon text-white border-transparent bg-black me-2 mb-0 float-none">
                                             <i class="fa-brands fa-twitter-square"></i>
-                                            <i class="fa-brands fa-twitter-square"></i>
+                                            <i class="fa-brands fa-x-twitter"></i>
                                         </a>
-                                        <a href="https://twitter.com/humasjakfire" target="_blank" class="ms-1"><small class="d-block"><strong>Follow Kami</strong><br>di Twitteer</small></a>
+                                        <a href="https://twitter.com/humasjakfire" target="_blank" class="ms-1"><small class="d-block"><strong>X/Twitter</strong></small></a>
                                     </div>
                                 </div>
                             </div>

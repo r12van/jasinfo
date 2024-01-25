@@ -31,7 +31,10 @@
 							============================================= -->
 							@if ($banner)
 								<div class="entry-image mb-5">
-									<a href="#"><img src="{{asset($banner)}}" alt="Blog Single"></a>
+									<a href="#"><img src="{{asset($banner)}}" alt="{{ $summary }}"></a>
+                                    {{-- @if ($id_tipe < 4)
+                                        <span style="font-style: italic"> {{ $summary }} </span>
+                                    @endif --}}
 								</div><!-- .entry-image end -->
 							@endif
 
@@ -39,7 +42,12 @@
 							<!-- Entry Content
 							============================================= -->
 							<div class="entry-content mt-0 text-justify" style="text-align:justify;">
-
+                                @if ($id_tipe < 4)
+                                    <p style="font-style: italic; text-align:center;">
+                                        {{ $summary }}
+                                    </p>
+                                @endif
+                                <br>
 								@if ($isi)
 									{!! Illuminate\Mail\Markdown::parse($isi) !!}
 								@endif

@@ -1,7 +1,8 @@
 <div class="section border-top-0 mt-4 mb-4 border-0 bg-transparent">
     <div class="container">
         <div class="mx-auto text-center" style="max-width: 900px;">
-            <h2>Periode Tahun 2023</h2>
+            <h2>Statistik Kejadian Periode Tahun 2023</h2>
+            <span class="text-small">*sampai Bulan September 2023</span>
         </div>
         <div class="row col-mb-50">
             <div class="col-sm-6 col-lg-4 text-center" data-animate="bounceIn">

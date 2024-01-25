@@ -38,7 +38,7 @@
 									<img src="images/eselon/sugeng_wiyono.jpg" alt="Sugeng Wiyono,S.Sos,M.Si" class="rounded-6">
 								</div>
 								<div class="team-desc">
-                                    <div class="team-title"><h4>Sugeng Wiyono,S.Sos,M.Si</h4><span>Sekertaris Dinas</span></div>
+                                    <div class="team-title"><h4>Sugeng Wiyono,S.Sos,M.Si</h4><span>Sekretaris Dinas</span></div>
 								</div>
 							</div>
 						</div>

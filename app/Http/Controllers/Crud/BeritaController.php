@@ -316,7 +316,8 @@ class BeritaController extends Controller
                 "tipe" => $berita->nama_tipe,
                 "tanggal" => $berita->tanggal,
                 "banner" => $berita->banner,
-                "isi" => $berita->isi
+                "isi" => $berita->isi,
+                "id_tipe" => $berita->id_tipe
             ]);
         } catch (Throwable $e) {
             error_log("Berita Controller Error : Gagal mengambil berita dengan slug : " . $slug . " at show() " . $e);

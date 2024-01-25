@@ -36,13 +36,16 @@
                             <a class="menu-link" href="{{ route('index') }}"><div style="text-shadow: 0 0 5px #FFFFFF;">Beranda</div></a>
                         </li>
                         <li class="menu-item">
+                            <a class="menu-link" href="{{ route('loker') }}"><div style="text-shadow: 0 0 5px #FFFFFF;">Lowongan</div></a>
+                        </li>
+                        {{-- <li class="menu-item">
                             <a class="menu-link"><div style="text-shadow: 0 0 5px #FFFFFF;">Event</div></a>
                             <ul class="sub-menu-container">
                                 <li class="menu-item">
                                     <a class="menu-link" href="{{ url('../../fsc') }}"><div>Fire Safety Challenge</div></a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                         <li class="menu-item">
                             <a class="menu-link" ><div style="text-shadow: 0 0 5px #FFFFFF;">Profil</div></a>
                             <ul class="sub-menu-container">
@@ -94,7 +97,23 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li class="menu-item">
+                                    <a class="menu-link"><div></i>Standar Pelayanan</div></a>
+                                    <ul class="sub-menu-container">
+                                        <li class="menu-item">
+                                            <a href="{{ route('konsultasi-teknis') }}" class="menu-link">Layanan Konsultasi Teknis</a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="#" class="menu-link"></a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('laporan-kinerja') }}" class="menu-link">
+                                <div>Laporan Kinerja</div>
+                            </a>
                         </li>
                         <li class="menu-item">
                             <a class="menu-link" href="{{ route('produk_hukum') }} "><div style="text-shadow: 0 0 5px #FFFFFF;">Produk Hukum</div></a>
@@ -114,7 +133,7 @@
                                 {{-- <li class="menu-item">
                                     <a class="menu-link" href="{{ env('APP.ENV') }}"><div>Pengumuman</div></a>
                                 </li> --}}
-                                <li class="menu-item">
+                                <!--li class="menu-item">
                                     <a class="menu-link" href="{{ env('APP.ENV') }}"><div></i>Galeri</div></a>
                                     {{-- <ul class="sub-menu-container">
                                         <li class="menu-item">
@@ -124,11 +143,11 @@
                                             <a class="menu-link" href="{{ route('pembinaan') }}"><div>Video</div></a>
                                         </li>
                                     </ul> --}}
-                                </li>
+                                </li-->
                             </ul>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="{{ route('index') }}"><div style="text-shadow: 0 0 5px #FFFFFF; ">Kontak</div></a>
+                            <a class="menu-link" href="#kontak"><div style="text-shadow: 0 0 5px #FFFFFF; ">Kontak</div></a>
                         </li>
                     </ul>
                 </nav><!-- #primary-menu end -->

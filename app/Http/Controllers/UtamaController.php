@@ -24,41 +24,41 @@ class UtamaController extends Controller
 
     public function publikasiPers()
     {
-        return  Berita::where('id_tipe', '=', 4)->orderBy('tanggal')->paginate(8);
+        return  Berita::where('id_tipe', '=', 4)->orderBy('tanggal', 'desc')->paginate(8);
     }
 
     public function kegiatan()
     {
-        return  Berita::where('id_tipe', '=', 5)->orderBy('tanggal')->take(8)->get();
+        return  Berita::where('id_tipe', '=', 5)->orderBy('tanggal', 'desc')->take(8)->get();
     }
 
     public function publikasiKegiatan()
     {
-        return  Berita::where('id_tipe', '=', 5)->orderBy('tanggal')->paginate(8);
+        return  Berita::where('id_tipe', '=', 5)->orderBy('tanggal', 'desc')->paginate(8);
     }
 
     public function kebakaran()
     {
-        return  Berita::where('id_tipe', '=', 1)->orderBy('tanggal')->take(1)->get();
+        return  Berita::where('id_tipe', '=', 1)->orderBy('tanggal', 'desc')->take(1)->get();
     }
 
     public function publikasiKebakaran()
     {
-        return  Berita::where('id_tipe', '=', 1)->orderBy('tanggal')->paginate(4, ['*'], 'kebakaran');
+        return  Berita::where('id_tipe', '=', 1)->orderBy('tanggal', 'desc')->paginate(4, ['*'], 'kebakaran');
     }
 
     public function penyelamatan()
     {
-        return  Berita::where('id_tipe', '=', 2)->orderBy('tanggal')->take(1)->get();
+        return  Berita::where('id_tipe', '=', 2)->orderBy('tanggal', 'desc')->take(1)->get();
     }
 
     public function publikasiPenyelamatan()
     {
-        return  Berita::where('id_tipe', '=', 2)->orderBy('tanggal')->paginate(4, ['*'], 'penyelamatan');
+        return  Berita::where('id_tipe', '=', 2)->orderBy('tanggal', 'desc')->paginate(4, ['*'], 'penyelamatan');
     }
 
     public function pencegahan()
     {
-        return  Berita::where('id_tipe', '=', 3)->orderBy('tanggal')->take(1)->get();
+        return  Berita::where('id_tipe', '=', 3)->orderBy('tanggal', 'desc')->take(1)->get();
     }
 }

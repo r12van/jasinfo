@@ -78,6 +78,14 @@ Route::get('/tugas_pokok', function () {
 Route::get('/produk_hukum', function () {
     return view('dashboard.produk_hukum');
 })->name('produk_hukum');
+
+Route::get('/loker', function () {
+return view('loker.index');
+})->name('loker');
+
+Route::get('/laporan-kinerja', function () {
+    return view('dashboard.laporan.lkip');
+})->name('laporan-kinerja');
 //route layanan
 Route::get('/layanan_kebakaran', function () {
     return view('dashboard.layanan.kebakaran');
@@ -97,6 +105,9 @@ Route::get('/layanan-laboratorium', function () {
 Route::get('/layanan_penyelamatan', function () {
     return view('dashboard.layanan.penyelamatan');
 })->name('layanan_penyelamatan');
+Route::get('/konsultasi-teknis', function () {
+    return view('dashboard.layanan.konsultasi');
+})->name('konsultasi-teknis');
 
 Route::get('/kontak', function () {
     return "Kontak";

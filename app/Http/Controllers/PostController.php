@@ -49,9 +49,12 @@ class PostController extends Controller
         return  Berita::where('publish', 1)->orderBy('tanggal', 'desc')->take(9)->get();
     }
     public function statistics() {
-        $statistics['countKebakaran'] = Berita::where('id_tipe', '=', 1)->count();
-        $statistics['countPenyelamatan'] = Berita::where('id_tipe', '=', 2)->count();
-        $statistics['countPencegahan'] = Berita::where('id_tipe', '=', 3)->count();
+        $statistics['countKebakaran'] = 1590;
+        $statistics['countPenyelamatan'] = 4999;
+        $statistics['countPencegahan'] = 792+57;
+        // $statistics['countKebakaran'] = Berita::where('id_tipe', '=', 1)->count();
+        // $statistics['countPenyelamatan'] = Berita::where('id_tipe', '=', 2)->count();
+        // $statistics['countPencegahan'] = Berita::where('id_tipe', '=', 3)->count();
         return $statistics;
     }
     public function pers()
