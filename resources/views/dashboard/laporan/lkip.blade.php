@@ -27,13 +27,20 @@
                         <p>If unable to display PDF file. <a href="{{ asset('document/lkip/LKIPDinasGulkarmatTahun2021opt.pdf') }}">Download</a> instead.</p>
                     </div>
 
-
                     <div class="row entry-image mb-10">
                         <div class="fancy-title title-border">
                             <h3>Laporan Kegiatan Tahun 2022</h3>
                         </div>
                         <div id="lkip2022" style="height: 600px;"></div>
                         <p>If unable to display PDF file. <a href="{{ asset('document/lkip/LKIPDinasGulkarmatTahun2022opt.pdf') }}">Download</a> instead.</p>
+                    </div>
+
+                    <div class="row entry-image mb-10">
+                        <div class="fancy-title title-border">
+                            <h3>Laporan Kegiatan Tahun 2023</h3>
+                        </div>
+                        <div id="lkip2022" style="height: 600px;"></div>
+                        <p>If unable to display PDF file. <a href="{{ asset('document/lkip/LKIPDinasGulkarmatTahun2023opt.pdf') }}">Download</a> instead.</p>
                     </div>
 
                 </div>

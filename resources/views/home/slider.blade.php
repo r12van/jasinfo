@@ -1,4 +1,4 @@
-<section id="slider" class="slider-element slider-parallax swiper_wrapper min-vh-sm-30 min-vh-lg-60 min-vh-md-100 include-header" data-autoplay="5000" data-speed="650" data-loop="true">
+<section id="slider" class="slider-element slider-parallax swiper_wrapper min-vh-60 min-vh-md-100 include-header" data-autoplay="5000" data-speed="650" data-loop="true">
     <div class="slider-inner">
 
         <div class="swiper-container swiper-parent">

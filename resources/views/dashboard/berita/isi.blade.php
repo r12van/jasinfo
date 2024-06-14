@@ -42,7 +42,7 @@
 							<!-- Entry Content
 							============================================= -->
 							<div class="entry-content mt-0 text-justify" style="text-align:justify;">
-                                @if ($id_tipe < 4)
+                                @if ($id_tipe == 4)
                                     <p style="font-style: italic; text-align:center;">
                                         {{ $summary }}
                                     </p>

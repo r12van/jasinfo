@@ -7,10 +7,10 @@
                     <a href="{{ route('index') }}" class="menu-link">
                         <div class="row">
                             <div class="col">
-                                <img class="logo-default" srcset="{{asset('img/logo/logo-pemadam.png') . ' , ' . asset('img/logo/logo-pemadam.png 2x')}}" src="{{asset('img/logo/logo-pemadam.png')}}" alt="Logo Pemadam" style="max-height: 75px; height: 70%; width: auto;">
+                                <img class="logo-default" srcset="{{asset('img/logo/jayaraya.png') . ' , ' . asset('img/logo/jayaraya.png 2x')}}" src="{{asset('img/logo/jayaraya.png')}}" alt="Logo Provinsi DKI" style="max-height: 75px; height: 70%; width: auto;">
                             </div>
                             <div class="col">
-                                <img class="logo-default" srcset="{{asset('img/logo/jayaraya.png') . ' , ' . asset('img/logo/jayaraya.png 2x')}}" src="{{asset('img/logo/jayaraya.png')}}" alt="Logo Provinsi DKI" style="max-height: 75px; height: 70%; width: auto;">
+                                <img class="logo-default" srcset="{{asset('img/logo/logo-pemadam.png') . ' , ' . asset('img/logo/logo-pemadam.png 2x')}}" src="{{asset('img/logo/logo-pemadam.png')}}" alt="Logo Pemadam" style="max-height: 75px; height: 70%; width: auto;">
                             </div>
                         </div>
                     </a>

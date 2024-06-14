@@ -78,11 +78,9 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="example-search-input" class="col-sm-2 col-form-label">Sumary</label>
+										<label for="example-search-input" class="col-sm-2 col-form-label">Summary</label>
 										<div class="col-sm-10">
-											<textarea class="form-control" type="text" placeholder="Ringkasan singkat mengenai berita. Text ini yang akan ditampilkan di thumbnail berita." id="summary" name="summary" maxlength="255">
-												{{(isset($summary)) ? $summary : old('summary')}}
-											</textarea>
+											<textarea class="form-control" type="text" placeholder="Ringkasan singkat mengenai berita. Text ini yang akan ditampilkan di thumbnail berita." id="summary" name="summary" maxlength="255">{{(isset($summary)) ? $summary : old('summary')}}</textarea>
 										</div>
 									</div>
 									<div class="form-group row">

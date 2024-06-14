@@ -2,13 +2,13 @@
     <div class="container">
         <div class="mx-auto text-center" style="max-width: 900px;">
             <h2>Statistik Kejadian Periode Tahun 2023</h2>
-            <span class="text-small">*sampai Bulan September 2023</span>
+            <span class="text-small">*sampai Bulan Desember 2023</span>
         </div>
         <div class="row col-mb-50">
             <div class="col-sm-6 col-lg-4 text-center" data-animate="bounceIn">
                 <i class="i-plain i-xlarge mx-auto mb-0 bi-fire"></i>
                 <div class="counter counter-lined"><span data-from="0" data-to="{{ $statistics['countKebakaran'] }}" data-refresh-interval="50" data-speed="2000"></span>+</div>
-                <h5>Kebakaran</h5>
+                <h5>Kejadian Kebakaran</h5>
             </div>
 
             <div class="col-sm-6 col-lg-4 text-center" data-animate="bounceIn" data-delay="200">
@@ -20,7 +20,7 @@
             <div class="col-sm-6 col-lg-4 text-center" data-animate="bounceIn" data-delay="400">
                 <i class="i-plain i-xlarge mx-auto mb-0 bi-people"></i>
                 <div class="counter counter-lined"><span data-from="0" data-to="{{ $statistics['countPencegahan'] }}" data-refresh-interval="25" data-speed="3500"></span>+</div>
-                <h5>Sosialisasi Pencegahan</h5>
+                <h5>RW Tersosialisasi</h5>
             </div>
 
             {{-- <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn" data-delay="600">

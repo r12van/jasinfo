@@ -1,6 +1,6 @@
 <aside class="main-sidebar">
     <!-- sidebar-->
-    <section class="sidebar">			
+    <section class="sidebar">
       <!-- sidebar menu-->
       <ul class="sidebar-menu" data-widget="tree">
 		    <li>
@@ -8,7 +8,7 @@
             <i class="mdi mdi-database"></i>
 			      <span>Dashboard</span>
           </a>
-        </li>		
+        </li>
         <li class="treeview">
               <a href="#">
                 <i class="mdi mdi-bulletin-board"></i>
@@ -22,7 +22,21 @@
                 <li><a href="{{ route('adminBerita') }}"><i class="ti-more"></i>Tabel Berita</a></li>
                 <li><a href="{{ route('adminBuatBerita') }}"><i class="ti-more"></i>Buat Berita</a></li>
               </ul>
-        </li> 
+        </li>
+        <li class="treeview">
+              <a href="#">
+                <i class="mdi mdi-bulletin-board"></i>
+                <span>Loker</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                {{-- <li><a href="widgets_blog.html"><i class="ti-more"></i>Banner Berita</a></li> --}}
+                <li><a href="{{ route('tabelLoker') }}"><i class="ti-more"></i>Tabel Loker</a></li>
+                <li><a href="{{ route('tambahLoker') }}"><i class="ti-more"></i>Buat Loker</a></li>
+              </ul>
+        </li>
         {{-- <li class="treeview">
               <a href="#">
                 <i class="mdi mdi-gift"></i>

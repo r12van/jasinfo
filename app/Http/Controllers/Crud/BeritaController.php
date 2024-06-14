@@ -67,7 +67,7 @@ class BeritaController extends Controller
                             return "";
                         })
                         ->editColumn("tindakan", function ($berita) {
-                            return view("kolom.tindakan-tabel-berita")->with("id", $berita->id_berita)->with("judul", $berita->judul);
+                            return view("kolom.tindakan-tabel-berita")->with("id", $berita->id_berita)->with("judul", $berita->judul)->with("slug", $berita->slug);
                         })
                         ->toJson();
                 }

@@ -5,7 +5,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta http-equiv="x-ua-compatible" content="IE=edge">
 	<meta name="author" content="Bidang Kerjasama dan Informasi">
-	<meta name="author" content="r12van">
+	<!---meta name="author" content="r12van"-->
 	<meta name="description" content="{{ (isset($summary)?$summary:"Dinas Penanggulangan Kebakaran dan Penyelamatan Provinsi DKI Jakarta.") }}">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">

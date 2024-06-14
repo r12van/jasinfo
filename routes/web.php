@@ -79,9 +79,17 @@ Route::get('/produk_hukum', function () {
     return view('dashboard.produk_hukum');
 })->name('produk_hukum');
 
-Route::get('/loker', function () {
-return view('loker.index');
-})->name('loker');
+// Route::get('/loker', function () {
+//     return view('loker.index');
+// })->name('loker');
+
+Route::get('loker/{slug}',
+    [App\Http\Controllers\UtamaController::class, "lokerView"]
+)->name('lokerView');
+
+Route::get('loker',
+ [App\Http\Controllers\UtamaController::class, "loker"]
+ )->name('loker');
 
 Route::get('/laporan-kinerja', function () {
     return view('dashboard.laporan.lkip');
@@ -174,11 +182,18 @@ Route::get('/admin-berita', [App\Http\Controllers\HomeController::class, 'adminB
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
 Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/post', [App\Http\Controllers\PostController::class, 'index'])->name('post-article');
 });
     Route::get('/post', [App\Http\Controllers\PostController::class, 'index'])->name('post-article');
 
+    Route::get('/tabel-loker', [App\Http\Controllers\AdminLowonganController::class, 'index'])->name('tabelLoker');
+    Route::get('/tambah-loker', [App\Http\Controllers\AdminLowonganController::class, 'create'])->name('tambahLoker');
+    Route::post('/tambah-loker', [App\Http\Controllers\AdminLowonganController::class, 'store'])->name('simpanLoker');
+
+    Route::get('/tabel-tag', [App\Http\Controllers\AdminLowonganController::class, 'tagIndex'])->name('tabelTag');
+    // Route::get('/tambah-tag', [App\Http\Controllers\AdminLowonganController::class, 'tagCreate'])->name('tambahTag');
+    // Route::post('/tambah-tag', [App\Http\Controllers\AdminLowonganController::class, 'tagStore'])->name('simpanTag');
 //end route admin
 
 Route::get('register', function () {
